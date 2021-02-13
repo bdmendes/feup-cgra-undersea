@@ -1,9 +1,9 @@
 # CGRA 2020/2021
 
-## Group T0xG0y
+## Group T07G09
 | Name             | Number    | E-Mail             |
 | ---------------- | --------- | ------------------ |
-| John Doe         | 201901010 | ...                |
-| Jane Doe         | 201901011 | ...                |
+| Bruno Mendes     | 201906166 | up201906166@fe.up.pt |
+| Francisco Colino | 201905405 | up201905405@fe.up.pt |
 
 ----
