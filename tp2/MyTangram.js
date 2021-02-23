@@ -49,6 +49,9 @@ export class MyTangram extends CGFobject {
     display() {
         let globalScale = Math.sqrt(2) / 2; // work with unit sides
 
+        /* Center entire figure around the origin */
+        this.scene.multMatrix(MyTangram.getTranslationMatrix(-2, -2, 0));
+
         /* Green square */
         this.scene.pushMatrix();
         this.scene.multMatrix(MyTangram.getTranslationMatrix(0.5, 0.5, 0));
