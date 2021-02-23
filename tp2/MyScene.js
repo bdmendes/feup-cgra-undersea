@@ -7,6 +7,7 @@ import { MyTriangleBig } from "./MyTriangleBig.js";
 import { MyUnitCube } from "./MyUnitCube.js";
 import { MyQuad } from "./MyQuad.js";
 import { MyUnitCubeQuad } from "./MyUnitCubeQuad.js";
+import { MyTangram } from "./MyTangram.js";
 
 /**
  * MyScene
@@ -18,7 +19,6 @@ export class MyScene extends CGFscene {
   }
   init(application) {
     super.init(application);
-    
     this.initCameras();
     this.initLights();
 
@@ -40,6 +40,7 @@ export class MyScene extends CGFscene {
     this.unitCube = new MyUnitCube(this);
     this.quad = new MyQuad(this);
     this.unitCubeQuad = new MyUnitCubeQuad(this);
+    this.tangram = new MyTangram(this);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -49,9 +50,10 @@ export class MyScene extends CGFscene {
     this.displayParallelogram = false;
     this.displayTriangleSmall = false;
     this.displayTriangleBig = false;
-    this.displayUnitCube = false;
+    this.displayUnitCube = true;
     this.displayQuad = false;
-    this.displayUCQ = true;
+    this.displayUCQ = false;
+    this.displayTangram = true;
   }
   initLights() {
     this.lights[0].setPosition(15, 2, 5, 1);
@@ -123,7 +125,25 @@ export class MyScene extends CGFscene {
 
     if (this.displayTriangleBig) this.triangleBig.display();
 
-    if (this.displayUnitCube) this.unitCube.display();
+    //matches the tangram's upper left corner with the (0, 0, 0)
+    //tangram is now parallel to XZ
+    this.pushMatrix()
+
+    this.translate(2, 0, 2);
+    this.rotate(-Math.PI/2, 1, 0, 0);
+
+    if (this.displayUnitCube){ 
+      this.pushMatrix();
+      this.translate(0, 0, -2);
+      this.scale(4, 4, 4);
+      this.translate(-0.5, -0.5, -0.5);
+      this.unitCube.display();
+      this.popMatrix();
+    }
+
+    if (this.displayTangram) this.tangram.display();
+
+    this.popMatrix()
 
     if(this.displayQuad) this.quad.display();
 
@@ -131,5 +151,4 @@ export class MyScene extends CGFscene {
 
     // ---- END Primitive drawing section
   }
-
 }
