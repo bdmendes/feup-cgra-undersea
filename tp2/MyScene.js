@@ -169,9 +169,23 @@ export class MyScene extends CGFscene {
     this.popMatrix();
 
     /* Pink triangle */
-    if (this.displayTriangle) this.pinkTriangle.display();
-
-    if (this.displayParallelogram) this.yellowParallelogram.display();
+    let pinkTriangleRotateAngle = 5 * Math.PI / 4;
+    let pinkRotateTriangle =
+      [Math.cos(pinkTriangleRotateAngle), Math.sin(pinkTriangleRotateAngle), 0, 0,
+      -Math.sin(pinkTriangleRotateAngle), Math.cos(pinkTriangleRotateAngle), 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1];
+    let translatePinkTriangle =
+      [1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        2, 3, 0, 1];
+    this.pushMatrix();
+    this.multMatrix(translatePinkTriangle);
+    this.multMatrix(pinkRotateTriangle);
+    this.multMatrix(scaleGeneral);
+    if (1 || this.displayTriangle) this.pinkTriangle.display();
+    this.popMatrix();
 
     /* Purple triangle */
 
@@ -253,7 +267,6 @@ export class MyScene extends CGFscene {
     this.blueTriangle.display();
 
     this.popMatrix();
-
 
     // ---- END Primitive drawing section
   }
