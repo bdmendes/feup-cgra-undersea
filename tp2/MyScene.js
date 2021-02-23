@@ -50,10 +50,10 @@ export class MyScene extends CGFscene {
     this.displayParallelogram = false;
     this.displayTriangleSmall = false;
     this.displayTriangleBig = false;
-    this.displayUnitCube = true;
+    this.displayUnitCube = false;
     this.displayQuad = false;
     this.displayUCQ = false;
-    this.displayTangram = true;
+    this.displayTangram = false;
   }
   initLights() {
     this.lights[0].setPosition(15, 2, 5, 1);
