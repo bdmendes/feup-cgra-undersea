@@ -119,7 +119,14 @@ export class MyScene extends CGFscene {
 
     if (this.displayTriangleBig) this.triangleBig.display();
 
-    if (this.displayUnitCube) this.unitCube.display();
+    if (this.displayUnitCube){ 
+      this.pushMatrix();
+      this.translate(0, -4, 0);
+      this.scale(4, 4, 4);
+      this.translate(-0.5, -0.5, -0.5);
+      this.unitCube.display();
+      this.popMatrix();
+    }
 
     if (this.displayTangram) this.tangram.display();
 
