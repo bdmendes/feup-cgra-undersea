@@ -35,6 +35,10 @@ export class MyInterface extends CGFinterface {
 
         this.gui.add(this.scene, 'displayUnitCube').name('Display Unit Cube');
 
+        this.gui.add(this.scene, 'displayQuad').name('Display Quad');
+
+        this.gui.add(this.scene, 'displayUCQ').name('Display Unit Cube Squad');
+
         return true;
     }
 }
