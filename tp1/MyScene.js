@@ -29,12 +29,13 @@ export class MyScene extends CGFscene {
 
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    this.diamond = new MyDiamond(this);
-    this.triangle = new MyTriangle(this);
-    this.parallelogram = new MyParallelogram(this);
-    this.triangleSmall1 = new MyTriangleSmall(this);
-    this.triangleSmall2 = new MyTriangleSmall(this);
-    this.triangleBig = new MyTriangleBig(this);
+    this.greenTriangle = new MyDiamond(this);
+    this.pinkTriangle = new MyTriangle(this);
+    this.yellowParallelogram = new MyParallelogram(this);
+    this.redTriangle = new MyTriangleSmall(this);
+    this.purpleTriangle = new MyTriangleSmall(this);
+    this.orangeTriangle = new MyTriangleBig(this);
+    this.blueTriangle = new MyTriangleBig(this);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
@@ -127,7 +128,7 @@ export class MyScene extends CGFscene {
     this.multMatrix(translateMDiamond);
     this.multMatrix(rotateMDiamond);
     this.multMatrix(scaleGeneral);
-    if (this.displayDiamond) this.diamond.display();
+    if (this.displayDiamond) this.greenTriangle.display();
     this.popMatrix();
 
     /* Red triangle */
@@ -145,16 +146,34 @@ export class MyScene extends CGFscene {
     this.multMatrix(translateSTriangle);
     this.multMatrix(rotateSTriangle1);
     this.multMatrix(scaleGeneral);
-    if (this.displayTriangleSmall) this.triangleSmall1.display();
+    if (this.displayTriangleSmall) this.redTriangle.display();
     this.popMatrix();
 
+    /* Orange triangle */
+    let orangeTriangleRotateAngle = Math.PI / 4;
+    let rotateOrangeTriangle =
+      [Math.cos(orangeTriangleRotateAngle), Math.sin(orangeTriangleRotateAngle), 0, 0,
+      -Math.sin(orangeTriangleRotateAngle), Math.cos(orangeTriangleRotateAngle), 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1];
+    let translateOrangeTriangle =
+      [1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        1, 2, 0, 1];
+    this.pushMatrix();
+    this.multMatrix(translateOrangeTriangle);
+    this.multMatrix(rotateOrangeTriangle);
+    this.multMatrix(scaleGeneral);
+    if (this.displayTriangleBig) this.orangeTriangle.display();
+    this.popMatrix();
 
-    if (this.displayTriangle) this.triangle.display();
+    /* Pink triangle */
+    if (this.displayTriangle) this.pinkTriangle.display();
 
-    if (this.displayParallelogram) this.parallelogram.display();
+    if (this.displayParallelogram) this.yellowParallelogram.display();
 
 
-    if (this.displayTriangleBig) this.triangleBig.display();
 
     // ---- END Primitive drawing section
   }
