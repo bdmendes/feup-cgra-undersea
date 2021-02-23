@@ -173,6 +173,86 @@ export class MyScene extends CGFscene {
 
     if (this.displayParallelogram) this.yellowParallelogram.display();
 
+    /* Purple triangle */
+
+    let purpleTriangleRotateAngle = 3 * Math.PI / 4;
+    let rotatePurpleTriangle =
+      [Math.cos(purpleTriangleRotateAngle), Math.sin(purpleTriangleRotateAngle), 0, 0,
+      -Math.sin(purpleTriangleRotateAngle), Math.cos(purpleTriangleRotateAngle), 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1];
+
+    let translatePurpleTriangle =
+      [1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        3.5, 0.5, 0, 1];
+    this.pushMatrix()
+
+    this.multMatrix(translatePurpleTriangle);
+    this.multMatrix(rotatePurpleTriangle);
+    this.multMatrix(scaleGeneral);
+
+    this.purpleTriangle.display();
+
+    this.popMatrix();
+
+
+    /* Yellow paralelogram */
+
+    let yellowParallelogramRotateAngleZ = -3 * Math.PI / 4;
+    let rotateyellowParallelogramZ =
+      [Math.cos(yellowParallelogramRotateAngleZ), Math.sin(yellowParallelogramRotateAngleZ), 0, 0,
+      -Math.sin(yellowParallelogramRotateAngleZ), Math.cos(yellowParallelogramRotateAngleZ), 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1];
+
+    let yellowParallelogramRotateAngleX = Math.PI;
+    let rotateyellowParallelogramX =
+      [1, 0, 0, 0,
+        0, Math.cos(yellowParallelogramRotateAngleX), Math.sin(yellowParallelogramRotateAngleX), 0,
+        0, -Math.sin(yellowParallelogramRotateAngleX), Math.cos(yellowParallelogramRotateAngleX), 0,
+        0, 0, 0, 1];
+
+    let translateYellowParallelogram =
+      [1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        4, 0, 0, 1];
+
+    this.pushMatrix()
+
+    this.multMatrix(translateYellowParallelogram);
+    this.multMatrix(rotateyellowParallelogramX);
+    this.multMatrix(rotateyellowParallelogramZ);
+    this.multMatrix(scaleGeneral);
+    this.yellowParallelogram.display();
+
+    this.popMatrix();
+
+    /* Blue Triangle */
+
+    let blueTriangleRotateAngle = -Math.PI / 4;
+    let rotateBlueTriangle =
+      [Math.cos(blueTriangleRotateAngle), Math.sin(blueTriangleRotateAngle), 0, 0,
+      -Math.sin(blueTriangleRotateAngle), Math.cos(blueTriangleRotateAngle), 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1];
+
+    let translateBlueTriangle =
+      [1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        3, 2, 0, 1];
+
+    this.pushMatrix()
+
+    this.multMatrix(translateBlueTriangle);
+    this.multMatrix(rotateBlueTriangle);
+    this.multMatrix(scaleGeneral);
+    this.blueTriangle.display();
+
+    this.popMatrix();
 
 
     // ---- END Primitive drawing section
