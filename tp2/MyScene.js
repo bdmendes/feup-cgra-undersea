@@ -15,7 +15,7 @@ export class MyScene extends CGFscene {
   }
   init(application) {
     super.init(application);
-    
+
     this.initCameras();
     this.initLights();
 
@@ -29,17 +29,19 @@ export class MyScene extends CGFscene {
 
     //Initialize scene objects
     this.axis = new CGFaxis(this);
-    this.diamond = new MyDiamond(this);
-    this.triangle = new MyTriangle(this);
-    this.parallelogram = new MyParallelogram(this);
-    this.triangleSmall = new MyTriangleSmall(this);
-    this.triangleBig = new MyTriangleBig(this);
+    this.greenTriangle = new MyDiamond(this);
+    this.pinkTriangle = new MyTriangle(this);
+    this.yellowParallelogram = new MyParallelogram(this);
+    this.redTriangle = new MyTriangleSmall(this);
+    this.purpleTriangle = new MyTriangleSmall(this);
+    this.orangeTriangle = new MyTriangleBig(this);
+    this.blueTriangle = new MyTriangleBig(this);
 
     //Objects connected to MyInterface
     this.displayAxis = true;
     this.scaleFactor = 1;
-    this.displayDiamond = false; 
-    this.displayTriangle = false; 
+    this.displayDiamond = false;
+    this.displayTriangle = false;
     this.displayParallelogram = false;
     this.displayTriangleSmall = false;
     this.displayTriangleBig = false;
@@ -104,15 +106,74 @@ export class MyScene extends CGFscene {
 
     // ---- BEGIN Primitive drawing section
 
-    if (this.displayDiamond) this.diamond.display();
+    /* Green square */
+    let translateMDiamond =
+      [1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        0.5, 0.5, 0, 1];
+    let DiamondRotateAngle = Math.PI / 4;
+    let rotateMDiamond =
+      [Math.cos(DiamondRotateAngle), Math.sin(DiamondRotateAngle), 0, 0,
+      -Math.sin(DiamondRotateAngle), Math.cos(DiamondRotateAngle), 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1];
+    let scaleGeneral =
+      [1 / Math.sqrt(2), 0, 0, 0,
+        0, 1 / Math.sqrt(2), 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1];
 
-    if (this.displayTriangle) this.triangle.display();
+    this.pushMatrix();
+    this.multMatrix(translateMDiamond);
+    this.multMatrix(rotateMDiamond);
+    this.multMatrix(scaleGeneral);
+    if (this.displayDiamond) this.greenTriangle.display();
+    this.popMatrix();
 
-    if (this.displayParallelogram) this.parallelogram.display();
+    /* Red triangle */
+    let translateSTriangle =
+      [1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        0.5, 0.5 + 1, 0, 1];
+    let rotateSTriangle1 =
+      [Math.cos(-DiamondRotateAngle * 3), Math.sin(-DiamondRotateAngle * 3), 0, 0,
+      -Math.sin(-DiamondRotateAngle * 3), Math.cos(-DiamondRotateAngle * 3), 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1];
+    this.pushMatrix();
+    this.multMatrix(translateSTriangle);
+    this.multMatrix(rotateSTriangle1);
+    this.multMatrix(scaleGeneral);
+    if (this.displayTriangleSmall) this.redTriangle.display();
+    this.popMatrix();
 
-    if (this.displayTriangleSmall) this.triangleSmall.display();
+    /* Orange triangle */
+    let orangeTriangleRotateAngle = Math.PI / 4;
+    let rotateOrangeTriangle =
+      [Math.cos(orangeTriangleRotateAngle), Math.sin(orangeTriangleRotateAngle), 0, 0,
+      -Math.sin(orangeTriangleRotateAngle), Math.cos(orangeTriangleRotateAngle), 0, 0,
+        0, 0, 1, 0,
+        0, 0, 0, 1];
+    let translateOrangeTriangle =
+      [1, 0, 0, 0,
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        1, 2, 0, 1];
+    this.pushMatrix();
+    this.multMatrix(translateOrangeTriangle);
+    this.multMatrix(rotateOrangeTriangle);
+    this.multMatrix(scaleGeneral);
+    if (this.displayTriangleBig) this.orangeTriangle.display();
+    this.popMatrix();
 
-    if (this.displayTriangleBig) this.triangleBig.display();
+    /* Pink triangle */
+    if (this.displayTriangle) this.pinkTriangle.display();
+
+    if (this.displayParallelogram) this.yellowParallelogram.display();
+
+
 
     // ---- END Primitive drawing section
   }
