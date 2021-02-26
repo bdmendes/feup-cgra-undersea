@@ -134,8 +134,8 @@ export class MyScene extends CGFscene {
 
     if (this.displayUnitCube){ 
       this.pushMatrix();
-      this.translate(0, 0, -2);
-      this.scale(4, 4, 4);
+      this.translate(0, 0, -1);
+      this.scale(4, 4, 1);
       this.translate(-0.5, -0.5, -0.5);
       this.unitCube.display();
       this.popMatrix();
