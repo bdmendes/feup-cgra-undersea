@@ -9,6 +9,34 @@ export class MyUnitCube extends CGFobject {
 		super(scene);
 		this.initBuffers();
 	}
+
+	goDeeper(ver1, ver2, ver3, levels){
+		if (levels == 0){
+			return;
+		}
+		levels--;
+
+		var x_1 = this.vertices[ver1*3];
+		var x_2 = this.vertices[ver2*3];
+		var x_3 = this.vertices[ver3*3];
+
+		var y_1 = this.vertices[ver1*3 + 1];
+		var y_2 = this.vertices[ver2*3 + 1];
+		var y_3 = this.vertices[ver3*3 + 1];
+
+		var z_1 = this.vertices[ver1*3 + 2];
+		var z_2 = this.vertices[ver2*3 + 2];
+		var z_3 = this.vertices[ver3*3 + 2];
+
+		var new_x = (x_2 + x_3)/2;
+
+		var new_y = (y_2 + y_3)/2;
+
+		var new_z = (z_2 + z_3)/2;
+
+		return;
+
+	}
 	
 	initBuffers() {
 		this.vertices = [
