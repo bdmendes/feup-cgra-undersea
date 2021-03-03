@@ -12,9 +12,11 @@ import { MyUnitCubeQuad } from "./MyUnitCubeQuad.js";
 * @constructor
 */
 export class MyScene extends CGFscene {
+
     constructor() {
         super();
     }
+
     init(application) {
         super.init(application);
         this.initCameras();
@@ -52,8 +54,8 @@ export class MyScene extends CGFscene {
         this.objectComplexity = 0.5;
         this.scaleFactor = 2.0;
         this.globalAmbientLightIntensity = 0.3;
-
     }
+
     initLights() {
         this.setGlobalAmbientLight(0.3, 0.3, 0.3, 1.0);
 
@@ -71,6 +73,7 @@ export class MyScene extends CGFscene {
         this.lights[1].setVisible(true);
         this.lights[1].update();
     }
+
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(10, 10, 10), vec3.fromValues(0, 0, 0));
     }
@@ -101,15 +104,12 @@ export class MyScene extends CGFscene {
         this.customMaterial.setAmbient(...this.hexToRgbA(this.customMaterialValues['Ambient']));
         this.customMaterial.setDiffuse(...this.hexToRgbA(this.customMaterialValues['Diffuse']));
         this.customMaterial.setSpecular(...this.hexToRgbA(this.customMaterialValues['Specular']));
-
         this.customMaterial.setShininess(this.customMaterialValues['Shininess']);
-
     };
 
     updateObjectComplexity(){
         this.objects[this.selectedObject].updateBuffers(this.objectComplexity);
     }
-
 
     initMaterials() {
         // Red Ambient (no diffuse, no specular)
@@ -155,12 +155,12 @@ export class MyScene extends CGFscene {
         //this.materialWood.setSpecular(temp[0], temp[1], temp[2], 1.0);
         this.materialWood.setShininess(10.0);
 
-
         this.materials = [this.material1, this.material2, this.material3, this.customMaterial, this.materialWood];
 
         // Labels and ID's for object selection on MyInterface
         this.materialIDs = {'Red Ambient': 0, 'Red Diffuse': 1, 'Red Specular': 2, 'Custom': 3, 'Wood': 4};
     }
+    
     display() {
         // ---- BEGIN Background, camera and axis setup
         // Clear image and depth buffer everytime we update the scene

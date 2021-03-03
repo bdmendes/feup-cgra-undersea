@@ -109,4 +109,10 @@ export class MyTangram extends CGFobject {
         this.blueTriangle.display();
         this.scene.popMatrix();
     }
+
+    updateBuffers(complexity){
+        // reinitialize buffers
+        this.initBuffers();
+        this.initNormalVizBuffers();
+    }
 }
