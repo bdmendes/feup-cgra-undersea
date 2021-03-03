@@ -16,6 +16,10 @@ export class MyTangram extends CGFobject {
         this.purpleTriangle = new MyTriangleSmall(scene);
         this.orangeTriangle = new MyTriangleBig(scene);
         this.blueTriangle = new MyTriangleBig(scene);
+        this.objects = [this.greenTriangle, this.pinkTriangle,
+            this.yellowParallelogram, this.redTriangle,
+            this.purpleTriangle, this.orangeTriangle,
+            this.blueTriangle];
     }
 
     static getTranslationMatrix(Tx, Ty, Tz) {
@@ -44,6 +48,30 @@ export class MyTangram extends CGFobject {
             0, Sy, 0, 0,
             0, 0, Sz, 0,
             0, 0, 0, 1];
+    }
+
+    initBuffers(){
+        for (var i = 0; i < this.objects.length; i++){
+            this.objects[i].initBuffers();
+        }
+    }
+
+    initNormalVizBuffers(){
+        for (var i = 0; i < this.objects.length; i++){
+            this.objects[i].initNormalVizBuffers();
+        }
+    }
+
+    disableNormalViz(){
+        for (var i = 0; i < this.objects.length; i++){
+            this.objects[i].disableNormalViz();
+        }
+    }
+
+    enableNormalViz(){
+        for (var i = 0; i < this.objects.length; i++){
+            this.objects[i].enableNormalViz();
+        }
     }
 
     display() {
