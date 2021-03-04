@@ -42,14 +42,10 @@ export class MyParallelogram extends CGFobject {
 
 		this.normals = []
 		for (let i = 0; i < 6; ++i){
-			this.normals.push(0);
-			this.normals.push(0);
-			this.normals.push(1);
+			this.normals.push(0, 0, 1);
 		}
 		for (let i = 0; i < 6; ++i){
-			this.normals.push(0);
-			this.normals.push(0);
-			this.normals.push(-1);
+			this.normals.push(0, 0, -1);
 		}
 
 		//The defined indices (and corresponding vertices)

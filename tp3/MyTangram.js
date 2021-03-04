@@ -1,13 +1,11 @@
-import { CGFobject } from '../lib/CGF.js';
 import { MyDiamond } from "./MyDiamond.js";
 import { MyParallelogram } from "./MyParallelogram.js";
 import { MyTriangle } from "./MyTriangle.js";
 import { MyTriangleSmall } from "./MyTriangleSmall.js"
 import { MyTriangleBig } from "./MyTriangleBig.js"
 
-export class MyTangram extends CGFobject {
+export class MyTangram{
     constructor(scene) {
-        super(scene);
         this.scene = scene;
         this.greenTriangle = new MyDiamond(scene);
         this.pinkTriangle = new MyTriangle(scene);
@@ -51,31 +49,64 @@ export class MyTangram extends CGFobject {
     }
 
     initBuffers(){
-        for (var i = 0; i < this.objects.length; i++){
-            this.objects[i].initBuffers();
-        }
+        // for (var i = 0; i < this.objects.length; i++){
+        //     this.objects[i].initBuffers();
+        // }
+
+        this.greenTriangle.initBuffers();
+        this.pinkTriangle.initBuffers();
+        this.yellowParallelogram.initBuffers();
+        this.redTriangle.initBuffers();
+        this.purpleTriangle.initBuffers();
+        this.orangeTriangle.initBuffers();
+        this.blueTriangle.initBuffers();
     }
 
     initNormalVizBuffers(){
-        for (var i = 0; i < this.objects.length; i++){
-            this.objects[i].initNormalVizBuffers();
-        }
+        // for (var i = 0; i < this.objects.length; i++){
+        //     this.objects[i].initNormalVizBuffers();
+        // }
+
+        this.greenTriangle.initNormalVizBuffers();
+        this.pinkTriangle.initNormalVizBuffers();
+        this.yellowParallelogram.initNormalVizBuffers();
+        this.redTriangle.initNormalVizBuffers();
+        this.purpleTriangle.initNormalVizBuffers();
+        this.orangeTriangle.initNormalVizBuffers();
+        this.blueTriangle.initNormalVizBuffers();
     }
 
     disableNormalViz(){
-        for (var i = 0; i < this.objects.length; i++){
-            this.objects[i].disableNormalViz();
-        }
+        // for (var i = 0; i < this.objects.length; i++){
+        //     this.objects[i].disableNormalViz();
+        // }
+
+        this.greenTriangle.disableNormalViz();
+        this.pinkTriangle.disableNormalViz();
+        this.yellowParallelogram.disableNormalViz();
+        this.redTriangle.disableNormalViz();
+        this.purpleTriangle.disableNormalViz();
+        this.orangeTriangle.disableNormalViz();
+        this.blueTriangle.disableNormalViz();
     }
 
     enableNormalViz(){
-        for (var i = 0; i < this.objects.length; i++){
-            this.objects[i].enableNormalViz();
-        }
+        // for (var i = 0; i < this.objects.length; i++){
+        //     this.objects[i].enableNormalViz();
+        // }
+        this.greenTriangle.enableNormalViz();
+        this.pinkTriangle.enableNormalViz();
+        this.yellowParallelogram.enableNormalViz();
+        this.redTriangle.enableNormalViz();
+        this.purpleTriangle.enableNormalViz();
+        this.orangeTriangle.enableNormalViz();
+        this.blueTriangle.enableNormalViz();
     }
 
     display() {
         let globalScale = Math.sqrt(2) / 2; // work with unit sides
+
+        this.scene.pushMatrix();
 
         /* Center entire figure around the origin */
         this.scene.multMatrix(MyTangram.getTranslationMatrix(-2, -2, 0));
@@ -84,15 +115,16 @@ export class MyTangram extends CGFobject {
         this.scene.pushMatrix();
         this.scene.multMatrix(MyTangram.getTranslationMatrix(0.5, 0.5, 0));
         this.scene.multMatrix(MyTangram.getRotationZAxisMatrix(Math.PI / 4));
-        this.scene.multMatrix(MyTangram.getScaleMatrix(globalScale, globalScale, 0));
+        this.scene.multMatrix(MyTangram.getScaleMatrix(globalScale, globalScale, 1));
         this.greenTriangle.display();
         this.scene.popMatrix();
+
 
         /* Red triangle */
         this.scene.pushMatrix();
         this.scene.multMatrix(MyTangram.getTranslationMatrix(0.5, 1.5, 0));
         this.scene.multMatrix(MyTangram.getRotationZAxisMatrix(-3 * Math.PI / 4));
-        this.scene.multMatrix(MyTangram.getScaleMatrix(globalScale, globalScale, 0));
+        this.scene.multMatrix(MyTangram.getScaleMatrix(globalScale, globalScale, 1));
         this.redTriangle.display();
         this.scene.popMatrix();
 
@@ -100,7 +132,7 @@ export class MyTangram extends CGFobject {
         this.scene.pushMatrix();
         this.scene.multMatrix(MyTangram.getTranslationMatrix(1, 2, 0));
         this.scene.multMatrix(MyTangram.getRotationZAxisMatrix(Math.PI / 4));
-        this.scene.multMatrix(MyTangram.getScaleMatrix(globalScale, globalScale, 0));
+        this.scene.multMatrix(MyTangram.getScaleMatrix(globalScale, globalScale, 1));
         this.orangeTriangle.display();
         this.scene.popMatrix();
 
@@ -108,7 +140,7 @@ export class MyTangram extends CGFobject {
         this.scene.pushMatrix();
         this.scene.multMatrix(MyTangram.getTranslationMatrix(2, 3, 0));
         this.scene.multMatrix(MyTangram.getRotationZAxisMatrix(5 * Math.PI / 4));
-        this.scene.multMatrix(MyTangram.getScaleMatrix(globalScale, globalScale, 0));
+        this.scene.multMatrix(MyTangram.getScaleMatrix(globalScale, globalScale, 1));
         this.pinkTriangle.display();
         this.scene.popMatrix();
 
@@ -116,7 +148,7 @@ export class MyTangram extends CGFobject {
         this.scene.pushMatrix();
         this.scene.multMatrix(MyTangram.getTranslationMatrix(3.5, 0.5, 0));
         this.scene.multMatrix(MyTangram.getRotationZAxisMatrix(3 * Math.PI / 4));
-        this.scene.multMatrix(MyTangram.getScaleMatrix(globalScale, globalScale, 0));
+        this.scene.multMatrix(MyTangram.getScaleMatrix(globalScale, globalScale, 1));
         this.purpleTriangle.display();
         this.scene.popMatrix();
 
@@ -125,7 +157,7 @@ export class MyTangram extends CGFobject {
         this.scene.multMatrix(MyTangram.getTranslationMatrix(4, 0, 0));
         this.scene.multMatrix(MyTangram.getRotationXAxisMatrix(Math.PI));
         this.scene.multMatrix(MyTangram.getRotationZAxisMatrix(-3 * Math.PI / 4));
-        this.scene.multMatrix(MyTangram.getScaleMatrix(globalScale, globalScale, 0));
+        this.scene.multMatrix(MyTangram.getScaleMatrix(globalScale, globalScale, 1));
         this.yellowParallelogram.display();
         this.scene.popMatrix();
 
@@ -133,8 +165,10 @@ export class MyTangram extends CGFobject {
         this.scene.pushMatrix()
         this.scene.multMatrix(MyTangram.getTranslationMatrix(3, 2, 0));
         this.scene.multMatrix(MyTangram.getRotationZAxisMatrix(- Math.PI / 4));
-        this.scene.multMatrix(MyTangram.getScaleMatrix(globalScale, globalScale, 0));
+        this.scene.multMatrix(MyTangram.getScaleMatrix(globalScale, globalScale, 1));
         this.blueTriangle.display();
+        this.scene.popMatrix();
+
         this.scene.popMatrix();
     }
 
