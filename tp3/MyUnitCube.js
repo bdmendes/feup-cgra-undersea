@@ -10,6 +10,7 @@ export class MyUnitCube extends CGFobject {
 		this.initBuffers();
 	}
 
+	///Good idea bad execution ; _ ;
 	goDeeper(ver1, ver2, ver3, levels){
 		if (levels == 0){
 			return;
@@ -159,10 +160,6 @@ export class MyUnitCube extends CGFobject {
 			1, 0, 0,
 			-1, 0, 0,
 		]
-
-		for(var i = 0; i < 4; i++){
-			this.goDeeper(this.indicesFake[i*3], this.indicesFake[i*3+1], this.indicesFake[i*3+2], 1);
-		}
 		
 
 		//The defined indices (and corresponding vertices)

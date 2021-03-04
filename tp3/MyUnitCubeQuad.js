@@ -83,6 +83,11 @@ export class MyUnitCubeQuad {
         updateBuffers(complexity){
         
                 // reinitialize buffers
+
+                for (var i = 0; i < 6; i++){
+                        this.quads[i].updateBuffers(complexity);
+                }
+
                 this.initBuffers();
                 this.initNormalVizBuffers();
         }
