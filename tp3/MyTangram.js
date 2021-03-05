@@ -6,10 +6,14 @@ import { MyTriangleBig } from "./MyTriangleBig.js"
 import { CGFappearance } from "../lib/CGF.js";
 
 export class MyTangram{
-    constructor(scene) {
+    constructor(scene, customDiamondMaterial) {
         this.scene = scene;
         this.initPieces();
         this.initMaterials();
+        if (customDiamondMaterial != undefined){
+            this.customDiamondMaterial = customDiamondMaterial;
+        }
+        this.customizeDiamondColor = customDiamondMaterial != undefined;
     }
 
     initPieces() {
@@ -150,7 +154,11 @@ export class MyTangram{
         this.scene.multMatrix(MyTangram.getTranslationMatrix(-2, -2, 0));
 
         /* Green square */
-        this.greenMaterial.apply();
+        if (this.customizeDiamondColor){
+            this.customDiamondMaterial.apply();
+        } else {
+            this.greenMaterial.apply();
+        }
         this.scene.pushMatrix();
         this.scene.multMatrix(MyTangram.getTranslationMatrix(0.5, 0.5, 0));
         this.scene.multMatrix(MyTangram.getRotationZAxisMatrix(Math.PI / 4));
