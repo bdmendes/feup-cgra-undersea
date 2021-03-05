@@ -35,4 +35,21 @@ export class MyQuad extends CGFobject {
 
 		this.initGLBuffers();
 	}
+
+	display(){
+		// this.scene.pushMatrix();
+		// this.scene.rotate(Math.PI/4, 0 ,0, 1);
+		// this.scene.translate(0.5, -0.5, 0);
+		// super.display();
+		// this.scene.popMatrix();
+		super.display();
+	}
+
+	updateBuffers(complexity){
+
+
+        // reinitialize buffers
+        this.initBuffers();
+        this.initNormalVizBuffers();
+    }
 }
