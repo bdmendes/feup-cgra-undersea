@@ -146,13 +146,13 @@ export class MyScene extends CGFscene {
 
         this.updateCustomMaterial();
 
+        // Wood material
         this.materialWood = new CGFappearance(this);
-        var temp = this.hexToRgbA('#853f13');
-        this.materialWood.setAmbient(temp[0], temp[1], temp[2], 1.0);
-        this.materialWood.setDiffuse(temp[0], temp[1], temp[2], 1.0);
-        var temp2 = this.hexToRgbA('#2d1506');
-        this.materialWood.setSpecular(temp2[0], temp2[1], temp2[2], 1.0);
-        //this.materialWood.setSpecular(temp[0], temp[1], temp[2], 1.0);
+        let color1 = this.hexToRgbA('#853f13');
+        let color2 = this.hexToRgbA('#2d1506');
+        this.materialWood.setAmbient(...color1, 1.0);
+        this.materialWood.setDiffuse(...color1, 1.0);
+        this.materialWood.setSpecular(...color2, 1.0);
         this.materialWood.setShininess(10.0);
 
         this.materials = [this.material1, this.material2, this.material3, this.customMaterial, this.materialWood];
@@ -193,6 +193,8 @@ export class MyScene extends CGFscene {
         else
             this.objects[this.selectedObject].disableNormalViz();
         
+        // Should be called after setting scene global material, so that
+        // objects may override it with their specific material
         this.objects[this.selectedObject].display();
         this.popMatrix();
         // ---- END Primitive drawing section
