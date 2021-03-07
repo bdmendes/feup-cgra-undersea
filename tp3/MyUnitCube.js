@@ -7,6 +7,7 @@ import {CGFobject} from '../lib/CGF.js';
 export class MyUnitCube extends CGFobject {
 	constructor(scene) {
 		super(scene);
+		this.comp = 5;
 		this.initBuffers();
 	}
 
@@ -61,106 +62,46 @@ export class MyUnitCube extends CGFobject {
 
 		if (levels == 0){
 
-			this.indices.push(ver1, new_ver, ver3);
-			this.indices.push(ver1, ver2, new_ver);
+			this.indices.push(new_ver, ver3, ver1);
+			this.indices.push(new_ver, ver1, ver2);
 
 			return;
 		}
 
-		this.goDeeper(ver1, new_ver, ver3, levels);
-		this.goDeeper(ver1, ver2, new_ver, levels);
+		this.goDeeper(new_ver, ver3, ver1, levels);
+		this.goDeeper(new_ver, ver1, ver2, levels);
 
 		return;
 
 	}
 	
 	initBuffers() {
+
 		this.vertices = [
-			0, 0, 0, //0
-            1, 0, 0, //1
-            1, 1, 0, //2
-            0, 1, 0, //3
-            0, 0, 1, //4
-            1, 0, 1, //5
-            1, 1, 1, //6
-            0, 1, 1, //7
-
-			0, 0, 0, //8
-            1, 0, 0, //9
-            1, 1, 0, //10
-            0, 1, 0, //11
-            0, 0, 1, //12
-            1, 0, 1, //13
-            1, 1, 1, //14
-            0, 1, 1, //15
-
-			0, 0, 0, //16
-            1, 0, 0, //17
-            1, 1, 0, //18
-            0, 1, 0, //19
-            0, 0, 1, //20
-            1, 0, 1, //21
-            1, 1, 1, //22
-            0, 1, 1, //23
+			//base
+			-0.5, -0.5, -0.5, //0
+            0.5, -0.5, -0.5, //1
+            0.5, 0.5, -0.5, //2
+            -0.5, 0.5, -0.5, //3
 		];
-
-		//Counter-clockwise reference of vertices
-
-		this.indices = [];
-
-		this.indicesFake = [
-			3, 2, 0, //base
-			1, 0, 2, //base
-            4, 0, 5, //side xz
-            1, 5, 0, //side xz
-            4, 7, 3, //side yz
-            4, 3, 0, //side yz
-            7, 6, 3, //side y = 1
-            3, 6, 2, //side y = 1
-            5, 2, 6, //side x = 1
-            5, 1, 2, //side x = 1
-            6, 7, 4, //top
-            4, 5, 6, //top
-		];
-
-		/*
-		for (var i = 0; i < 12*3; i++){
-			this.indices.push(this.indices[i] + 8);
-		}
-
-		for (var i = 0; i < 12*3; i++){
-			this.indices.push(this.indices[i] + 16);
-		}*/
 
 		this.normals = [
 			0, 0, -1,
 			0, 0, -1,
 			0, 0, -1,
 			0, 0, -1,
-			0, 0, 1,
-			0, 0, 1,
-			0, 0, 1,
-			0, 0, 1,
+		];
 
-			0, -1, 0,
-			0, -1, 0,
-			0, 1, 0,
-			0, 1, 0,
-			0, -1, 0,
-			0, -1, 0,
-			0, 1, 0,
-			0, 1, 0,
+		this.indices = [];
 
-			-1, 0, 0,
-			1, 0, 0,
-			1, 0, 0,
-			-1, 0, 0,
-			-1, 0, 0,
-			1, 0, 0,
-			1, 0, 0,
-			-1, 0, 0,
-		]
-		
+		this.indicesFake = [
+			3, 2, 0, //base
+			1, 0, 2, //base
+		];
+
+		for(var i = 0; i < 2; i++){
+			this.goDeeper(this.indicesFake[i*3], this.indicesFake[i*3+1], this.indicesFake[i*3+2], this.comp);
+		}	
 
 		//The defined indices (and corresponding vertices)
 		//will be read in groups of three to draw triangles
@@ -169,9 +110,26 @@ export class MyUnitCube extends CGFobject {
 		this.initGLBuffers();
 	}
 
+	display(){
+		this.scene.pushMatrix();
+		super.display();
+		this.scene.rotate(Math.PI/2, 0, 1, 0);
+		super.display();
+		this.scene.rotate(Math.PI/2, 0, 1, 0);
+		super.display();
+		this.scene.rotate(Math.PI/2, 0, 1, 0);
+		super.display();
+		this.scene.rotate(Math.PI/2, 1, 0, 0);
+		super.display();
+		this.scene.rotate(Math.PI, 1, 0, 0);
+		super.display();
+		this.scene.pushMatrix();
+	}
+
 	updateBuffers(complexity){
         
         // reinitialize buffers
+		this.comp = Math.round(complexity*10);
         this.initBuffers();
         this.initNormalVizBuffers();
     }
