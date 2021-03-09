@@ -26,11 +26,21 @@ export class MyScene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
         this.enableTextures(true);
 
+
+        //------ Textures
+        this.texture1 = new CGFtexture(this, 'images/board.jpg');
+        this.texture2 = new CGFtexture(this, 'images/mineTop.png');
+        this.texture3 = new CGFtexture(this, 'images/window.jpg');
+        this.grassBlockTop = new CGFtexture(this, 'images/mineTop.png');
+        this.grassBlockBot = new CGFtexture(this, 'images/mineBottom.png');
+        this.grassBlockSide = new CGFtexture(this, 'images/mineSide.png');
+        //-------
+
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.quad = new MyQuad(this);
         this.tangram = new MyTangram(this);
-        this.cube = new MyUnitCubeQuad(this);
+        this.cube = new MyUnitCubeQuad(this, this.grassBlockSide, this.grassBlockSide, this.grassBlockSide, this.grassBlockSide, this.grassBlockTop, this.grassBlockBot);
         this.objects = [null, this.quad, this.tangram, this.cube]; // populate
         this.selectedObject = 0;
         this.objectIDs = { 'None': 0 , 'Quad': 1, 'Tangram': 2, 'Unit Cube Quad': 3 };
@@ -44,12 +54,6 @@ export class MyScene extends CGFscene {
         this.quadMaterial.loadTexture('images/default.png');
         this.quadMaterial.setTextureWrap('REPEAT', 'REPEAT');
         //------
-
-        //------ Textures
-        this.texture1 = new CGFtexture(this, 'images/board.jpg');
-        this.texture2 = new CGFtexture(this, 'images/floor.png');
-        this.texture3 = new CGFtexture(this, 'images/window.jpg');
-        //-------
 
         //-------Objects connected to MyInterface
         this.displayAxis = true;
@@ -128,7 +132,7 @@ export class MyScene extends CGFscene {
         // Uncomment next line for NEAREST when magnifying, or 
         // add a checkbox in the GUI to alternate in real time
         
-        // this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
+        //this.gl.texParameterf(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
 
         if (this.objects[this.selectedObject] != null) {
             this.objects[this.selectedObject].display();
