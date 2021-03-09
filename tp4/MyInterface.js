@@ -30,6 +30,9 @@ export class MyInterface extends CGFinterface {
         //Dropdown for selected object
         this.gui.add(this.scene, 'selectedObject', this.scene.objectIDs).name('Selected Object');
 
+        // Scale slider
+        this.gui.add(this.scene, 'scaleFactor', 0.1, 10.0).name('Scale');
+
         //Groups for Texture coordinates per vertex (MyQuad)
         var f0 = this.gui.addFolder('Top Left Coords')
         f0.add(this.scene.texCoords, '4', -5.0, 5.0, 0.1).name('S Coord').onChange(this.scene.updateTexCoords.bind(this.scene)).step(0.001);
