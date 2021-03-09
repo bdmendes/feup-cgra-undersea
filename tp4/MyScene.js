@@ -1,5 +1,7 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFtexture } from "../lib/CGF.js";
 import { MyQuad } from "./MyQuad.js";
+import { MyTangram } from "./MyTangram.js"
+import { MyUnitCubeQuad } from "./MyUnitCubeQuad.js"
 
 /**
  * MyScene
@@ -27,6 +29,11 @@ export class MyScene extends CGFscene {
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.quad = new MyQuad(this);
+        this.tangram = new MyTangram(this);
+        this.cube = new MyUnitCubeQuad(this);
+        this.objects = [null, this.quad, this.tangram, this.cube]; // populate
+        this.selectedObject = 0;
+        this.objectIDs = { 'None': 0 , 'Quad': 1, 'Tangram': 2, 'Unit Cube Quad': 3 };
 
         //------ Applied Material
         this.quadMaterial = new CGFappearance(this);
@@ -58,7 +65,6 @@ export class MyScene extends CGFscene {
         this.textureIds = { 'Board': 0, 'Floor': 1, 'Window': 2 };
         this.wrappingS = { 'Repeat': 0, 'Clamp to edge': 1, 'Mirrored repeat': 2 };
         this.wrappingT = { 'Repeat': 0, 'Clamp to edge': 1, 'Mirrored repeat': 2 };
-
       }
 
     initLights() {
@@ -124,7 +130,9 @@ export class MyScene extends CGFscene {
         
         // this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
 
-        this.quad.display();
+        if (this.objects[this.selectedObject] != null) {
+            this.objects[this.selectedObject].display();
+        }
 
         // ---- END Primitive drawing section
     }
