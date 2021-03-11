@@ -19,7 +19,7 @@ export class MyTangram{
     initPieces() {
         this.greenSquare = new MyDiamond(this.scene, [0,0.5,0.25,0.75,0.5,0.5,0.25,0.25]);
         this.pinkTriangle = new MyTriangle(this.scene, [0.5,1,0,0.5,0,1]);
-        this.yellowParallelogram = new MyParallelogram(this.scene, [1,1,0.75,1,0.5,1,0.75,0.75,0.5,0.75, 0.25,0.75,1,1,0.75,1,0.5,1,0.75,0.75,0.5,0.75, 0.25,0.75]);
+        this.yellowParallelogram = new MyParallelogram(this.scene, [1,1,0.75,0.75,0.5,1,0.25,0.75]);
         this.redTriangle = new MyTriangleSmall(this.scene, [0.25, 0.75, 0.75, 0.75, 0.5, 0.5]);
         this.purpleTriangle = new MyTriangleSmall(this.scene, [0,0,0,0.5,0.25,0.25]);
         this.orangeTriangle = new MyTriangleBig(this.scene, [1,1,1,0,0.5,0.5]);
