@@ -27,13 +27,10 @@ export class MyParallelogram extends CGFobject {
 		];
 
 		this.normals = []
-		for (let i = 0; i < 2; ++i){
-			this.normals.push(0, 0, 1);
-		}
-		for (let i = 0; i < 2; ++i){
+		for (let i = 0; i < 4; ++i){
 			this.normals.push(0, 0, -1);
 		}
-
+		
         if (texC != undefined){
             this.texCoords = texC;
         }
