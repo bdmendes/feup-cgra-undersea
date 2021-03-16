@@ -42,7 +42,7 @@ export class MyScene extends CGFscene {
         this.tangram = new MyTangram(this);
         this.cube = new MyUnitCubeQuad(this, this.grassBlockSide, this.grassBlockSide, this.grassBlockSide, this.grassBlockSide, this.grassBlockTop, this.grassBlockBot);
         this.objects = [null, this.quad, this.tangram, this.cube]; // populate
-        this.selectedObject = 0;
+        this.selectedObject = 2;
         this.objectIDs = { 'None': 0 , 'Quad': 1, 'Tangram': 2, 'Unit Cube Quad': 3 };
 
         //------ Applied Material

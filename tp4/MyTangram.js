@@ -3,7 +3,7 @@ import { MyParallelogram } from "./MyParallelogram.js";
 import { MyTriangle } from "./MyTriangle.js";
 import { MyTriangleSmall } from "./MyTriangleSmall.js"
 import { MyTriangleBig } from "./MyTriangleBig.js"
-import { CGFappearance } from "../lib/CGF.js";
+import { CGFappearance, CGFtexture } from "../lib/CGF.js";
 
 export class MyTangram{
     constructor(scene, customDiamondMaterial) {
@@ -17,64 +17,46 @@ export class MyTangram{
     }
 
     initPieces() {
-        this.greenSquare = new MyDiamond(this.scene);
-        this.pinkTriangle = new MyTriangle(this.scene);
-        this.yellowParallelogram = new MyParallelogram(this.scene);
-        this.redTriangle = new MyTriangleSmall(this.scene);
-        this.purpleTriangle = new MyTriangleSmall(this.scene);
-        this.orangeTriangle = new MyTriangleBig(this.scene);
-        this.blueTriangle = new MyTriangleBig(this.scene);
+        this.greenSquare = new MyDiamond(this.scene, [0,0.5,0.25,0.75,0.5,0.5,0.25,0.25]);
+        this.pinkTriangle = new MyTriangle(this.scene, [0.5,1,0,0.5,0,1]);
+        this.yellowParallelogram = new MyParallelogram(this.scene, [1,1,0.75,0.75,0.5,1,0.25,0.75]);
+        this.redTriangle = new MyTriangleSmall(this.scene, [0.25, 0.75, 0.75, 0.75, 0.5, 0.5]);
+        this.purpleTriangle = new MyTriangleSmall(this.scene, [0,0,0,0.5,0.25,0.25]);
+        this.orangeTriangle = new MyTriangleBig(this.scene, [1,1,1,0,0.5,0.5]);
+        this.blueTriangle = new MyTriangleBig(this.scene, [1,0,0,0,0.5,0.5]);
     }
 
     initMaterials() {
+        // Init global tangram texture
+        this.tangramTexture = new CGFtexture(this.scene, 'images/tangram.png');
+
         // Green Material
         this.greenMaterial = new CGFappearance(this.scene);
-        this.greenMaterial.setAmbient(0, 1, 0, 1.0);
-        this.greenMaterial.setDiffuse(0, 1, 0, 1.0);
-        this.greenMaterial.setSpecular(0, 0, 0, 1.0);
-        this.greenMaterial.setShininess(10.0);
+        this.greenMaterial.setTexture(this.tangramTexture);
 
         // Red Material
         this.redMaterial = new CGFappearance(this.scene);
-        this.redMaterial.setAmbient(1, 0.1, 0.1, 1.0);
-        this.redMaterial.setDiffuse(1, 0.1, 0.1, 1.0);
-        this.redMaterial.setSpecular(0, 0, 0, 1.0);
-        this.redMaterial.setShininess(10.0);
+        this.redMaterial.setTexture(this.tangramTexture);
 
         // Orange Material
         this.orangeMaterial = new CGFappearance(this.scene);
-        this.orangeMaterial.setAmbient(1, 0.6, 0, 1.0);
-        this.orangeMaterial.setDiffuse(1, 0.6, 0, 1.0);
-        this.orangeMaterial.setSpecular(0, 0, 0, 1.0);
-        this.orangeMaterial.setShininess(10.0);
+        this.orangeMaterial.setTexture(this.tangramTexture);
 
         // Pink Material
         this.pinkMaterial = new CGFappearance(this.scene);
-        this.pinkMaterial.setAmbient(1, 0.6, 0.8, 1.0);
-        this.pinkMaterial.setDiffuse(1, 0.6, 0.8, 1.0);
-        this.pinkMaterial.setSpecular(0, 0, 0, 1.0);
-        this.pinkMaterial.setShininess(10.0);
+        this.pinkMaterial.setTexture(this.tangramTexture);
 
         // Blue Material
         this.blueMaterial = new CGFappearance(this.scene);
-        this.blueMaterial.setAmbient(0, 0.6, 1, 1.0);
-        this.blueMaterial.setDiffuse(0, 0.6, 1, 1.0);
-        this.blueMaterial.setSpecular(0, 0, 0, 1.0);
-        this.blueMaterial.setShininess(10.0);
+        this.blueMaterial.setTexture(this.tangramTexture);
 
         // Yellow Material
         this.yellowMaterial = new CGFappearance(this.scene);
-        this.yellowMaterial.setAmbient(1, 1, 0, 1.0);
-        this.yellowMaterial.setDiffuse(1, 1, 0, 1.0);
-        this.yellowMaterial.setSpecular(0, 0, 0, 1.0);
-        this.yellowMaterial.setShininess(10.0);
+        this.yellowMaterial.setTexture(this.tangramTexture);
 
         // Purple Material
         this.purpleMaterial = new CGFappearance(this.scene);
-        this.purpleMaterial.setAmbient(0.6, 0.3, 0.75, 1.0);
-        this.purpleMaterial.setDiffuse(0.6, 0.3, 0.75, 1.0);
-        this.purpleMaterial.setSpecular(0, 0, 0, 1.0);
-        this.purpleMaterial.setShininess(10.0);
+        this.purpleMaterial.setTexture(this.tangramTexture);
     }
 
     static getTranslationMatrix(Tx, Ty, Tz) {
@@ -154,12 +136,9 @@ export class MyTangram{
         this.scene.multMatrix(MyTangram.getTranslationMatrix(-2, -2, 0));
 
         /* Green square */
-        if (this.customizeDiamondColor){
-            this.customDiamondMaterial.apply();
-        } else {
-            this.greenMaterial.apply();
-        }
+        this.greenMaterial.apply();
         this.scene.pushMatrix();
+        this.greenMaterial.setTexture(this.tangramTexture);
         this.scene.multMatrix(MyTangram.getTranslationMatrix(0.5, 0.5, 0));
         this.scene.multMatrix(MyTangram.getRotationZAxisMatrix(Math.PI / 4));
         this.scene.multMatrix(MyTangram.getScaleMatrix(globalScale, globalScale, 1));
