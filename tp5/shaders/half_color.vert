@@ -9,6 +9,6 @@ uniform mat4 uNMatrix;
 varying vec3 vertexCoords;
 
 void main() {
-	gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
-    vertexCoords.xyz = gl_Position.xyz;
+  gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
+  vertexCoords.xyz = gl_Position.xyz;
 }
