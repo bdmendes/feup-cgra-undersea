@@ -103,7 +103,7 @@ export class ShaderScene extends CGFscene {
 		this.testShaders[5].setUniformsValues({ uSampler2: 1 });
 		this.testShaders[6].setUniformsValues({ uSampler2: 1 });
 		this.testShaders[6].setUniformsValues({ timeFactor: 0 });
-		this.testShaders[11].setUniformsValues({uSampler1: 2, uSampler2: 3, timeFactor: 0})
+		this.testShaders[11].setUniformsValues({uSampler1: 2, uSampler2: 3, timeFactor: 0});
 
 
 		// Shaders interface variables
@@ -115,7 +115,7 @@ export class ShaderScene extends CGFscene {
 			'Simple texturing': 3,
 			'Multiple textures in the FS': 4,
 			'Multiple textures in VS and FS': 5,
-			'Animation example': 6,
+			'Animation': 6,
 			'Sepia': 7,
 			'Convolution': 8,
 			'Blue and yellow': 9,
