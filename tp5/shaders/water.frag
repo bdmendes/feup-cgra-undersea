@@ -33,6 +33,7 @@ void main() {
 
     vec2 bTextureCoord = (vTextureCoord + transformedTime);
     
+    /*
     for (int i = 0; i < 100; i++){
         if ( bTextureCoord[0] > 1.0){
             bTextureCoord[0] = bTextureCoord[0] - 1.0;
@@ -49,7 +50,7 @@ void main() {
         else{
             break;
         }
-    }
+    }*/
 
     float blue = texture2D(uSampler2, bTextureCoord).b / 8.0; // 0.0 - 1.0;
 
