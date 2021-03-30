@@ -94,7 +94,7 @@ export class ShaderScene extends CGFscene {
 			new CGFshader(this.gl, "shaders/texture1.vert", "shaders/sepia.frag"),
 			new CGFshader(this.gl, "shaders/texture1.vert", "shaders/convolution.frag"),
 			new CGFshader(this.gl, "shaders/blueandyellow.vert", "shaders/blueandyellow.frag"),
-			new CGFshader(this.gl, "shaders/texture1.vert", "shaders/grayScale.frag"),
+			new CGFshader(this.gl, "shaders/texture1.vert", "shaders/grayscale.frag"),
 			new CGFshader(this.gl, "shaders/water.vert", "shaders/water.frag"),
 		];
 
