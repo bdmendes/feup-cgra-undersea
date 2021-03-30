@@ -1,5 +1,6 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance } from "../lib/CGF.js";
 import { MySphere } from "./MySphere.js";
+import { MyPyramid } from "./MyPyramid.js";
 
 /**
 * MyScene
@@ -29,6 +30,12 @@ export class MyScene extends CGFscene {
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.incompleteSphere = new MySphere(this, 16, 8);
+        this.pyramid = new MyPyramid(this, 6, 1);
+
+        this.objects = [this.incompleteSphere, this.pyramid];
+
+        // Labels and ID's for object selection on MyInterface
+        this.objectIDs = { 'Sphere': 0 , 'Pyramid': 1};
 
         this.defaultAppearance = new CGFappearance(this);
 		this.defaultAppearance.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -46,6 +53,7 @@ export class MyScene extends CGFscene {
 
         //Objects connected to MyInterface
         this.displayAxis = true;
+        this.selectedObject = 1;
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -91,7 +99,7 @@ export class MyScene extends CGFscene {
         // ---- BEGIN Primitive drawing section
 
         //This sphere does not have defined texture coordinates
-        this.incompleteSphere.display();
+        this.objects[this.selectedObject].display();
 
         // ---- END Primitive drawing section
     }
