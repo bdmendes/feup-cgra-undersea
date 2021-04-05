@@ -1,6 +1,7 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance } from "../lib/CGF.js";
 import { MySphere } from "./MySphere.js";
 import { MyPyramid } from "./MyPyramid.js";
+import { MyCubeMap } from "./MyCubeMap.js";
 
 /**
 * MyScene
@@ -31,11 +32,12 @@ export class MyScene extends CGFscene {
         this.axis = new CGFaxis(this);
         this.incompleteSphere = new MySphere(this, 16, 8);
         this.pyramid = new MyPyramid(this, 6, 1);
+        this.cubeMap = new MyCubeMap(this);
 
-        this.objects = [this.incompleteSphere, this.pyramid];
+        this.objects = [this.incompleteSphere, this.pyramid, this.cubeMap];
 
         // Labels and ID's for object selection on MyInterface
-        this.objectIDs = { 'Sphere': 0 , 'Pyramid': 1};
+        this.objectIDs = { 'Sphere': 0 , 'Pyramid': 1, 'Cube Map':2};
 
         this.defaultAppearance = new CGFappearance(this);
 		this.defaultAppearance.setAmbient(0.2, 0.4, 0.8, 1.0);
