@@ -1,5 +1,6 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance } from "../lib/CGF.js";
 import { MySphere } from "./MySphere.js";
+import {keyEventCode} from "./constants.js";
 
 /**
 * MyScene
@@ -98,20 +99,8 @@ export class MyScene extends CGFscene {
     }
 
     checkKeys()  {
-        let text="Keys pressed: ";
-        let keysPressed=false;
-
-        // Check for key codes e.g. in https://keycode.info/
-        if (this.gui.isKeyPressed("KeyW")) {
-            text+=" W ";
-            keysPressed=true;
-        }
-
-        if (this.gui.isKeyPressed("KeyS"))        {
-            text+=" S ";
-            keysPressed=true;
-        }
-
-        if (keysPressed) console.log(text);
+        Object.entries(keyEventCode).map(item => {
+            if (this.gui.isKeyPressed(item[1])) console.log(item[1])
+          })
     }
 }
