@@ -43,7 +43,6 @@ export class MyScene extends CGFscene {
 		this.sphereAppearance.setSpecular(0.0, 0.0, 0.0, 1);
 		this.sphereAppearance.setShininess(120);
 
-
         //Objects connected to MyInterface
         this.displayAxis = true;
     }
@@ -67,7 +66,7 @@ export class MyScene extends CGFscene {
 
     // called periodically (as per setUpdatePeriod() in init())
     update(t){
-        //To be done...
+        this.checkKeys();
     }
 
     display() {
@@ -75,14 +74,16 @@ export class MyScene extends CGFscene {
         // Clear image and depth buffer everytime we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+
         // Initialize Model-View matrix as identity (no transformation
         this.updateProjectionMatrix();
         this.loadIdentity();
+
         // Apply transformations corresponding to the camera position relative to the origin
         this.applyViewMatrix();
-        
-        
+
         this.defaultAppearance.apply();
+
         // Draw axis
         if (this.displayAxis)
             this.axis.display();
@@ -94,5 +95,23 @@ export class MyScene extends CGFscene {
         this.incompleteSphere.display();
 
         // ---- END Primitive drawing section
+    }
+
+    checkKeys()  {
+        let text="Keys pressed: ";
+        let keysPressed=false;
+
+        // Check for key codes e.g. in https://keycode.info/
+        if (this.gui.isKeyPressed("KeyW")) {
+            text+=" W ";
+            keysPressed=true;
+        }
+
+        if (this.gui.isKeyPressed("KeyS"))        {
+            text+=" S ";
+            keysPressed=true;
+        }
+
+        if (keysPressed) console.log(text);
     }
 }
