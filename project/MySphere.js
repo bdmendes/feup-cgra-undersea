@@ -1,4 +1,4 @@
-import {CGFobject} from '../lib/CGF.js';
+import {CGFobject, CGFappearance, CGFtexture} from '../lib/CGF.js';
 
 export class MySphere extends CGFobject {
   /**
@@ -11,6 +11,13 @@ export class MySphere extends CGFobject {
     super(scene);
     this.latDivs = stacks * 2;
     this.longDivs = slices;
+
+    this.material = new CGFappearance(this.scene);
+    this.material.setAmbient(0.1, 0.1, 0.1, 1);
+    this.material.setDiffuse(0.9, 0.9, 0.9, 1);
+    this.material.setSpecular(0.1, 0.1, 0.1, 1);
+    this.material.setShininess(10.0);
+    this.material.setTexture(new CGFtexture(this.scene, 'images/earth.jpg'));
 
     this.initBuffers();
   }
@@ -44,7 +51,12 @@ export class MySphere extends CGFobject {
         var x = Math.cos(theta) * sinPhi;
         var y = cosPhi;
         var z = Math.sin(-theta) * sinPhi;
-        this.vertices.push(x, y, z);
+        this.vertices.push(x, y, z); 
+
+        var u = 1.0*theta/(2*Math.PI);
+        var v = 1.0*phi/(Math.PI);
+
+        this.texCoords.push(u, v);
 
         //--- Indices
         if (latitude < this.latDivs && longitude < this.longDivs) {
@@ -54,7 +66,7 @@ export class MySphere extends CGFobject {
           // and the ones directly south (next, next+1)
           // (i.e. one full round of slices ahead)
           
-          this.indices.push( current + 1, current, next);
+          this.indices.push( current + 1, current, next); 
           this.indices.push( current + 1, next, next +1);
         }
 
@@ -78,4 +90,15 @@ export class MySphere extends CGFobject {
     this.primitiveType = this.scene.gl.TRIANGLES;
     this.initGLBuffers();
   }
+
+  updateTexCoords(coords) {
+		this.texCoords = [...coords];
+		this.updateTexCoordsGLBuffers();
+	}
+
+  display(){
+    this.material.apply();
+    super.display();
+  }
+
 }
