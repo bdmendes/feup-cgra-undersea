@@ -15,7 +15,12 @@ export class MyCylinder extends CGFobject {
         this.material.setDiffuse(0.9, 0.9, 0.9, 1);
         this.material.setSpecular(0.1, 0.1, 0.1, 1);
         this.material.setShininess(10.0);
-        this.material.setTexture(new CGFtexture(this.scene, 'images/test_cylinder/fade.png'));
+    
+        //this.material.setTexture(new CGFtexture(this.scene, 'images/test_cylinder/fade.png'));
+        //this.material.setTexture(new CGFtexture(this.scene, 'images/default.png'));
+        //this.material.setTexture(new CGFtexture(this.scene, 'images/earth.jpg'));
+        //this.material.setTexture(new CGFtexture(this.scene, 'images/test_cubemap/nx.png'));
+        this.material.setTexture(new CGFtexture(this.scene, 'images/test_cylinder/soup.jpg'));
 
         this.initBuffers();
         
@@ -129,31 +134,35 @@ export class MyCylinder extends CGFobject {
             this.vertices.push(ca, this.height, -sa);       this.texCoords.push(i*1.0/(this.slices+1), 0);    
             this.vertices.push(caa, this.height, -saa);     this.texCoords.push((i+1)*1.0/(this.slices+1), 0);
 
-            this.vertices.push(ca, 0, -sa);                 this.texCoords.push(i*1.0/(this.slices+1), 1);
-            this.vertices.push(caa, 0, -saa);               this.texCoords.push((i+1)*1.0/(this.slices+1), 1);
-            this.vertices.push(0, 0, 0);                    this.texCoords.push(0.5 ,0);
+            this.vertices.push(ca, 0, -sa);                 this.texCoords.push(i*1.0/(this.slices+1), 0);
+            this.vertices.push(caa, 0, -saa);               this.texCoords.push((i+1)*1.0/(this.slices+1), 0);
+            this.vertices.push(0, 0, 0);                    this.texCoords.push(i*1.0/(this.slices+1), 1);
+            this.vertices.push(0, 0, 0);                    this.texCoords.push((i+1)*1.0/(this.slices+1), 1);
 
             this.vertices.push(ca, this.height, -sa);       this.texCoords.push(i*1.0/(this.slices+1), 0);
             this.vertices.push(caa, this.height, -saa);     this.texCoords.push((i+1)*1.0/(this.slices+1), 0);
-            this.vertices.push(0, this.height, 0);          this.texCoords.push(0.5 ,1);
+            this.vertices.push(0, this.height, 0);          this.texCoords.push(i*1.0/(this.slices+1), 1);
+            this.vertices.push(0, this.height, 0);          this.texCoords.push((i+1)*1.0/(this.slices+1), 1);
 
             this.normals.push(ca, 0, -sa);
             this.normals.push(caa, 0, -saa);
             this.normals.push(ca, 0, -sa);
             this.normals.push(caa, 0, -saa);
 
-            for(var j = 0;j < 3; j++){
+            for(var j = 0;j < 4; j++){
                 this.normals.push(0, -1, 0);
             }
                 
-            for(var j = 0;j < 3; j++){
+            for(var j = 0;j < 4; j++){
                 this.normals.push(0, 1, 0);
             } 
                 
-            this.indicesFake.push(10*i+2, 10*i, 10*i+3);
-            this.indicesFake.push(10*i+1, 10*i+3, 10*i);
-            this.indicesFake.push(10*i+6, 10*i+5, 10*i+4);
-            this.indicesFake.push(10*i+9, 10*i+7, 10*i+8);
+            this.indicesFake.push(12*i+2, 12*i, 12*i+3);
+            this.indicesFake.push(12*i+1, 12*i+3, 12*i);
+            this.indicesFake.push(12*i+6, 12*i+5, 12*i+4);
+            this.indicesFake.push(12*i+7, 12*i+5, 12*i+4);
+            this.indicesFake.push(12*i+10, 12*i+8, 12*i+9);
+            this.indicesFake.push(12*i+11, 12*i+8, 12*i+9);
 
             ang+=alphaAng;
         }
@@ -162,7 +171,7 @@ export class MyCylinder extends CGFobject {
             this.indices = this.indicesFake;
         }
         else{
-            for(var i = 0; i < this.slices*4; i++){
+            for(var i = 0; i < this.slices*6; i++){
                 this.goDeeper(this.indicesFake[i*3], this.indicesFake[i*3+1], this.indicesFake[i*3+2], this.deep);
             }
         }
