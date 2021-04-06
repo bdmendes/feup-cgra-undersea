@@ -1,6 +1,6 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance } from "../lib/CGF.js";
 import { MySphere } from "./MySphere.js";
-import {keyEventCode} from "./constants.js";
+import { keyEventCode } from "./constants.js";
 import { MyPyramid } from "./MyPyramid.js";
 
 /**
@@ -25,7 +25,7 @@ export class MyScene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.setUpdatePeriod(50);
-        
+
         this.enableTextures(true);
 
         //Initialize scene objects
@@ -36,20 +36,20 @@ export class MyScene extends CGFscene {
         this.objects = [this.incompleteSphere, this.pyramid];
 
         // Labels and ID's for object selection on MyInterface
-        this.objectIDs = { 'Sphere': 0 , 'Pyramid': 1};
+        this.objectIDs = { 'Sphere': 0, 'Pyramid': 1 };
 
         this.defaultAppearance = new CGFappearance(this);
-		this.defaultAppearance.setAmbient(0.2, 0.4, 0.8, 1.0);
+        this.defaultAppearance.setAmbient(0.2, 0.4, 0.8, 1.0);
         this.defaultAppearance.setDiffuse(0.2, 0.4, 0.8, 1.0);
         this.defaultAppearance.setSpecular(0.2, 0.4, 0.8, 1.0);
-        this.defaultAppearance.setEmission(0,0,0,1);
-		this.defaultAppearance.setShininess(120);
+        this.defaultAppearance.setEmission(0, 0, 0, 1);
+        this.defaultAppearance.setShininess(120);
 
-		this.sphereAppearance = new CGFappearance(this);
-		this.sphereAppearance.setAmbient(0.3, 0.3, 0.3, 1);
-		this.sphereAppearance.setDiffuse(0.7, 0.7, 0.7, 1);
-		this.sphereAppearance.setSpecular(0.0, 0.0, 0.0, 1);
-		this.sphereAppearance.setShininess(120);
+        this.sphereAppearance = new CGFappearance(this);
+        this.sphereAppearance.setAmbient(0.3, 0.3, 0.3, 1);
+        this.sphereAppearance.setDiffuse(0.7, 0.7, 0.7, 1);
+        this.sphereAppearance.setSpecular(0.0, 0.0, 0.0, 1);
+        this.sphereAppearance.setShininess(120);
 
         //Objects connected to MyInterface
         this.displayAxis = true;
@@ -69,12 +69,12 @@ export class MyScene extends CGFscene {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
         this.setDiffuse(0.2, 0.4, 0.8, 1.0);
         this.setSpecular(0.2, 0.4, 0.8, 1.0);
-        this.setEmission(0,0,0,1);
+        this.setEmission(0, 0, 0, 1);
         this.setShininess(10.0);
     }
 
     // called periodically (as per setUpdatePeriod() in init())
-    update(t){
+    update(t) {
         this.checkKeys();
     }
 
@@ -106,9 +106,9 @@ export class MyScene extends CGFscene {
         // ---- END Primitive drawing section
     }
 
-    checkKeys()  {
+    checkKeys() {
         Object.entries(keyEventCode).map(item => {
             if (this.gui.isKeyPressed(item[1])) console.log(item[1])
-          })
+        })
     }
 }
