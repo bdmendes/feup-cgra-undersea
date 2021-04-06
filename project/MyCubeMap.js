@@ -54,7 +54,7 @@ export class MyCubeMap {
 
         betterRes(){
                 this.gl = this.scene.gl;
-                this.gl.texParameterf(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
+                this.gl.texParameterf(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
         }
 
         changeTexture(selectedTexture){
