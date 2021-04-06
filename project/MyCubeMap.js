@@ -31,8 +31,9 @@ export class MyCubeMap {
         initTextures(){
                 this.mapTextures = [
                         [new CGFtexture(this.scene, 'images/test_cubemap/px.png'), new CGFtexture(this.scene, 'images/test_cubemap/nx.png'), new CGFtexture(this.scene, 'images/test_cubemap/py.png'), new CGFtexture(this.scene, 'images/test_cubemap/ny.png'), new CGFtexture(this.scene, 'images/test_cubemap/pz.png'), new CGFtexture(this.scene, 'images/test_cubemap/nz.png')],
-                        [new CGFtexture(this.scene, 'images/demo_cubemap/back.png'), new CGFtexture(this.scene, 'images/demo_cubemap/front.png'), new CGFtexture(this.scene, 'images/demo_cubemap/right.png'), new CGFtexture(this.scene, 'images/demo_cubemap/left.png'), new CGFtexture(this.scene, 'images/demo_cubemap/top.png'), new CGFtexture(this.scene, 'images/demo_cubemap/bottom.png')],
-                        [new CGFtexture(this.scene, 'images/city_skybox/px.jpg'), new CGFtexture(this.scene, 'images/city_skybox/nx.jpg'), new CGFtexture(this.scene, 'images/city_skybox/py.jpg'), new CGFtexture(this.scene, 'images/city_skybox/ny.jpg'), new CGFtexture(this.scene, 'images/city_skybox/pz.jpg'), new CGFtexture(this.scene, 'images/city_skybox/nz.jpg')]
+                        [new CGFtexture(this.scene, 'images/demo_cubemap/right.png'), new CGFtexture(this.scene, 'images/demo_cubemap/left.png'), new CGFtexture(this.scene, 'images/demo_cubemap/top.png'), new CGFtexture(this.scene, 'images/demo_cubemap/bottom.png'), new CGFtexture(this.scene, 'images/demo_cubemap/front.png'), new CGFtexture(this.scene, 'images/demo_cubemap/back.png')],
+                        [new CGFtexture(this.scene, 'images/city_skybox/px.jpg'), new CGFtexture(this.scene, 'images/city_skybox/nx.jpg'), new CGFtexture(this.scene, 'images/city_skybox/py.jpg'), new CGFtexture(this.scene, 'images/city_skybox/ny.jpg'), new CGFtexture(this.scene, 'images/city_skybox/pz.jpg'), new CGFtexture(this.scene, 'images/city_skybox/nz.jpg')],
+                        [new CGFtexture(this.scene, 'images/beach/px.png'), new CGFtexture(this.scene, 'images/beach/nx.png'), new CGFtexture(this.scene, 'images/beach/py.png'), new CGFtexture(this.scene, 'images/beach/ny.png'), new CGFtexture(this.scene, 'images/beach/pz.png'), new CGFtexture(this.scene, 'images/beach/nz.png')]
                 ];
         }
 	
@@ -70,7 +71,6 @@ export class MyCubeMap {
                 
                 this.scene.pushMatrix();
                 this.scene.translate(0.5, 0, 0);
-                this.scene.rotate(Math.PI/2, 1, 0, 0)
                 this.scene.rotate(-Math.PI/2, 0, 1, 0);
                 this.material.setTexture(this.mapTextures[this.selectedTexture][0]);
                 this.material.apply();
@@ -80,7 +80,6 @@ export class MyCubeMap {
                 
                 this.scene.pushMatrix();
                 this.scene.translate(-0.5, 0, 0);
-                this.scene.rotate(Math.PI/2, 1, 0, 0)
                 this.scene.rotate(Math.PI/2, 0, 1, 0);
                 this.material.setTexture(this.mapTextures[this.selectedTexture][1]);
                 this.material.apply();
@@ -98,7 +97,6 @@ export class MyCubeMap {
                 this.scene.popMatrix();
 
                 this.scene.pushMatrix();
-                this.scene.rotate(Math.PI, 0, 1, 0);
                 this.scene.translate(0, -0.5, 0);
                 this.scene.rotate(-Math.PI/2, 1, 0, 0);
                 this.material.setTexture(this.mapTextures[this.selectedTexture][3]);
@@ -109,20 +107,19 @@ export class MyCubeMap {
 
                 this.scene.pushMatrix();
                 this.scene.translate(0, 0, 0.5);
-                this.scene.rotate(Math.PI/2, 0, 0, 1)
+                this.scene.rotate(Math.PI, 0, 0, 1)
                 this.scene.rotate(Math.PI, 1, 0, 0);
-                this.material.setTexture(this.mapTextures[this.selectedTexture][4]);
+                this.material.setTexture(this.mapTextures[this.selectedTexture][5]);
                 this.material.apply();
                 this.betterRes();
                 this.quad.display();
                 this.scene.popMatrix();
 
                 this.scene.pushMatrix();
-                this.scene.rotate(Math.PI/2, 0, 0, 1)
                 this.scene.rotate(Math.PI, 1, 0, 0);
                 this.scene.translate(0, 0, 0.5);
                 this.scene.rotate(Math.PI, 1, 0, 0);
-                this.material.setTexture(this.mapTextures[this.selectedTexture][5]);
+                this.material.setTexture(this.mapTextures[this.selectedTexture][4]);
                 this.material.apply();
                 this.betterRes();
                 this.quad.display();
