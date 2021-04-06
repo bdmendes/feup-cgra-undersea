@@ -38,7 +38,7 @@ export class MyScene extends CGFscene {
         this.objects = [this.incompleteSphere, this.pyramid, this.movingObject];
 
         // Labels and ID's for object selection on MyInterface
-        this.objectIDs = { 'Sphere': 0, 'Pyramid': 1, 'Moving Object': 2};
+        this.objectIDs = { 'Sphere': 0, 'Pyramid': 1, 'Moving Object': 2 };
 
         this.defaultAppearance = new CGFappearance(this);
         this.defaultAppearance.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -78,6 +78,7 @@ export class MyScene extends CGFscene {
     // called periodically (as per setUpdatePeriod() in init())
     update(t) {
         this.checkKeys();
+        if (this.objects[this.selectedObject] instanceof MyMovingObject) this.objects[this.selectedObject].update();
     }
 
     display() {
@@ -109,8 +110,18 @@ export class MyScene extends CGFscene {
     }
 
     checkKeys() {
-        Object.entries(keyEventCode).map(item => {
-            if (this.gui.isKeyPressed(item[1])) console.log(item[1])
-        })
+        let currObject = this.objects[this.selectedObject];
+        if (!currObject instanceof MyMovingObject) return;
+        if (this.gui.isKeyPressed(keyEventCode["A"])) {
+            currObject.turn(Math.PI / 64);
+        } else if (this.gui.isKeyPressed(keyEventCode["D"])) {
+            currObject.turn(-Math.PI / 64);
+        } else if (this.gui.isKeyPressed(keyEventCode["W"])) {
+            currObject.accelerate(0.005);
+        } else if (this.gui.isKeyPressed(keyEventCode["S"])) {
+            currObject.accelerate(-0.005);
+        } else if (this.gui.isKeyPressed(keyEventCode["R"])) {
+            currObject.reset();
+        }
     }
 }

@@ -71,8 +71,7 @@ export class MyPyramid extends CGFobject {
 
     display() {
         this.scene.pushMatrix();
-        //super.display();
-        //this.scene.translate(4, 3, 2);
+        this.scene.translate(0, 0, -0.5, 0);
         this.scene.scale(0.3, 0.3, 1);
         this.scene.rotate(Math.PI / 2, 1, 0, 0);
         super.display();
