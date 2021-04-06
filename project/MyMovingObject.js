@@ -16,7 +16,11 @@ export class MyMovingObject extends CGFobject {
     display() {
         this.scene.pushMatrix();
         this.scene.translate(...this.position, 0);
-        this.scene.rotate(...this.axisAngle, 0);
+        console.log(...this.axisAngle);
+        this.scene.rotate(this.axisAngle[0], 1, 0, 0);
+        this.scene.rotate(this.axisAngle[1], 0, 1, 0);
+        this.scene.rotate(this.axisAngle[2], 0, 0, 1);
+        //this.scene.rotate(0, 2, 0, 0);
         this.object.display();
         this.scene.popMatrix();
     }
@@ -31,11 +35,8 @@ export class MyMovingObject extends CGFobject {
         let oldOrientation = this.isTurnedReverse();
         this.axisAngle[1] += val + 2 * Math.PI;
         this.axisAngle[1] %= 2 * Math.PI;
-        console.log(this.axisAngle);
         let newOrientation = this.isTurnedReverse();
-        console.log(oldOrientation, newOrientation);
         if (oldOrientation != newOrientation) {
-            console.log("got reversed!");
             this.speed[2] *= -1;
         }
     }
