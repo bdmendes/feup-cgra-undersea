@@ -7,11 +7,11 @@ import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFtexture } from "../lib/
  * @param scene - Reference to MyScene object
  */
 export class MyCubeMap {
-	constructor(scene, pX, nX, pY, nY, pZ, nZ) {
+	constructor(scene, position) {
                 this.scene = scene;
                 this.quad = new MyQuad(scene);
 
-                this.size = 4;
+                this.size = 50;
 
                 this.material = new CGFappearance(this.scene);
                 this.material.setAmbient(0, 0, 0, 1);
@@ -20,24 +20,21 @@ export class MyCubeMap {
                 this.material.setEmission(1.0, 1.0, 1.0, 1.0);
                 this.material.setShininess(10.0);
                 
-                if (pX == undefined) this.pX = new CGFtexture(this.scene, 'images/demo_cubemap/back.png');
-                else this.pX = pX;
+                if (position == undefined) this.position = [0, 0, 0];
+                else this.position = position;
 
-                if (nX == undefined) this.nX = new CGFtexture(this.scene, 'images/demo_cubemap/front.png');
-                else this.nX = nX;
+                this.selectedTexture = 0;
+                
+                this.initTextures();
+        }
 
-                if (pY == undefined) this.pY = new CGFtexture(this.scene, 'images/demo_cubemap/right.png');
-                else this.pY = pY;
-
-                if (nY == undefined) this.nY = new CGFtexture(this.scene, 'images/demo_cubemap/left.png');
-                else this.nY = nY;
-
-                if (pZ == undefined) this.pZ = new CGFtexture(this.scene, 'images/demo_cubemap/top.png');
-                else this.pZ = pZ;
-
-                if (nZ == undefined) this.nZ = new CGFtexture(this.scene, 'images/demo_cubemap/bottom.png');
-                else this.nZ = nZ;
-	}
+        initTextures(){
+                this.mapTextures = [
+                        [new CGFtexture(this.scene, 'images/test_cubemap/px.png'), new CGFtexture(this.scene, 'images/test_cubemap/nx.png'), new CGFtexture(this.scene, 'images/test_cubemap/py.png'), new CGFtexture(this.scene, 'images/test_cubemap/ny.png'), new CGFtexture(this.scene, 'images/test_cubemap/pz.png'), new CGFtexture(this.scene, 'images/test_cubemap/nz.png')],
+                        [new CGFtexture(this.scene, 'images/demo_cubemap/back.png'), new CGFtexture(this.scene, 'images/demo_cubemap/front.png'), new CGFtexture(this.scene, 'images/demo_cubemap/right.png'), new CGFtexture(this.scene, 'images/demo_cubemap/left.png'), new CGFtexture(this.scene, 'images/demo_cubemap/top.png'), new CGFtexture(this.scene, 'images/demo_cubemap/bottom.png')],
+                        [new CGFtexture(this.scene, 'images/city_skybox/px.jpg'), new CGFtexture(this.scene, 'images/city_skybox/nx.jpg'), new CGFtexture(this.scene, 'images/city_skybox/py.jpg'), new CGFtexture(this.scene, 'images/city_skybox/ny.jpg'), new CGFtexture(this.scene, 'images/city_skybox/pz.jpg'), new CGFtexture(this.scene, 'images/city_skybox/nz.jpg')]
+                ];
+        }
 	
         initBuffers(){
                 this.quad.initBuffers();
@@ -60,57 +57,22 @@ export class MyCubeMap {
                 this.gl.texParameterf(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
         }
 
+        changeTexture(selectedTexture){
+                this.selectedTexture = selectedTexture;
+        }
+
 	display(){
 
                 this.scene.pushMatrix();
 
+                this.scene.translate(this.position[0], this.position[1], this.position[2]);
                 this.scene.scale(this.size, this.size, this.size);
-
-                this.scene.pushMatrix();
-                this.scene.translate(0, 0, 0.5);
-                this.scene.rotate(Math.PI/2, 0, 0, 1)
-                this.scene.rotate(Math.PI, 1, 0, 0);
-                this.material.setTexture(this.pZ);
-                this.material.apply();
-                this.betterRes();
-                this.quad.display();
-                this.scene.popMatrix();
-
-                this.scene.pushMatrix();
-                this.scene.rotate(Math.PI/2, 0, 0, 1)
-                this.scene.rotate(Math.PI, 1, 0, 0);
-                this.scene.translate(0, 0, 0.5);
-                this.scene.rotate(Math.PI, 1, 0, 0);
-                this.material.setTexture(this.nZ);
-                this.material.apply();
-                this.betterRes();
-                this.quad.display();
-                this.scene.popMatrix();
-
-                this.scene.pushMatrix();
-                this.scene.rotate(Math.PI, 0, 1, 0);
-                this.scene.translate(0, -0.5, 0);
-                this.scene.rotate(-Math.PI/2, 1, 0, 0);
-                this.material.setTexture(this.nY);
-                this.material.apply();
-                this.betterRes();
-                this.quad.display();
-                this.scene.popMatrix();
-
-                this.scene.pushMatrix();
-                this.scene.translate(0, 0.5, 0);
-                this.scene.rotate(Math.PI/2, 1, 0, 0);
-                this.material.setTexture(this.pY);
-                this.material.apply();
-                this.betterRes();
-                this.quad.display();
-                this.scene.popMatrix();
                 
                 this.scene.pushMatrix();
                 this.scene.translate(0.5, 0, 0);
                 this.scene.rotate(Math.PI/2, 1, 0, 0)
                 this.scene.rotate(-Math.PI/2, 0, 1, 0);
-                this.material.setTexture(this.pX);
+                this.material.setTexture(this.mapTextures[this.selectedTexture][0]);
                 this.material.apply();
                 this.betterRes();
                 this.quad.display();
@@ -120,12 +82,51 @@ export class MyCubeMap {
                 this.scene.translate(-0.5, 0, 0);
                 this.scene.rotate(Math.PI/2, 1, 0, 0)
                 this.scene.rotate(Math.PI/2, 0, 1, 0);
-                this.material.setTexture(this.nX);
+                this.material.setTexture(this.mapTextures[this.selectedTexture][1]);
                 this.material.apply();
                 this.betterRes();
                 this.quad.display();
                 this.scene.popMatrix();
 
+                this.scene.pushMatrix();
+                this.scene.translate(0, 0.5, 0);
+                this.scene.rotate(Math.PI/2, 1, 0, 0);
+                this.material.setTexture(this.mapTextures[this.selectedTexture][2]);
+                this.material.apply();
+                this.betterRes();
+                this.quad.display();
+                this.scene.popMatrix();
+
+                this.scene.pushMatrix();
+                this.scene.rotate(Math.PI, 0, 1, 0);
+                this.scene.translate(0, -0.5, 0);
+                this.scene.rotate(-Math.PI/2, 1, 0, 0);
+                this.material.setTexture(this.mapTextures[this.selectedTexture][3]);
+                this.material.apply();
+                this.betterRes();
+                this.quad.display();
+                this.scene.popMatrix();
+
+                this.scene.pushMatrix();
+                this.scene.translate(0, 0, 0.5);
+                this.scene.rotate(Math.PI/2, 0, 0, 1)
+                this.scene.rotate(Math.PI, 1, 0, 0);
+                this.material.setTexture(this.mapTextures[this.selectedTexture][4]);
+                this.material.apply();
+                this.betterRes();
+                this.quad.display();
+                this.scene.popMatrix();
+
+                this.scene.pushMatrix();
+                this.scene.rotate(Math.PI/2, 0, 0, 1)
+                this.scene.rotate(Math.PI, 1, 0, 0);
+                this.scene.translate(0, 0, 0.5);
+                this.scene.rotate(Math.PI, 1, 0, 0);
+                this.material.setTexture(this.mapTextures[this.selectedTexture][5]);
+                this.material.apply();
+                this.betterRes();
+                this.quad.display();
+                this.scene.popMatrix();
 
                 this.scene.popMatrix();
 

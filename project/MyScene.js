@@ -29,17 +29,21 @@ export class MyScene extends CGFscene {
         
         this.enableTextures(true);
 
+        
+
         //Initialize scene objects
         this.axis = new CGFaxis(this);
         this.incompleteSphere = new MySphere(this, 16, 8);
         this.pyramid = new MyPyramid(this, 6, 1);
-        this.cubeMap = new MyCubeMap(this);
+        this.cubeMap = new MyCubeMap(this, this.camera.position);
         this.cylinder = new MyCylinder(this, 32, 2);
 
         this.objects = [this.incompleteSphere, this.pyramid, this.cubeMap, this.cylinder];
 
         // Labels and ID's for object selection on MyInterface
         this.objectIDs = { 'Sphere': 0 , 'Pyramid': 1, 'Cube Map':2, 'Cylinder': 3};
+
+        this.mapTexturesIDs = {'Axis': 0, 'Plains': 1, 'City': 2};
 
         this.defaultAppearance = new CGFappearance(this);
 		this.defaultAppearance.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -57,9 +61,11 @@ export class MyScene extends CGFscene {
 
         //Objects connected to MyInterface
         this.displayAxis = true;
-        this.selectedObject = 2;
+        this.selectedObject = 1;
         this.displayNormals = false;
         this.wireframe = false;
+        this.selectedMapTexture = 0;
+        this.oldSelectedMapTexture = -1;
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -110,6 +116,12 @@ export class MyScene extends CGFscene {
             this.axis.display();
 
         this.sphereAppearance.apply();
+
+        if(this.oldSelectedMapTexture != this.selectedMapTexture)
+            this.cubeMap.changeTexture(this.selectedMapTexture);
+        
+        this.oldSelectedMapTexture = this.selectedMapTexture;
+
         // ---- BEGIN Primitive drawing section
 
         if (this.displayNormals)
