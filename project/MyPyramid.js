@@ -7,7 +7,7 @@ import { MyMovingObject } from './MyMovingObject.js';
  * @param slices - number of divisions around the Y axis
  * @param stacks - number of divisions along the Y axis
 */
-export class MyPyramid extends MyMovingObject {
+export class MyPyramid extends CGFobject {
     constructor(scene, slices, stacks) {
         super(scene, 0, 0, 0, 0);
         this.slices = slices;
@@ -70,13 +70,13 @@ export class MyPyramid extends MyMovingObject {
     }
 
     display() {
-        //this.scene.pushMatrix();
+        this.scene.pushMatrix();
         //super.display();
-        this.scene.translate(4, 3, 2);
+        //this.scene.translate(4, 3, 2);
         this.scene.scale(0.3, 0.3, 1);
         this.scene.rotate(Math.PI / 2, 1, 0, 0);
         super.display();
-        //this.scene.popMatrix();
+        this.scene.popMatrix();
     }
 
     /**

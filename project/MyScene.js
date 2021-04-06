@@ -2,6 +2,7 @@ import { CGFscene, CGFcamera, CGFaxis, CGFappearance } from "../lib/CGF.js";
 import { MySphere } from "./MySphere.js";
 import { keyEventCode } from "./constants.js";
 import { MyPyramid } from "./MyPyramid.js";
+import { MyMovingObject } from "./MyMovingObject.js";
 
 /**
 * MyScene
@@ -32,11 +33,12 @@ export class MyScene extends CGFscene {
         this.axis = new CGFaxis(this);
         this.incompleteSphere = new MySphere(this, 16, 8);
         this.pyramid = new MyPyramid(this, 6, 1);
+        this.movingObject = new MyMovingObject(this, this.pyramid, 0, 0, 0, 0);
 
-        this.objects = [this.incompleteSphere, this.pyramid];
+        this.objects = [this.incompleteSphere, this.pyramid, this.movingObject];
 
         // Labels and ID's for object selection on MyInterface
-        this.objectIDs = { 'Sphere': 0, 'Pyramid': 1 };
+        this.objectIDs = { 'Sphere': 0, 'Pyramid': 1, 'Moving Object': 2};
 
         this.defaultAppearance = new CGFappearance(this);
         this.defaultAppearance.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -53,7 +55,7 @@ export class MyScene extends CGFscene {
 
         //Objects connected to MyInterface
         this.displayAxis = true;
-        this.selectedObject = 1;
+        this.selectedObject = 2;
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
