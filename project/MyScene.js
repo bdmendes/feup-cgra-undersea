@@ -114,13 +114,13 @@ export class MyScene extends CGFscene {
         if (!currObject instanceof MyMovingObject) return;
         if (this.gui.isKeyPressed(keyEventCode["A"])) {
             currObject.turn(Math.PI / 64);
-        } else if (this.gui.isKeyPressed(keyEventCode["D"])) {
+        } if (this.gui.isKeyPressed(keyEventCode["D"])) {
             currObject.turn(-Math.PI / 64);
-        } else if (this.gui.isKeyPressed(keyEventCode["W"])) {
+        } if (this.gui.isKeyPressed(keyEventCode["W"])) {
             currObject.accelerate(0.005);
-        } else if (this.gui.isKeyPressed(keyEventCode["S"])) {
+        } if (this.gui.isKeyPressed(keyEventCode["S"])) {
             currObject.accelerate(-0.005);
-        } else if (this.gui.isKeyPressed(keyEventCode["R"])) {
+        } if (this.gui.isKeyPressed(keyEventCode["R"])) {
             currObject.reset();
         }
     }
