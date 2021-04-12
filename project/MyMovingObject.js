@@ -10,7 +10,7 @@ export class MyMovingObject extends CGFobject {
     reset() {
         this.axisAngle = [0, 0, 0];
         this.position = [0, 0, 0];
-        this.speed = [0, 0, 0];
+        this.speed = 0;
     }
 
     display() {
@@ -24,8 +24,8 @@ export class MyMovingObject extends CGFobject {
     }
 
     update() {
-        this.position[0] += this.speed[2] * Math.sin(this.axisAngle[1]);
-        this.position[2] += this.speed[2] * Math.cos(this.axisAngle[1]);
+        this.position[0] += this.speed * Math.sin(this.axisAngle[1]);
+        this.position[2] += this.speed * Math.cos(this.axisAngle[1]);
     }
 
     turn(val) {
@@ -34,7 +34,6 @@ export class MyMovingObject extends CGFobject {
     }
 
     accelerate(val) {
-        this.speed[0] += val;
-        this.speed[2] += val;
+        this.speed += val;
     }
 }
