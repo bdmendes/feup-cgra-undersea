@@ -142,7 +142,7 @@ export class MyScene extends CGFscene {
 
     checkKeys() {
         let currObject = this.objects[this.selectedObject];
-        if (!currObject instanceof MyMovingObject) return;
+        if (!(currObject instanceof MyMovingObject)) return;
         if (this.gui.isKeyPressed(keyEventCode["A"])) {
             currObject.turn(Math.PI / 64);
         } if (this.gui.isKeyPressed(keyEventCode["D"])) {
