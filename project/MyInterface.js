@@ -1,4 +1,4 @@
-import {CGFinterface, dat} from '../lib/CGF.js';
+import { CGFinterface, dat } from '../lib/CGF.js';
 
 /**
 * MyInterface
@@ -24,7 +24,7 @@ export class MyInterface extends CGFinterface {
 
         this.gui.add(this.scene, 'enableCubeMap', this.scene.enableCubeMap).name('Enable Cube Map');
 
-        this.gui.add(this.scene, 'selectedMapTexture', this.scene.mapTexturesIDs).name('Selected Map');
+        this.gui.add(this.scene, 'selectedMapTexture', this.scene.mapTexturesIDs).name('Selected Map').onChange(this.scene.updateMapTexture.bind(this.scene));
 
         //Init keys
         this.initKeys();
@@ -32,28 +32,28 @@ export class MyInterface extends CGFinterface {
         return true;
     }
 
-    initKeys(){
+    initKeys() {
         // create reference from the scene to the GUI
-        this.scene.gui=this;
+        this.scene.gui = this;
 
         // disable the processKeyboard function
-        this.processKeyboard=function(){};
+        this.processKeyboard = function () { };
 
         // create a named array to store which keys are being pressed
-        this.activeKeys={};
+        this.activeKeys = {};
     }
-    
+
     processKeyDown(event) {
         // called when a key is pressed down
         // mark it as active in the array
-        this.activeKeys[event.code]=true;
+        this.activeKeys[event.code] = true;
     }
-    
+
     processKeyUp(event) {
         // called when a key is released, mark it as inactive in the array
-        this.activeKeys[event.code]=false;
+        this.activeKeys[event.code] = false;
     }
-    
+
     isKeyPressed(keyCode) {
         return this.activeKeys[keyCode] === true;
     }

@@ -42,9 +42,9 @@ export class MyScene extends CGFscene {
         this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cylinder];
 
         // Labels and ID's for object selection on MyInterface
-        this.objectIDs = { 'Sphere': 0 , 'Pyramid': 1, 'Moving Object': 2, 'Cylinder': 3};
+        this.objectIDs = { 'Sphere': 0, 'Pyramid': 1, 'Moving Object': 2, 'Cylinder': 3 };
 
-        this.mapTexturesIDs = {'Axis': 0, 'Plains': 1, 'City': 2, 'Beach': 3, 'Sky': 4};
+        this.mapTexturesIDs = { 'Axis': 0, 'Plains': 1, 'City': 2, 'Beach': 3, 'Sky': 4 };
 
         this.defaultAppearance = new CGFappearance(this);
         this.defaultAppearance.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -65,7 +65,6 @@ export class MyScene extends CGFscene {
         this.displayNormals = false;
         this.wireframe = false;
         this.selectedMapTexture = 0;
-        this.oldSelectedMapTexture = -1;
         this.enableCubeMap = false;
     }
     initLights() {
@@ -87,12 +86,16 @@ export class MyScene extends CGFscene {
     }
 
     onWireframeChanged(v) {
-		if (v)
-			this.objects[this.selectedObject].setLineMode();
-		else
-			this.objects[this.selectedObject].setFillMode();
+        if (v)
+            this.objects[this.selectedObject].setLineMode();
+        else
+            this.objects[this.selectedObject].setFillMode();
 
-	}
+    }
+
+    updateMapTexture() {
+        this.cubeMap.changeTexture(this.selectedMapTexture);
+    }
 
     // called periodically (as per setUpdatePeriod() in init())
     update(t) {
@@ -121,11 +124,6 @@ export class MyScene extends CGFscene {
 
         this.sphereAppearance.apply();
 
-        if(this.oldSelectedMapTexture != this.selectedMapTexture)
-            this.cubeMap.changeTexture(this.selectedMapTexture);
-        
-        this.oldSelectedMapTexture = this.selectedMapTexture;
-
         // ---- BEGIN Primitive drawing section
 
         if (this.enableCubeMap)
@@ -135,7 +133,7 @@ export class MyScene extends CGFscene {
             this.objects[this.selectedObject].enableNormalViz();
         else
             this.objects[this.selectedObject].disableNormalViz();
-        
+
         //This sphere does not have defined texture coordinates
         this.objects[this.selectedObject].display();
 
