@@ -4,6 +4,8 @@ export class MyMovingObject extends CGFobject {
     constructor(scene, object) {
         super(scene);
         this.object = object;
+        this.normals = this.object.normals;
+        this.vertices = this.object.vertices;
         this.reset();
     }
 
@@ -24,8 +26,8 @@ export class MyMovingObject extends CGFobject {
     }
 
     update() {
-        this.position[0] += this.speed * Math.sin(this.axisAngle[1]);
-        this.position[2] += this.speed * Math.cos(this.axisAngle[1]);
+        this.position[0] += this.speed * this.scene.speedFactor * Math.sin(this.axisAngle[1]);
+        this.position[2] += this.speed * this.scene.speedFactor * Math.cos(this.axisAngle[1]);
     }
 
     turn(val) {
