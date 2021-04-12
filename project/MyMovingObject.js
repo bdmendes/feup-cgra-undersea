@@ -1,11 +1,9 @@
 import { CGFobject } from '../lib/CGF.js';
 
-export class MyMovingObject extends CGFobject {
+export class MyMovingObject {
     constructor(scene, object) {
-        super(scene);
+        this.scene = scene;
         this.object = object;
-        this.normals = this.object.normals;
-        this.vertices = this.object.vertices;
         this.reset();
     }
 

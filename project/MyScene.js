@@ -1,4 +1,4 @@
-import { CGFscene, CGFcamera, CGFaxis, CGFappearance } from "../lib/CGF.js";
+import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject } from "../lib/CGF.js";
 import { MySphere } from "./MySphere.js";
 import { keyEventCode } from "./constants.js";
 import { MyPyramid } from "./MyPyramid.js";
@@ -135,10 +135,13 @@ export class MyScene extends CGFscene {
         if (this.enableCubeMap)
             this.cubeMap.display();
 
-        if (this.displayNormals)
-            this.objects[this.selectedObject].enableNormalViz();
-        else
-            this.objects[this.selectedObject].disableNormalViz();
+        /* Unless we make MyMovingObject a proper CGFObject with all its properties... */
+        if (this.objects[this.selectedObject] instanceof CGFobject) {
+            if (this.displayNormals)
+                this.objects[this.selectedObject].enableNormalViz();
+            else
+                this.objects[this.selectedObject].disableNormalViz();
+        }
 
         // Display selected object
         this.pushMatrix();
