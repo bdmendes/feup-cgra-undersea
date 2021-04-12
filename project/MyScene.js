@@ -1,8 +1,10 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance } from "../lib/CGF.js";
 import { MySphere } from "./MySphere.js";
+import { keyEventCode } from "./constants.js";
 import { MyPyramid } from "./MyPyramid.js";
 import { MyCubeMap } from "./MyCubeMap.js";
 import { MyCylinder } from "./MyCylinder.js";
+import { MyMovingObject } from "./MyMovingObject.js";
 
 /**
 * MyScene
@@ -26,7 +28,7 @@ export class MyScene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.setUpdatePeriod(50);
-        
+
         this.enableTextures(true);
 
         //Initialize scene objects
@@ -35,27 +37,27 @@ export class MyScene extends CGFscene {
         this.pyramid = new MyPyramid(this, 6, 1);
         this.cubeMap = new MyCubeMap(this);
         this.cylinder = new MyCylinder(this, 32, 6);
+        this.movingObject = new MyMovingObject(this, this.pyramid, 0, 0, 0, 0);
 
-        this.objects = [this.incompleteSphere, this.pyramid, this.cubeMap, this.cylinder];
+        this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cubeMap, this.cylinder];
 
         // Labels and ID's for object selection on MyInterface
-        this.objectIDs = { 'Sphere': 0 , 'Pyramid': 1, 'Cube Map':2, 'Cylinder': 3};
+        this.objectIDs = { 'Sphere': 0 , 'Pyramid': 1, 'Moving Object': 2, 'Cube Map':3, 'Cylinder': 4};
 
         this.mapTexturesIDs = {'Axis': 0, 'Plains': 1, 'City': 2, 'Beach': 3, 'Sky': 4};
 
         this.defaultAppearance = new CGFappearance(this);
-		this.defaultAppearance.setAmbient(0.2, 0.4, 0.8, 1.0);
+        this.defaultAppearance.setAmbient(0.2, 0.4, 0.8, 1.0);
         this.defaultAppearance.setDiffuse(0.2, 0.4, 0.8, 1.0);
         this.defaultAppearance.setSpecular(0.2, 0.4, 0.8, 1.0);
-        this.defaultAppearance.setEmission(0,0,0,1);
-		this.defaultAppearance.setShininess(120);
+        this.defaultAppearance.setEmission(0, 0, 0, 1);
+        this.defaultAppearance.setShininess(120);
 
-		this.sphereAppearance = new CGFappearance(this);
-		this.sphereAppearance.setAmbient(0.3, 0.3, 0.3, 1);
-		this.sphereAppearance.setDiffuse(0.7, 0.7, 0.7, 1);
-		this.sphereAppearance.setSpecular(0.0, 0.0, 0.0, 1);
-		this.sphereAppearance.setShininess(120);
-
+        this.sphereAppearance = new CGFappearance(this);
+        this.sphereAppearance.setAmbient(0.3, 0.3, 0.3, 1);
+        this.sphereAppearance.setDiffuse(0.7, 0.7, 0.7, 1);
+        this.sphereAppearance.setSpecular(0.0, 0.0, 0.0, 1);
+        this.sphereAppearance.setShininess(120);
 
         //Objects connected to MyInterface
         this.displayAxis = true;
@@ -79,7 +81,7 @@ export class MyScene extends CGFscene {
         this.setAmbient(0.2, 0.4, 0.8, 1.0);
         this.setDiffuse(0.2, 0.4, 0.8, 1.0);
         this.setSpecular(0.2, 0.4, 0.8, 1.0);
-        this.setEmission(0,0,0,1);
+        this.setEmission(0, 0, 0, 1);
         this.setShininess(10.0);
     }
 
@@ -92,8 +94,9 @@ export class MyScene extends CGFscene {
 	}
 
     // called periodically (as per setUpdatePeriod() in init())
-    update(t){
-        //To be done...
+    update(t) {
+        this.checkKeys();
+        if (this.objects[this.selectedObject] instanceof MyMovingObject) this.objects[this.selectedObject].update();
     }
 
     display() {
@@ -101,14 +104,16 @@ export class MyScene extends CGFscene {
         // Clear image and depth buffer everytime we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+
         // Initialize Model-View matrix as identity (no transformation
         this.updateProjectionMatrix();
         this.loadIdentity();
+
         // Apply transformations corresponding to the camera position relative to the origin
         this.applyViewMatrix();
-        
-        
+
         this.defaultAppearance.apply();
+
         // Draw axis
         if (this.displayAxis)
             this.axis.display();
@@ -131,5 +136,21 @@ export class MyScene extends CGFscene {
         this.objects[this.selectedObject].display();
 
         // ---- END Primitive drawing section
+    }
+
+    checkKeys() {
+        let currObject = this.objects[this.selectedObject];
+        if (!currObject instanceof MyMovingObject) return;
+        if (this.gui.isKeyPressed(keyEventCode["A"])) {
+            currObject.turn(Math.PI / 64);
+        } if (this.gui.isKeyPressed(keyEventCode["D"])) {
+            currObject.turn(-Math.PI / 64);
+        } if (this.gui.isKeyPressed(keyEventCode["W"])) {
+            currObject.accelerate(0.005);
+        } if (this.gui.isKeyPressed(keyEventCode["S"])) {
+            currObject.accelerate(-0.005);
+        } if (this.gui.isKeyPressed(keyEventCode["R"])) {
+            currObject.reset();
+        }
     }
 }
