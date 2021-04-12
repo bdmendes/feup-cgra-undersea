@@ -39,10 +39,10 @@ export class MyScene extends CGFscene {
         this.cylinder = new MyCylinder(this, 32, 6);
         this.movingObject = new MyMovingObject(this, this.pyramid, 0, 0, 0, 0);
 
-        this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cubeMap, this.cylinder];
+        this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cylinder];
 
         // Labels and ID's for object selection on MyInterface
-        this.objectIDs = { 'Sphere': 0 , 'Pyramid': 1, 'Moving Object': 2, 'Cube Map':3, 'Cylinder': 4};
+        this.objectIDs = { 'Sphere': 0 , 'Pyramid': 1, 'Moving Object': 2, 'Cylinder': 3};
 
         this.mapTexturesIDs = {'Axis': 0, 'Plains': 1, 'City': 2, 'Beach': 3, 'Sky': 4};
 
@@ -66,6 +66,7 @@ export class MyScene extends CGFscene {
         this.wireframe = false;
         this.selectedMapTexture = 0;
         this.oldSelectedMapTexture = -1;
+        this.enableCubeMap = false;
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -127,11 +128,14 @@ export class MyScene extends CGFscene {
 
         // ---- BEGIN Primitive drawing section
 
+        if (this.enableCubeMap)
+            this.cubeMap.display();
+
         if (this.displayNormals)
             this.objects[this.selectedObject].enableNormalViz();
         else
             this.objects[this.selectedObject].disableNormalViz();
-
+        
         //This sphere does not have defined texture coordinates
         this.objects[this.selectedObject].display();
 

@@ -22,6 +22,8 @@ export class MyInterface extends CGFinterface {
 
         this.gui.add(this.scene, 'selectedObject', this.scene.objectIDs).name('Selected Object');
 
+        this.gui.add(this.scene, 'enableCubeMap', this.scene.enableCubeMap).name('Enable Cube Map');
+
         this.gui.add(this.scene, 'selectedMapTexture', this.scene.mapTexturesIDs).name('Selected Map');
 
         //Init keys
