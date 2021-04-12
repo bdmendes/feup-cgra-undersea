@@ -41,7 +41,7 @@ export class MyScene extends CGFscene {
         // Labels and ID's for object selection on MyInterface
         this.objectIDs = { 'Sphere': 0 , 'Pyramid': 1, 'Cube Map':2, 'Cylinder': 3};
 
-        this.mapTexturesIDs = {'Axis': 0, 'Plains': 1, 'City': 2, 'Beach': 3};
+        this.mapTexturesIDs = {'Axis': 0, 'Plains': 1, 'City': 2, 'Beach': 3, 'Sky': 4};
 
         this.defaultAppearance = new CGFappearance(this);
 		this.defaultAppearance.setAmbient(0.2, 0.4, 0.8, 1.0);
