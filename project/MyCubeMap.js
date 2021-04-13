@@ -28,15 +28,15 @@ export class MyCubeMap {
 
     initTextures() {
         this.mapTextures = [
-            [new CGFtexture(this.scene, 'images/test_cubemap/px.png'), new CGFtexture(this.scene, 'images/test_cubemap/nx.png'), new CGFtexture(this.scene, 'images/test_cubemap/py.png'), new CGFtexture(this.scene, 'images/test_cubemap/ny.png'), new CGFtexture(this.scene, 'images/test_cubemap/pz.png'), new CGFtexture(this.scene, 'images/test_cubemap/nz.png')],
+            [new CGFtexture(this.scene, 'images/part-a/test_cubemap/px.png'), new CGFtexture(this.scene, 'images/part-a/test_cubemap/nx.png'), new CGFtexture(this.scene, 'images/part-a/test_cubemap/py.png'), new CGFtexture(this.scene, 'images/part-a/test_cubemap/ny.png'), new CGFtexture(this.scene, 'images/part-a/test_cubemap/pz.png'), new CGFtexture(this.scene, 'images/part-a/test_cubemap/nz.png')],
 
-            [new CGFtexture(this.scene, 'images/demo_cubemap/right.png'), new CGFtexture(this.scene, 'images/demo_cubemap/left.png'), new CGFtexture(this.scene, 'images/demo_cubemap/top.png'), new CGFtexture(this.scene, 'images/demo_cubemap/bottom.png'), new CGFtexture(this.scene, 'images/demo_cubemap/front.png'), new CGFtexture(this.scene, 'images/demo_cubemap/back.png')],
+            [new CGFtexture(this.scene, 'images/part-a/demo_cubemap/right.png'), new CGFtexture(this.scene, 'images/part-a/demo_cubemap/left.png'), new CGFtexture(this.scene, 'images/part-a/demo_cubemap/top.png'), new CGFtexture(this.scene, 'images/part-a/demo_cubemap/bottom.png'), new CGFtexture(this.scene, 'images/part-a/demo_cubemap/front.png'), new CGFtexture(this.scene, 'images/part-a/demo_cubemap/back.png')],
 
-            [new CGFtexture(this.scene, 'images/city_skybox/px.jpg'), new CGFtexture(this.scene, 'images/city_skybox/nx.jpg'), new CGFtexture(this.scene, 'images/city_skybox/py.jpg'), new CGFtexture(this.scene, 'images/city_skybox/ny.jpg'), new CGFtexture(this.scene, 'images/city_skybox/pz.jpg'), new CGFtexture(this.scene, 'images/city_skybox/nz.jpg')],
+            [new CGFtexture(this.scene, 'images/part-a/city_skybox/px.jpg'), new CGFtexture(this.scene, 'images/part-a/city_skybox/nx.jpg'), new CGFtexture(this.scene, 'images/part-a/city_skybox/py.jpg'), new CGFtexture(this.scene, 'images/part-a/city_skybox/ny.jpg'), new CGFtexture(this.scene, 'images/part-a/city_skybox/pz.jpg'), new CGFtexture(this.scene, 'images/part-a/city_skybox/nz.jpg')],
 
-            [new CGFtexture(this.scene, 'images/beach/px.png'), new CGFtexture(this.scene, 'images/beach/nx.png'), new CGFtexture(this.scene, 'images/beach/py.png'), new CGFtexture(this.scene, 'images/beach/ny.png'), new CGFtexture(this.scene, 'images/beach/pz.png'), new CGFtexture(this.scene, 'images/beach/nz.png')],
+            [new CGFtexture(this.scene, 'images/part-a/beach/px.png'), new CGFtexture(this.scene, 'images/part-a/beach/nx.png'), new CGFtexture(this.scene, 'images/part-a/beach/py.png'), new CGFtexture(this.scene, 'images/part-a/beach/ny.png'), new CGFtexture(this.scene, 'images/part-a/beach/pz.png'), new CGFtexture(this.scene, 'images/part-a/beach/nz.png')],
 
-            [new CGFtexture(this.scene, 'images/sky1/right.png'), new CGFtexture(this.scene, 'images/sky1/left.png'), new CGFtexture(this.scene, 'images/sky1/top.png'), new CGFtexture(this.scene, 'images/sky1/bottom.png'), new CGFtexture(this.scene, 'images/sky1/back.png'), new CGFtexture(this.scene, 'images/sky1/front.png')],
+            [new CGFtexture(this.scene, 'images/part-a/sky1/right.png'), new CGFtexture(this.scene, 'images/part-a/sky1/left.png'), new CGFtexture(this.scene, 'images/part-a/sky1/top.png'), new CGFtexture(this.scene, 'images/part-a/sky1/bottom.png'), new CGFtexture(this.scene, 'images/part-a/sky1/back.png'), new CGFtexture(this.scene, 'images/part-a/sky1/front.png')],
         ];
     }
 

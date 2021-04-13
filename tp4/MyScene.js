@@ -31,7 +31,7 @@ export class MyScene extends CGFscene {
         this.texture1 = new CGFtexture(this, 'images/board.jpg');
         this.texture2 = new CGFtexture(this, 'images/mineTop.png');
         this.texture3 = new CGFtexture(this, 'images/window.jpg');
-        this.grassBlockTop = new CGFtexture(this, 'images/mineTop.png');
+        this.grassBlockTop = new CGFtexture(this, 'images/pmineTop.png');
         this.grassBlockBot = new CGFtexture(this, 'images/mineBottom.png');
         this.grassBlockSide = new CGFtexture(this, 'images/mineSide.png');
         //-------
@@ -43,7 +43,7 @@ export class MyScene extends CGFscene {
         this.cube = new MyUnitCubeQuad(this, this.grassBlockSide, this.grassBlockSide, this.grassBlockSide, this.grassBlockSide, this.grassBlockTop, this.grassBlockBot);
         this.objects = [null, this.quad, this.tangram, this.cube]; // populate
         this.selectedObject = 2;
-        this.objectIDs = { 'None': 0 , 'Quad': 1, 'Tangram': 2, 'Unit Cube Quad': 3 };
+        this.objectIDs = { 'None': 0, 'Quad': 1, 'Tangram': 2, 'Unit Cube Quad': 3 };
 
         //------ Applied Material
         this.quadMaterial = new CGFappearance(this);
@@ -51,14 +51,14 @@ export class MyScene extends CGFscene {
         this.quadMaterial.setDiffuse(0.9, 0.9, 0.9, 1);
         this.quadMaterial.setSpecular(0.1, 0.1, 0.1, 1);
         this.quadMaterial.setShininess(10.0);
-        this.quadMaterial.loadTexture('images/default.png');
+        this.quadMaterial.loadTexture('images/part-a/default.png');
         this.quadMaterial.setTextureWrap('REPEAT', 'REPEAT');
         //------
 
         //-------Objects connected to MyInterface
         this.displayAxis = true;
         this.scaleFactor = 5;
-        this.selectedTexture = -1;        
+        this.selectedTexture = -1;
         this.wrapS = 0;
         this.wrapT = 0;
 
@@ -69,7 +69,7 @@ export class MyScene extends CGFscene {
         this.textureIds = { 'Board': 0, 'Floor': 1, 'Window': 2 };
         this.wrappingS = { 'Repeat': 0, 'Clamp to edge': 1, 'Mirrored repeat': 2 };
         this.wrappingT = { 'Repeat': 0, 'Clamp to edge': 1, 'Mirrored repeat': 2 };
-      }
+    }
 
     initLights() {
         this.lights[0].setPosition(5, 2, 5, 1);
@@ -105,7 +105,7 @@ export class MyScene extends CGFscene {
     }
 
     display() {
-  
+
         // ---- BEGIN Background, camera and axis setup
         // Clear image and depth buffer everytime we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
@@ -131,7 +131,7 @@ export class MyScene extends CGFscene {
         // Default texture filtering in WebCGF is LINEAR. 
         // Uncomment next line for NEAREST when magnifying, or 
         // add a checkbox in the GUI to alternate in real time
-        
+
         //this.gl.texParameterf(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
 
         if (this.objects[this.selectedObject] != null) {
@@ -140,4 +140,4 @@ export class MyScene extends CGFscene {
 
         // ---- END Primitive drawing section
     }
-} 
+}
