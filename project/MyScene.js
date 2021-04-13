@@ -144,10 +144,7 @@ export class MyScene extends CGFscene {
         }
 
         // Display selected object
-        this.pushMatrix();
-        this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
         this.objects[this.selectedObject].display();
-        this.popMatrix();
 
         // ---- END Primitive drawing section
     }

@@ -19,6 +19,7 @@ export class MyMovingObject {
         this.scene.rotate(this.axisAngle[0], 1, 0, 0);
         this.scene.rotate(this.axisAngle[1], 0, 1, 0);
         this.scene.rotate(this.axisAngle[2], 0, 0, 1);
+        this.scene.scale(this.scene.scaleFactor, this.scene.scaleFactor, this.scene.scaleFactor);
         this.object.display();
         this.scene.popMatrix();
     }
