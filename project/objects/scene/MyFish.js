@@ -23,7 +23,7 @@ export class MyFish {
     }
 
     initTextures() {
-        this.bodyScales = new CGFtexture(this.scene, 'images/part-a/earth.jpg');
+        this.bodyScales = new CGFtexture(this.scene, 'images/part-b/fish_scales/fish_scales_2.png');
         this.appearance.setTexture(this.bodyScales);
         this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     }
@@ -39,7 +39,7 @@ export class MyFish {
         this.scene.pushMatrix();
         this.bodyScales.bind(1);
         this.scene.scale(0.5, 0.7, 1);
-        this.bodyScales.ap
+        this.scene.rotate(Math.PI / 2, 1, 0, 0);
         this.bodySphere.display();
         this.scene.popMatrix();
         this.scene.setActiveShader(this.scene.defaultShader);
