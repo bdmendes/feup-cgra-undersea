@@ -33,7 +33,7 @@ export class MyScene extends CGFscene {
 
         // Initialize scene background
         this.cubeMap = new MyCubeMap(this);
-        this.mapTexturesIDs = { 'Axis': 0, 'Plains': 1, 'City': 2, 'Beach': 3, 'Sky': 4 };
+        this.mapTexturesIDs = { 'Axis': 0, 'Plains': 1, 'City': 2, 'Beach': 3, 'Sky': 4, 'Underwater':5 };
 
         // Initialize scene objects
         this.axis = new CGFaxis(this);

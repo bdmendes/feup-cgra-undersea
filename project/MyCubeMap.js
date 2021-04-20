@@ -37,6 +37,8 @@ export class MyCubeMap {
             [new CGFtexture(this.scene, 'images/part-a/beach/px.png'), new CGFtexture(this.scene, 'images/part-a/beach/nx.png'), new CGFtexture(this.scene, 'images/part-a/beach/py.png'), new CGFtexture(this.scene, 'images/part-a/beach/ny.png'), new CGFtexture(this.scene, 'images/part-a/beach/pz.png'), new CGFtexture(this.scene, 'images/part-a/beach/nz.png')],
 
             [new CGFtexture(this.scene, 'images/part-a/sky1/right.png'), new CGFtexture(this.scene, 'images/part-a/sky1/left.png'), new CGFtexture(this.scene, 'images/part-a/sky1/top.png'), new CGFtexture(this.scene, 'images/part-a/sky1/bottom.png'), new CGFtexture(this.scene, 'images/part-a/sky1/back.png'), new CGFtexture(this.scene, 'images/part-a/sky1/front.png')],
+        
+            [new CGFtexture(this.scene, 'images/part-b/underwater_cubemap/right.jpg'), new CGFtexture(this.scene, 'images/part-b/underwater_cubemap/left.jpg'), new CGFtexture(this.scene, 'images/part-b/underwater_cubemap/top.jpg'), new CGFtexture(this.scene, 'images/part-b/underwater_cubemap/bottom.jpg'), new CGFtexture(this.scene, 'images/part-b/underwater_cubemap/front.jpg'), new CGFtexture(this.scene, 'images/part-b/underwater_cubemap/back.jpg')],
         ];
     }
 
@@ -58,7 +60,7 @@ export class MyCubeMap {
 
     betterRes() {
         this.gl = this.scene.gl;
-        this.gl.texParameterf(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
+        this.gl.texParameterf(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.LINEAR);
     }
 
     changeTexture(selectedTexture) {
