@@ -50,13 +50,13 @@ export class MyFish {
 
         /* Body */
         this.scene.pushMatrix();
-        this.bodyMaterial.apply();
-        this.scene.rotate(Math.PI / 2, 1, 0, 0);
         this.bodyScales.bind(1);
         this.scene.setActiveShader(this.bodyShader);
+        this.bodyMaterial.apply();
+        this.scene.rotate(Math.PI / 2, 1, 0, 0);
         this.body.display();
-        this.scene.setActiveShader(this.scene.defaultShader);
         this.scene.defaultAppearance.apply();
+        this.scene.setActiveShader(this.scene.defaultShader);
         this.scene.popMatrix();
 
         /* Left eye */
