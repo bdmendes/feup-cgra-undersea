@@ -5,6 +5,8 @@ import { MyPyramid } from "./objects/base/MyPyramid.js";
 import { MyCubeMap } from "./objects/base/MyCubeMap.js";
 import { MyCylinder } from "./objects/base/MyCylinder.js";
 import { MyMovingObject } from "./objects/base/MyMovingObject.js";
+import { MyPlane } from "./objects/base/MyPlane.js";
+import { MySandFloor } from "./objects/scene/MySandFloor.js";
 
 /**
 * MyScene
@@ -41,11 +43,12 @@ export class MyScene extends CGFscene {
         this.pyramid = new MyPyramid(this, 6, 1);
         this.cylinder = new MyCylinder(this, 8, 0);
         this.movingObject = new MyMovingObject(this, this.pyramid, 0, 0, 0, 0);
+        this.sandFloor = new MySandFloor(this);
 
-        this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cylinder];
+        this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cylinder, this.sandFloor];
 
         // Labels and ID's for object selection on MyInterface
-        this.objectIDs = { 'Sphere': 0, 'Pyramid': 1, 'Moving Object': 2, 'Cylinder': 3 };
+        this.objectIDs = { 'Sphere': 0, 'Pyramid': 1, 'Moving Object': 2, 'Cylinder': 3, 'Sand Floor': 4 };
 
         this.defaultAppearance = new CGFappearance(this);
         this.defaultAppearance.setAmbient(0.2, 0.4, 0.8, 1.0);
