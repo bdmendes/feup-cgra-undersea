@@ -19,10 +19,17 @@ export class MyFish {
 
     initAppearance() {
         this.bodyMaterial = new CGFappearance(this.scene);
-        this.bodyMaterial.setAmbient(0.3, 0.3, 0.3, 1);
-        this.bodyMaterial.setDiffuse(0.7, 0.7, 0.7, 1);
-        this.bodyMaterial.setSpecular(0.5, 0.5, 0.5, 1);
+        this.bodyMaterial.setAmbient(1, 1, 1, 1);
+        this.bodyMaterial.setDiffuse(1, 1, 1, 1);
+        this.bodyMaterial.setSpecular(1, 1, 1, 1);
         this.bodyMaterial.setShininess(120);
+
+        this.finMaterial = new CGFappearance(this.scene);
+        this.finMaterial.setAmbient(1, 1, 1, 1);
+        this.finMaterial.setDiffuse(1, 1, 1, 1);
+        this.finMaterial.setSpecular(1, 1, 1, 1);
+        this.finMaterial.setShininess(120);
+        this.finMaterial.setColor(0.55, 0.18, 0.1, 1);
     }
 
     initTextures() {
@@ -72,10 +79,22 @@ export class MyFish {
 
         /* Back fin */
         this.scene.pushMatrix();
+        this.finMaterial.apply();
         this.scene.translate(0, 0, -1);
         this.scene.scale(1, 0.7, 0.5);
         this.scene.rotate(Math.PI / 2, 1, 0, 0);
         this.fin.display();
+        this.scene.defaultAppearance.apply();
+        this.scene.popMatrix();
+
+        /* Top fin */
+        this.scene.pushMatrix();
+        this.finMaterial.apply();
+        this.scene.translate(0, 0.7, -0.3);
+        this.scene.scale(1, 0.61, 0.61);
+        this.scene.rotate(5 * Math.PI / 4, 1, 0, 0);
+        this.fin.display();
+        this.scene.defaultAppearance.apply();
         this.scene.popMatrix();
 
         this.scene.popMatrix();

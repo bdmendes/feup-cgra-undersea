@@ -15,6 +15,10 @@ export class MyTriangle extends CGFobject {
             0, 0, 0,	//0
             0, -1, -1,	//1
             0, -1, 1,	//2
+
+            0, 0, 0,	//0
+            0, -1, -1,	//1
+            0, -1, 1,	//2
         ];
 
         //Counter-clockwise reference of vertices
@@ -27,6 +31,10 @@ export class MyTriangle extends CGFobject {
             1, 0, 0,
             1, 0, 0,
             1, 0, 0,
+
+            -1, 0, 0,
+            -1, 0, 0,
+            -1, 0, 0,
         ];
 
         if (texC != undefined) {
