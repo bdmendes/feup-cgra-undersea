@@ -1,5 +1,5 @@
 import { MyQuad } from "./MyQuad.js";
-import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFtexture, CGFobject } from "../lib/CGF.js";
+import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFtexture, CGFobject } from "../../../lib/CGF.js";
 
 /**
  * MyUnitCubeQuad
@@ -37,7 +37,7 @@ export class MyCubeMap {
             [new CGFtexture(this.scene, 'images/part-a/beach/px.png'), new CGFtexture(this.scene, 'images/part-a/beach/nx.png'), new CGFtexture(this.scene, 'images/part-a/beach/py.png'), new CGFtexture(this.scene, 'images/part-a/beach/ny.png'), new CGFtexture(this.scene, 'images/part-a/beach/pz.png'), new CGFtexture(this.scene, 'images/part-a/beach/nz.png')],
 
             [new CGFtexture(this.scene, 'images/part-a/sky1/right.png'), new CGFtexture(this.scene, 'images/part-a/sky1/left.png'), new CGFtexture(this.scene, 'images/part-a/sky1/top.png'), new CGFtexture(this.scene, 'images/part-a/sky1/bottom.png'), new CGFtexture(this.scene, 'images/part-a/sky1/back.png'), new CGFtexture(this.scene, 'images/part-a/sky1/front.png')],
-        
+
             [new CGFtexture(this.scene, 'images/part-b/underwater_cubemap/right.jpg'), new CGFtexture(this.scene, 'images/part-b/underwater_cubemap/left.jpg'), new CGFtexture(this.scene, 'images/part-b/underwater_cubemap/top.jpg'), new CGFtexture(this.scene, 'images/part-b/underwater_cubemap/bottom.jpg'), new CGFtexture(this.scene, 'images/part-b/underwater_cubemap/front.jpg'), new CGFtexture(this.scene, 'images/part-b/underwater_cubemap/back.jpg')],
         ];
     }
