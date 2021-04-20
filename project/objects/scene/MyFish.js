@@ -48,7 +48,7 @@ export class MyFish {
         this.scene.pushMatrix();
         this.scene.scale(0.5, 0.8, 1); // global fish distortion
 
-        /* Fish body */
+        /* Body */
         this.scene.pushMatrix();
         this.bodyMaterial.apply();
         this.scene.rotate(Math.PI / 2, 1, 0, 0);
@@ -59,7 +59,7 @@ export class MyFish {
         this.scene.defaultAppearance.apply();
         this.scene.popMatrix();
 
-        /* Fish left eye */
+        /* Left eye */
         this.scene.pushMatrix();
         this.scene.rotate(Math.PI / 10, 0, 0, 1);
         this.scene.rotate(-Math.PI / 6, 0, 1, 0);
@@ -93,6 +93,28 @@ export class MyFish {
         this.scene.translate(0, 0.7, -0.3);
         this.scene.scale(1, 0.61, 0.61);
         this.scene.rotate(5 * Math.PI / 4, 1, 0, 0);
+        this.fin.display();
+        this.scene.defaultAppearance.apply();
+        this.scene.popMatrix();
+
+        /* Left fin */
+        this.scene.pushMatrix();
+        this.finMaterial.apply();
+        this.scene.translate(1.03, -0.9, 0.25);
+        this.scene.scale(0.5, 0.4, 0.5);
+        this.scene.rotate(Math.PI / 18, 0, 0, 1);
+        this.scene.rotate(3 * Math.PI / 4, 1, 0, 0);
+        this.fin.display();
+        this.scene.defaultAppearance.apply();
+        this.scene.popMatrix();
+
+        /* Right fin */
+        this.scene.pushMatrix();
+        this.finMaterial.apply();
+        this.scene.translate(-1.03, -0.9, 0.25);
+        this.scene.scale(0.5, 0.4, 0.5);
+        this.scene.rotate(-Math.PI / 18, 0, 0, 1);
+        this.scene.rotate(3 * Math.PI / 4, 1, 0, 0);
         this.fin.display();
         this.scene.defaultAppearance.apply();
         this.scene.popMatrix();
