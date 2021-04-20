@@ -1,10 +1,10 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject } from "../lib/CGF.js";
-import { MySphere } from "./MySphere.js";
+import { MySphere } from "./objects/base/MySphere.js";
 import { keyEventCode } from "./constants.js";
-import { MyPyramid } from "./MyPyramid.js";
-import { MyCubeMap } from "./MyCubeMap.js";
-import { MyCylinder } from "./MyCylinder.js";
-import { MyMovingObject } from "./MyMovingObject.js";
+import { MyPyramid } from "./objects/base/MyPyramid.js";
+import { MyCubeMap } from "./objects/base/MyCubeMap.js";
+import { MyCylinder } from "./objects/base/MyCylinder.js";
+import { MyMovingObject } from "./objects/base/MyMovingObject.js";
 
 /**
 * MyScene
@@ -33,7 +33,7 @@ export class MyScene extends CGFscene {
 
         // Initialize scene background
         this.cubeMap = new MyCubeMap(this);
-        this.mapTexturesIDs = { 'Axis': 0, 'Plains': 1, 'City': 2, 'Beach': 3, 'Sky': 4, 'Underwater':5 };
+        this.mapTexturesIDs = { 'Axis': 0, 'Plains': 1, 'City': 2, 'Beach': 3, 'Sky': 4, 'Underwater': 5 };
 
         // Initialize scene objects
         this.axis = new CGFaxis(this);

@@ -1,5 +1,4 @@
-import { CGFobject } from '../lib/CGF.js';
-import { MyMovingObject } from './MyMovingObject.js';
+import { CGFobject } from '../../../lib/CGF.js';
 /**
 * MyPyramid
 * @constructor

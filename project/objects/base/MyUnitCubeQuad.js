@@ -1,5 +1,5 @@
 import { MyQuad } from "./MyQuad.js";
-import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFtexture } from "../lib/CGF.js";
+import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFtexture } from "../../../lib/CGF.js";
 
 /**
  * MyUnitCubeQuad
