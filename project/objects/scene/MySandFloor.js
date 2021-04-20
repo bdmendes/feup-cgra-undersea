@@ -11,7 +11,7 @@ export class MySandFloor {
     }
 
     initObject(){
-        this.plane = new MySphere(this, 16, 16);
+        this.plane = new MyPlane(this.scene, 20);
     }
 
     initAppearance(){
@@ -24,19 +24,38 @@ export class MySandFloor {
 
     initTextures(){
         this.sandTexture = new CGFtexture(this.scene, 'images/part-b/sand.png');
-        this.appearance.setTexture(this.bodyScales);
+        this.heightMap = new CGFtexture(this.scene, 'images/part-b/sandMap.png');
+        this.appearance.setTexture(this.sandTexture);
         this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     }
 
+    initShaders() {
+        this.bodyShader = new CGFshader(this.scene.gl, './shaders/sandFloor.vert', './shaders/sandFloor.frag');
+        this.bodyShader.setUniformsValues({ uSampler1: 1, uSampler2: 2});
+    }
+
+
     display(){
+
+        
 
         this.scene.pushMatrix();
 
         this.appearance.apply();
-        
+
+        this.sandTexture.bind(1);
+        this.heightMap.bind(2);
+
+        this.scene.setActiveShader(this.bodyShader);
+
+        this.scene.scale(10, 1, 10);
+        this.scene.rotate(-Math.PI/2, 1, 0, 0);
+
         this.plane.display();
 
         this.scene.popMatrix();
+
+        //this.scene.setActiveShader(this.scene.defaultShader);
 
     }
 
