@@ -39,7 +39,7 @@ export class MyScene extends CGFscene {
         this.axis = new CGFaxis(this);
         this.incompleteSphere = new MySphere(this, 16, 8);
         this.pyramid = new MyPyramid(this, 6, 1);
-        this.cylinder = new MyCylinder(this, 32, 6);
+        this.cylinder = new MyCylinder(this, 8, 0);
         this.movingObject = new MyMovingObject(this, this.pyramid, 0, 0, 0, 0);
 
         this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cylinder];
@@ -162,6 +162,12 @@ export class MyScene extends CGFscene {
             currObject.accelerate(-this.speedFactor / 200);
         } if (this.gui.isKeyPressed(keyEventCode["R"])) {
             currObject.reset();
+        }
+        if (this.gui.isKeyPressed(keyEventCode["Space"])) {
+            currObject.verAccel(this.speedFactor / 200);
+        }
+        if (this.gui.isKeyPressed(keyEventCode["Shift"])) {
+            currObject.verAccel(-this.speedFactor / 200);
         }
     }
 }

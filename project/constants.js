@@ -5,6 +5,7 @@ export const keyEventCode = {
     "W": "KeyW",
     "R": "KeyR",
     "Space": "Space",
+    "Shift": "ShiftLeft",
     "Enter": "Enter",
     "ArrowLeft": "ArrowLeft",
     "ArrowRight": "ArrowRight",
