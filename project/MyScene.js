@@ -41,8 +41,8 @@ export class MyScene extends CGFscene {
         this.incompleteSphere = new MySphere(this, 16, 8, new CGFtexture(this, './images/part-a/earth.jpg'));
         this.pyramid = new MyPyramid(this, 6, 1);
         this.cylinder = new MyCylinder(this, 32, 6);
-        this.movingObject = new MyMovingObject(this, this.pyramid, 0, 0, 0, 0);
         this.fish = new MyFish(this);
+        this.movingObject = new MyMovingObject(this, this.fish, 0, 0, 0, 0);
 
         this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cylinder, this.fish];
 
@@ -116,7 +116,7 @@ export class MyScene extends CGFscene {
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
-        // Initialize Model-View matrix as identity (no transformation
+        // Initialize Model-View matrix as identity (no transformation)
         this.updateProjectionMatrix();
         this.loadIdentity();
 
