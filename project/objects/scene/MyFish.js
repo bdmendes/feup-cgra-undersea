@@ -1,5 +1,6 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject, CGFtexture, CGFshader } from '../../../lib/CGF.js';
 import { MySphere } from '../base/MySphere.js'
+import { MyTriangle } from '../base/MyTriangle.js'
 
 export class MyFish {
     constructor(scene) {
@@ -13,6 +14,7 @@ export class MyFish {
     initObjects() {
         this.body = new MySphere(this.scene, 16, 16);
         this.eye = new MySphere(this.scene, 16, 16);
+        this.fin = new MyTriangle(this.scene);
     }
 
     initAppearance() {
@@ -37,7 +39,18 @@ export class MyFish {
     display() {
 
         this.scene.pushMatrix();
-        this.scene.scale(0.5, 0.7, 1); // global fish distortion
+        this.scene.scale(0.5, 0.8, 1); // global fish distortion
+
+        /* Fish body */
+        this.scene.pushMatrix();
+        this.bodyMaterial.apply();
+        this.scene.rotate(Math.PI / 2, 1, 0, 0);
+        this.bodyScales.bind(1);
+        this.scene.setActiveShader(this.bodyShader);
+        this.body.display();
+        this.scene.setActiveShader(this.scene.defaultShader);
+        this.scene.defaultAppearance.apply();
+        this.scene.popMatrix();
 
         /* Fish left eye */
         this.scene.pushMatrix();
@@ -57,15 +70,12 @@ export class MyFish {
         this.eye.display();
         this.scene.popMatrix();
 
-        /* Fish body */
+        /* Back fin */
         this.scene.pushMatrix();
-        this.bodyMaterial.apply();
+        this.scene.translate(0, 0, -1);
+        this.scene.scale(1, 0.7, 0.5);
         this.scene.rotate(Math.PI / 2, 1, 0, 0);
-        this.bodyScales.bind(1);
-        this.scene.setActiveShader(this.bodyShader);
-        this.body.display();
-        this.scene.setActiveShader(this.scene.defaultShader);
-        this.scene.defaultAppearance.apply();
+        this.fin.display();
         this.scene.popMatrix();
 
         this.scene.popMatrix();
