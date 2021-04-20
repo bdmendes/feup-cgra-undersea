@@ -3,11 +3,10 @@ precision highp float;
 #endif
 
 varying vec2 vTextureCoord;
-uniform sampler2D uSampler;
+uniform sampler2D uSampler2;
 
 void main() {
-  vec4 color = texture2D(uSampler, vTextureCoord);
-
+  vec4 color = texture2D(uSampler2, vTextureCoord);
   vec4 colorGrayScale = color;
   colorGrayScale.r = colorGrayScale.g = colorGrayScale.b =
       color.r * 0.299 + color.g * 0.587 + color.b * 0.114;
