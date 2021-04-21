@@ -30,7 +30,7 @@ void main() {
     vec2 bTextureCoord = vTextureCoord;
 
     vec4 color = texture2D(uSampler1, bTextureCoord)/1.5;
-    color = color + texture2D(uSampler2, bTextureCoord)/4.0;
+    color = color + texture2D(uSampler2, bTextureCoord)/4.0 + 0.2;
 
     gl_FragColor = color * uLight[0].diffuse;
 }

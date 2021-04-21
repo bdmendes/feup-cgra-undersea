@@ -1,8 +1,7 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject, CGFtexture, CGFshader } from '../../../lib/CGF.js';
 import { MyPlane } from "../base/MyPlane.js";
-import { MySphere} from "../base/MySphere.js";
 
-export class MySandFloor {
+export class MyFishNest {
     constructor(scene){
         this.scene = scene;
         this.initObject();
@@ -12,7 +11,7 @@ export class MySandFloor {
     }
 
     initObject(){
-        this.plane = new MyPlane(this.scene, 160, 0, 4, 0, 4); //TODO
+        this.plane = new MyPlane(this.scene, 80); //40 min 80 good 160 wonderful
     }
 
     initAppearance(){
@@ -24,15 +23,15 @@ export class MySandFloor {
     }
 
     initTextures(){
-        this.sandTexture = new CGFtexture(this.scene, 'images/part-b/sand.png');
-        this.heightMap = new CGFtexture(this.scene, 'images/part-b/sandMap.png');
+        this.sandTexture = new CGFtexture(this.scene, 'images/part-b/sandQuarter.png');
+        this.heightMap = new CGFtexture(this.scene, 'images/part-b/fishNestMap.png');
         this.appearance.setTexture(this.sandTexture);
         this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     }
 
     initShaders() {
-        this.bodyShader = new CGFshader(this.scene.gl, 'shaders/sandFloor.vert', 'shaders/sandFloor.frag');
-        this.bodyShader.setUniformsValues({ uSampler1: 1, uSampler2: 2, topRightPos: [2, 2], bottomLeftPos: [-2, -2]});
+        this.bodyShader = new CGFshader(this.scene.gl, 'shaders/fishNest.vert', 'shaders/fishNest.frag');
+        this.bodyShader.setUniformsValues({ uSampler1: 1, uSampler2: 2});
     }
 
 
@@ -47,7 +46,7 @@ export class MySandFloor {
 
         this.scene.setActiveShader(this.bodyShader);
 
-        this.scene.scale(50, 1, 50);
+        this.scene.scale(5, 1, 5);
         this.scene.rotate(-Math.PI/2, 1, 0, 0);
 
         this.plane.display();
@@ -57,18 +56,4 @@ export class MySandFloor {
         this.scene.setActiveShader(this.scene.defaultShader);
 
     }
-
-    initNormalVizBuffers(){
-        this.plane.initNormalVizBuffers();
-    }
-
-    disableNormalViz(){
-        this.plane.disableNormalViz();
-    }
-
-    enableNormalViz(){
-        this.plane.enableNormalViz();
-    }
-
-
 }

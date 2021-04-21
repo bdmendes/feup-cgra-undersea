@@ -7,6 +7,7 @@ import { MyCylinder } from "./objects/base/MyCylinder.js";
 import { MyMovingObject } from "./objects/base/MyMovingObject.js";
 import { MyPlane } from "./objects/base/MyPlane.js";
 import { MySandFloor } from "./objects/scene/MySandFloor.js";
+import { MyFishNest } from "./objects/scene/MyFishNest.js";
 
 /**
 * MyScene
@@ -44,11 +45,12 @@ export class MyScene extends CGFscene {
         this.cylinder = new MyCylinder(this, 8, 0);
         this.movingObject = new MyMovingObject(this, this.pyramid, 0, 0, 0, 0);
         this.sandFloor = new MySandFloor(this);
+        this.fishNest = new MyFishNest(this);
 
-        this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cylinder, this.sandFloor];
+        this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cylinder, this.sandFloor, this.fishNest];
 
         // Labels and ID's for object selection on MyInterface
-        this.objectIDs = { 'Sphere': 0, 'Pyramid': 1, 'Moving Object': 2, 'Cylinder': 3, 'Sand Floor': 4 };
+        this.objectIDs = { 'Sphere': 0, 'Pyramid': 1, 'Moving Object': 2, 'Cylinder': 3, 'Sand Floor': 4, 'Fish Nest':5 };
 
         this.defaultAppearance = new CGFappearance(this);
         this.defaultAppearance.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -83,6 +85,10 @@ export class MyScene extends CGFscene {
     }
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        this.camera.position = [2, 2, 2];
+        this.camera.fov = 2.0;
+        this.camera.target = [0, 2, 0];
+        this.camera.direction = this.camera.calculateDirection();
     }
 
     setDefaultAppearance() {
@@ -145,6 +151,8 @@ export class MyScene extends CGFscene {
             else
                 this.objects[this.selectedObject].disableNormalViz();
         }
+
+        this.fishNest.display();
 
         // Display selected object
         this.objects[this.selectedObject].display();
