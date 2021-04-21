@@ -1,10 +1,11 @@
-import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject } from "../lib/CGF.js";
+import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject, CGFtexture } from "../lib/CGF.js";
 import { MySphere } from "./objects/base/MySphere.js";
 import { keyEventCode } from "./constants.js";
 import { MyPyramid } from "./objects/base/MyPyramid.js";
 import { MyCubeMap } from "./objects/base/MyCubeMap.js";
 import { MyCylinder } from "./objects/base/MyCylinder.js";
 import { MyMovingObject } from "./objects/base/MyMovingObject.js";
+import { MyFish } from "./objects/scene/MyFish.js";
 
 /**
 * MyScene
@@ -37,15 +38,16 @@ export class MyScene extends CGFscene {
 
         // Initialize scene objects
         this.axis = new CGFaxis(this);
-        this.incompleteSphere = new MySphere(this, 16, 8);
+        this.incompleteSphere = new MySphere(this, 16, 8, new CGFtexture(this, './images/part-a/earth.jpg'));
         this.pyramid = new MyPyramid(this, 6, 1);
-        this.cylinder = new MyCylinder(this, 8, 0);
-        this.movingObject = new MyMovingObject(this, this.pyramid, 0, 0, 0, 0);
+        this.cylinder = new MyCylinder(this, 32, 6);
+        this.fish = new MyFish(this);
+        this.movingObject = new MyMovingObject(this, this.fish, 0, 0, 0, 0);
 
-        this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cylinder];
+        this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cylinder, this.fish];
 
         // Labels and ID's for object selection on MyInterface
-        this.objectIDs = { 'Sphere': 0, 'Pyramid': 1, 'Moving Object': 2, 'Cylinder': 3 };
+        this.objectIDs = { 'Sphere': 0, 'Pyramid': 1, 'Moving Object': 2, 'Cylinder': 3, 'Fish': 4 };
 
         this.defaultAppearance = new CGFappearance(this);
         this.defaultAppearance.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -114,7 +116,7 @@ export class MyScene extends CGFscene {
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
-        // Initialize Model-View matrix as identity (no transformation
+        // Initialize Model-View matrix as identity (no transformation)
         this.updateProjectionMatrix();
         this.loadIdentity();
 
