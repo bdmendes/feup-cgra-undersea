@@ -24,14 +24,14 @@ export class MyPillarShader {
 
     initTextures(){
         this.pillarTexture = new CGFtexture(this.scene, 'images/part-b/pillarTexture.png');
-        this.bumpMap = new CGFtexture(this.scene, 'images/part-b/pillarTexture4Map3.png');
+        this.bumpMap = new CGFtexture(this.scene, 'images/part-b/pillarMap.png');
         this.appearance.setTexture(this.pillarTexture);
         this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     }
 
     initShaders() {
-        //this.bodyShader = new CGFshader(this.scene.gl, 'shaders/pillarShader.vert', 'shaders/pillarShader.frag');
-        //this.bodyShader.setUniformsValues({ uSampler1: 1, uSampler2: 2});
+        this.bodyShader = new CGFshader(this.scene.gl, 'shaders/pillarShader.vert', 'shaders/pillarShader.frag');
+        this.bodyShader.setUniformsValues({ uSampler1: 1, uSampler2: 2});
     }
 
 
@@ -41,16 +41,16 @@ export class MyPillarShader {
 
         this.appearance.apply();
 
-        //this.pillarTexture.bind(1);
-        //this.bumpMap.bind(2);
+        this.pillarTexture.bind(1);
+        this.bumpMap.bind(2);
 
-        //this.scene.setActiveShader(this.bodyShader);
+        this.scene.setActiveShader(this.bodyShader);
 
         this.pillar.display();
 
         this.scene.popMatrix();
 
-        //this.scene.setActiveShader(this.scene.defaultShader);
+        this.scene.setActiveShader(this.scene.defaultShader);
 
     }
 

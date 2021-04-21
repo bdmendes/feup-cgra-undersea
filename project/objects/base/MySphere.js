@@ -11,14 +11,6 @@ export class MySphere extends CGFobject {
         super(scene);
         this.latDivs = stacks * 2;
         this.longDivs = slices;
-
-        this.material = new CGFappearance(this.scene);
-        this.material.setAmbient(0.1, 0.1, 0.1, 1);
-        this.material.setDiffuse(0.9, 0.9, 0.9, 1);
-        this.material.setSpecular(0.1, 0.1, 0.1, 1);
-        this.material.setShininess(10.0);
-        this.material.setTexture(new CGFtexture(this.scene, 'images/part-a/earth.jpg'));
-
         this.initBuffers();
     }
 
@@ -95,10 +87,4 @@ export class MySphere extends CGFobject {
         this.texCoords = [...coords];
         this.updateTexCoordsGLBuffers();
     }
-
-    display() {
-        this.material.apply();
-        super.display();
-    }
-
 }
