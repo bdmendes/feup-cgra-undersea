@@ -64,7 +64,7 @@ export class MyScene extends CGFscene {
 
         // Objects connected to MyInterface
         this.displayAxis = true;
-        this.selectedObject = 4;
+        this.selectedObject = 2;
         this.displayNormals = false;
         this.wireframe = false;
         this.selectedMapTexture = 0;

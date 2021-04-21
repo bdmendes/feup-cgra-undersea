@@ -6,36 +6,30 @@ export class MyFish {
     constructor(scene) {
         this.scene = scene;
         this.initObjects();
-        this.initAppearance();
-        this.initTextures();
+        this.initMaterials();
         this.initShaders();
     }
 
     initObjects() {
-        this.body = new MySphere(this.scene, 16, 16);
-        this.eye = new MySphere(this.scene, 16, 16);
+        this.body = new MySphere(this.scene, 32, 32);
+        this.eye = new MySphere(this.scene, 32, 32);
         this.fin = new MyTriangle(this.scene);
     }
 
-    initAppearance() {
+    initMaterials() {
+        /* Body */
         this.bodyMaterial = new CGFappearance(this.scene);
-        this.bodyMaterial.setAmbient(1, 1, 1, 1);
-        this.bodyMaterial.setDiffuse(1, 1, 1, 1);
-        this.bodyMaterial.setSpecular(1, 1, 1, 1);
-        this.bodyMaterial.setShininess(120);
-
-        this.finMaterial = new CGFappearance(this.scene);
-        this.finMaterial.setAmbient(1, 1, 1, 1);
-        this.finMaterial.setDiffuse(1, 1, 1, 1);
-        this.finMaterial.setSpecular(1, 1, 1, 1);
-        this.finMaterial.setShininess(120);
-        this.finMaterial.setColor(0.55, 0.18, 0.1, 1);
-    }
-
-    initTextures() {
-        this.bodyScales = new CGFtexture(this.scene, 'images/part-b/fish_scales/fish_scales_2.png');
+        this.bodyScales = new CGFtexture(this.scene, 'images/part-b/fish/fish_scales_2.png');
         this.bodyMaterial.setTexture(this.bodyScales);
-        this.bodyMaterial.setTextureWrap('REPEAT', 'REPEAT');
+
+        /* Fin */
+        this.finMaterial = new CGFappearance(this.scene);
+        this.finMaterial.setColor(0.55, 0.18, 0.1, 1);
+
+        /* Eye */
+        this.eyeMaterial = new CGFappearance(this.scene);
+        this.eyeTexture = new CGFtexture(this.scene, 'images/part-b/fish/fish_eye.jpg');
+        this.eyeMaterial.setTexture(this.eyeTexture);
     }
 
     initShaders() {
@@ -61,20 +55,25 @@ export class MyFish {
 
         /* Left eye */
         this.scene.pushMatrix();
+        this.eyeMaterial.apply();
         this.scene.rotate(Math.PI / 10, 0, 0, 1);
         this.scene.rotate(-Math.PI / 6, 0, 1, 0);
-        this.scene.translate(0.85, 0, 0);
+        this.scene.translate(0.90, 0, 0);
         this.scene.scale(0.2, 0.2, 0.15);
+        this.scene.rotate(Math.PI, 0, 1, 0);
         this.eye.display();
+        this.scene.defaultAppearance.apply();
         this.scene.popMatrix();
 
-        /* Fish right eye */
+        /* Right eye */
         this.scene.pushMatrix();
+        this.eyeMaterial.apply();
         this.scene.rotate(-Math.PI / 10, 0, 0, 1);
         this.scene.rotate(Math.PI / 6, 0, 1, 0);
-        this.scene.translate(-0.85, 0, 0);
+        this.scene.translate(-0.90, 0, 0);
         this.scene.scale(0.2, 0.2, 0.15);
         this.eye.display();
+        this.scene.defaultAppearance.apply();
         this.scene.popMatrix();
 
         /* Back fin */
