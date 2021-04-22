@@ -1,4 +1,4 @@
-import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject } from "../lib/CGF.js";
+import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject, CGFtexture } from "../lib/CGF.js";
 import { MySphere } from "./objects/base/MySphere.js";
 import { keyEventCode } from "./constants.js";
 import { MyPyramid } from "./objects/base/MyPyramid.js";
@@ -8,6 +8,7 @@ import { MyMovingObject } from "./objects/base/MyMovingObject.js";
 import { MyPillar } from "./objects/base/MyPillar.js";
 import { MyPillarShader } from "./objects/base/MyPillarShader.js";
 import { MyRock } from "./objects/base/MyRock.js";
+import { MyFish } from "./objects/scene/MyFish.js";
 
 /**
 * MyScene
@@ -40,12 +41,14 @@ export class MyScene extends CGFscene {
 
         // Initialize scene objects
         this.axis = new CGFaxis(this);
-        this.incompleteSphere = new MySphere(this, 16, 8);
+        this.incompleteSphere = new MySphere(this, 16, 8, new CGFtexture(this, './images/part-a/earth.jpg'));
         this.pyramid = new MyPyramid(this, 6, 1);
-        this.cylinder = new MyCylinder(this, 8, 0);
-        this.movingObject = new MyMovingObject(this, this.pyramid, 0, 0, 0, 0);
+
         this.pillarShader = new MyPillarShader(this);
         this.rock = new MyRock(this);
+        this.cylinder = new MyCylinder(this, 32, 6);
+        this.fish = new MyFish(this);
+        this.movingObject = new MyMovingObject(this, this.fish, 0, 0, 0, 0);
 
         this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cylinder, this.pillarShader, this.rock];
 
@@ -119,7 +122,7 @@ export class MyScene extends CGFscene {
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
-        // Initialize Model-View matrix as identity (no transformation
+        // Initialize Model-View matrix as identity (no transformation)
         this.updateProjectionMatrix();
         this.loadIdentity();
 
