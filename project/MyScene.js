@@ -10,6 +10,7 @@ import { MyPillarShader } from "./objects/base/MyPillarShader.js";
 import { MyRock } from "./objects/base/MyRock.js";
 import { MyFish } from "./objects/scene/MyFish.js";
 
+
 /**
 * MyScene
 * @constructor
@@ -43,6 +44,7 @@ export class MyScene extends CGFscene {
         this.axis = new CGFaxis(this);
         this.incompleteSphere = new MySphere(this, 16, 8, new CGFtexture(this, './images/part-a/earth.jpg'));
         this.pyramid = new MyPyramid(this, 6, 1);
+
 
         this.pillarShader = new MyPillarShader(this);
         this.rock = new MyRock(this);

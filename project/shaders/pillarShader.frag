@@ -28,9 +28,8 @@ uniform lightProperties uLight[NUMBER_OF_LIGHTS];
 void main() {
     
     vec2 bTextureCoord = vTextureCoord;
-
-    vec4 color = texture2D(uSampler1, bTextureCoord);
-    color = color;
+  
+    vec4 color = texture2D(uSampler1, bTextureCoord)/1.5;
 
     gl_FragColor = color * uLight[0].diffuse;
 }
