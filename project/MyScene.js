@@ -12,6 +12,7 @@ import { MyFish } from "./objects/scene/MyFish.js";
 import { MyPlane } from "./objects/base/MyPlane.js";
 import { MySandFloor } from "./objects/scene/MySandFloor.js";
 import { MyFishNest } from "./objects/scene/MyFishNest.js";
+import { MyWaterSurface } from "./objects/base/MyWaterSurface.js";
 
 /**
 * MyScene
@@ -46,7 +47,6 @@ export class MyScene extends CGFscene {
         this.axis = new CGFaxis(this);
         this.incompleteSphere = new MySphere(this, 16, 8, new CGFtexture(this, './images/part-a/earth.jpg'));
         this.pyramid = new MyPyramid(this, 6, 1);
-
         this.pillarShader = new MyPillarShader(this);
         this.rock = new MyRock(this);
         this.cylinder = new MyCylinder(this, 32, 6);
@@ -54,6 +54,7 @@ export class MyScene extends CGFscene {
         this.movingObject = new MyMovingObject(this, this.fish, 0, 0, 0, 0);
         this.sandFloor = new MySandFloor(this);
         this.fishNest = new MyFishNest(this);
+        this.waterSurface = new MyWaterSurface(this);
 
         this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cylinder, this.pillarShader, this.rock];
 
@@ -123,6 +124,7 @@ export class MyScene extends CGFscene {
     update(t) {
         this.checkKeys();
         if (this.objects[this.selectedObject] instanceof MyMovingObject) this.objects[this.selectedObject].update();
+        this.waterSurface.update(t);
     }
 
     display() {
@@ -162,6 +164,7 @@ export class MyScene extends CGFscene {
 
         this.fishNest.display();
         this.sandFloor.display();
+        this.waterSurface.display();
 
         // Display selected object
         this.objects[this.selectedObject].display();
