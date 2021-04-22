@@ -9,7 +9,9 @@ import { MyPillar } from "./objects/base/MyPillar.js";
 import { MyPillarShader } from "./objects/base/MyPillarShader.js";
 import { MyRock } from "./objects/base/MyRock.js";
 import { MyFish } from "./objects/scene/MyFish.js";
-
+import { MyPlane } from "./objects/base/MyPlane.js";
+import { MySandFloor } from "./objects/scene/MySandFloor.js";
+import { MyFishNest } from "./objects/scene/MyFishNest.js";
 
 /**
 * MyScene
@@ -45,12 +47,13 @@ export class MyScene extends CGFscene {
         this.incompleteSphere = new MySphere(this, 16, 8, new CGFtexture(this, './images/part-a/earth.jpg'));
         this.pyramid = new MyPyramid(this, 6, 1);
 
-
         this.pillarShader = new MyPillarShader(this);
         this.rock = new MyRock(this);
         this.cylinder = new MyCylinder(this, 32, 6);
         this.fish = new MyFish(this);
         this.movingObject = new MyMovingObject(this, this.fish, 0, 0, 0, 0);
+        this.sandFloor = new MySandFloor(this);
+        this.fishNest = new MyFishNest(this);
 
         this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cylinder, this.pillarShader, this.rock];
 
@@ -90,6 +93,10 @@ export class MyScene extends CGFscene {
     }
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        this.camera.position = [2, 2, 2];
+        this.camera.fov = 2.0;
+        this.camera.target = [0, 2, 0];
+        this.camera.direction = this.camera.calculateDirection();
     }
 
     setDefaultAppearance() {
@@ -152,6 +159,9 @@ export class MyScene extends CGFscene {
             else
                 this.objects[this.selectedObject].disableNormalViz();
         }
+
+        this.fishNest.display();
+        this.sandFloor.display();
 
         // Display selected object
         this.objects[this.selectedObject].display();
