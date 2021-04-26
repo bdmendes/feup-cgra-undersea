@@ -35,7 +35,7 @@ export class MyScene extends CGFscene {
         this.gl.enable(this.gl.CULL_FACE);
         this.gl.depthFunc(this.gl.LEQUAL);
 
-        this.setUpdatePeriod(50);
+        this.setUpdatePeriod(100);
 
         this.enableTextures(true);
 
@@ -123,7 +123,13 @@ export class MyScene extends CGFscene {
     // called periodically (as per setUpdatePeriod() in init())
     update(t) {
         this.checkKeys();
-        if (this.objects[this.selectedObject] instanceof MyMovingObject) this.objects[this.selectedObject].update();
+        const selectedObject = this.objects[this.selectedObject];
+        if (selectedObject instanceof MyMovingObject) {
+            selectedObject.update();
+            if (selectedObject.getObject() instanceof MyFish) {
+                selectedObject.getObject().update();
+            }
+        }
         this.waterSurface.update(t);
     }
 
