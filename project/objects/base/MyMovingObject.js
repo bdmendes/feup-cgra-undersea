@@ -10,7 +10,7 @@ export class MyMovingObject {
     reset() {
         this.rotation = 0;
         this.tilt = 0;
-        this.position = [0, 2, 0];
+        this.position = [0, 3, 0];
         this.speed = 0;
         this.verSpeed = 0;
     }

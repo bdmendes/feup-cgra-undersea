@@ -2,8 +2,8 @@ import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject, CGFtexture, CGF
 import { MySphere } from '../base/MySphere.js'
 import { MyTriangle } from '../base/MyTriangle.js'
 
-const maxBackFinRotation = Math.PI / 4;
-const maxSideFinRotation = [0, 0, Math.PI / 8];
+const maxBackFinRotation = Math.PI / 9;
+const maxSideFinRotation = [Math.PI / 18, Math.PI / 18, 0];
 
 export class MyFish {
     constructor(scene) {
@@ -48,6 +48,7 @@ export class MyFish {
 
         this.scene.pushMatrix();
         this.scene.scale(0.5, 0.8, 1); // global fish distortion
+        this.scene.scale(0.5, 0.5, 0.5); // 0.5 units of length
 
         /* Body */
         this.scene.pushMatrix();
@@ -107,8 +108,12 @@ export class MyFish {
         /* Left fin */
         this.scene.pushMatrix();
         this.finMaterial.apply();
-        this.scene.translate(1.03, -0.9, 0.25);
+        this.scene.translate(1.03, -0.5, 0.25);
         this.scene.scale(0.5, 0.4, 0.5);
+        this.scene.rotate(this.sideFinRotation[0], 1, 0, 0);
+        this.scene.rotate(this.sideFinRotation[1], 0, 1, 0);
+        this.scene.rotate(this.sideFinRotation[2], 0, 0, 1);
+        this.scene.translate(0, -1.3, 0);
         this.scene.rotate(Math.PI / 18, 0, 0, 1);
         this.scene.rotate(3 * Math.PI / 4, 1, 0, 0);
         this.fin.display();
@@ -118,8 +123,12 @@ export class MyFish {
         /* Right fin */
         this.scene.pushMatrix();
         this.finMaterial.apply();
-        this.scene.translate(-1.03, -0.9, 0.25);
+        this.scene.translate(-1.03, -0.5, 0.25);
         this.scene.scale(0.5, 0.4, 0.5);
+        this.scene.rotate(-this.sideFinRotation[0], 1, 0, 0);
+        this.scene.rotate(this.sideFinRotation[1], 0, 1, 0);
+        this.scene.rotate(this.sideFinRotation[2], 0, 0, 1);
+        this.scene.translate(0, -1.3, 0);
         this.scene.rotate(-Math.PI / 18, 0, 0, 1);
         this.scene.rotate(3 * Math.PI / 4, 1, 0, 0);
         this.fin.display();
@@ -131,10 +140,21 @@ export class MyFish {
 
     update() {
         /* Back fin movement */
-        let backFinOffset = this.scene.speedFactor * Math.PI / 32;
+        let backFinOffset = this.scene.speedFactor * 1.2 * Math.PI / 36;
         if (Math.abs(this.backFinRotation + backFinOffset) > maxBackFinRotation) {
             this.backFinOrientation *= -1;
         }
         this.backFinRotation += this.backFinOrientation * backFinOffset;
+
+        /* Side fin movement */
+        let _sideFinOffset = this.scene.speedFactor * 0.8 * Math.PI / 36;
+        let sideFinOffset = [_sideFinOffset, _sideFinOffset, 0];
+        for (let i = 0; i < 3; i++) {
+            if (Math.abs(this.sideFinRotation[i] + sideFinOffset[i]) > maxSideFinRotation[i] || Math.abs(this.sideFinRotation[i] + sideFinOffset[i]) < 0) {
+                console.log("hey!");
+                this.sideFinOrientation[i] *= -1;
+            }
+            this.sideFinRotation[i] += this.sideFinOrientation[i] * sideFinOffset[i];
+        }
     }
 }
