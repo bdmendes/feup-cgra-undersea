@@ -183,14 +183,18 @@ export class MyScene extends CGFscene {
             currObject.accelerate(this.speedFactor / 200);
         } if (this.gui.isKeyPressed(keyEventCode["S"])) {
             currObject.accelerate(-this.speedFactor / 200);
-        } if (this.gui.isKeyPressed(keyEventCode["R"])) {
+        } if (this.gui.isKeyPressed(keyEventCode["R"])) { 
             currObject.reset();
         }
         if (this.gui.isKeyPressed(keyEventCode["Space"])) {
-            currObject.verAccel(this.speedFactor / 200);
+            currObject.verAccel(this.speedFactor/10);
         }
         if (this.gui.isKeyPressed(keyEventCode["Shift"])) {
-            currObject.verAccel(-this.speedFactor / 200);
+            currObject.verAccel(-this.speedFactor/10);
         }
+        if(!this.gui.isKeyPressed(keyEventCode["Space"]) && !this.gui.isKeyPressed(keyEventCode["Shift"])){
+            currObject.verAccel(0);
+        }
+
     }
 }

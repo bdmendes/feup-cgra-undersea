@@ -55,6 +55,6 @@ export class MyMovingObject {
     }
 
     verAccel(val) {
-        this.verSpeed += val;
+        this.verSpeed = val;
     }
 }
