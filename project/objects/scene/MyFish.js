@@ -2,12 +2,19 @@ import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject, CGFtexture, CGF
 import { MySphere } from '../base/MySphere.js'
 import { MyTriangle } from '../base/MyTriangle.js'
 
+const maxBackFinRotation = Math.PI / 4;
+const maxSideFinRotation = [0, 0, Math.PI / 8];
+
 export class MyFish {
     constructor(scene) {
         this.scene = scene;
         this.initObjects();
         this.initMaterials();
         this.initShaders();
+        this.backFinRotation = 0;
+        this.backFinOrientation = 1;
+        this.sideFinRotation = [0, 0, 0];
+        this.sideFinOrientation = [1, 1, 1];
     }
 
     initObjects() {
@@ -81,6 +88,7 @@ export class MyFish {
         this.finMaterial.apply();
         this.scene.translate(0, 0, -1);
         this.scene.scale(1, 0.7, 0.5);
+        this.scene.rotate(this.backFinRotation, 0, 1, 0);
         this.scene.rotate(Math.PI / 2, 1, 0, 0);
         this.fin.display();
         this.scene.defaultAppearance.apply();
@@ -119,5 +127,14 @@ export class MyFish {
         this.scene.popMatrix();
 
         this.scene.popMatrix();
+    }
+
+    update() {
+        /* Back fin movement */
+        let backFinOffset = this.scene.speedFactor * Math.PI / 32;
+        if (Math.abs(this.backFinRotation + backFinOffset) > maxBackFinRotation) {
+            this.backFinOrientation *= -1;
+        }
+        this.backFinRotation += this.backFinOrientation * backFinOffset;
     }
 }
