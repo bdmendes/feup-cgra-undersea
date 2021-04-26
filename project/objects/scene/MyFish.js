@@ -125,8 +125,8 @@ export class MyFish {
         this.finMaterial.apply();
         this.scene.translate(-1.03, -0.5, 0.25);
         this.scene.scale(0.5, 0.4, 0.5);
-        this.scene.rotate(-this.sideFinRotation[0], 1, 0, 0);
-        this.scene.rotate(this.sideFinRotation[1], 0, 1, 0);
+        this.scene.rotate(this.sideFinRotation[0], 1, 0, 0);
+        this.scene.rotate(-this.sideFinRotation[1], 0, 1, 0);
         this.scene.rotate(this.sideFinRotation[2], 0, 0, 1);
         this.scene.translate(0, -1.3, 0);
         this.scene.rotate(-Math.PI / 18, 0, 0, 1);
