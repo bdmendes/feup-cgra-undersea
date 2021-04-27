@@ -10,7 +10,7 @@ export class MyMovingObject {
     reset() {
         this.rotation = 0;
         this.tilt = 0;
-        this.position = [0, 0, 0];
+        this.position = [0, 3, 0];
         this.speed = 0;
         this.verSpeed = 0;
     }
@@ -29,19 +29,19 @@ export class MyMovingObject {
         this.position[0] += this.speed * this.scene.speedFactor * Math.sin(this.rotation);
         this.position[1] += this.verSpeed;
         this.position[2] += this.speed * this.scene.speedFactor * Math.cos(this.rotation);
-        
-        if (this.verSpeed != 0 && this.speed != 0){
-            var h = Math.sqrt(Math.pow(this.speed,2) + Math.pow(this.verSpeed,2));
-            this.tilt = Math.asin(this.verSpeed/h) * ((this.speed > 0) ? -1 : 1);
+
+        if (this.verSpeed != 0 && this.speed != 0) {
+            var h = Math.sqrt(Math.pow(this.speed, 2) + Math.pow(this.verSpeed, 2));
+            this.tilt = Math.asin(this.verSpeed / h) * ((this.speed > 0) ? -1 : 1);
             console.log(h);
         }
-        else if(this.verSpeed != 0){
-            this.tilt = Math.PI/2 * ((this.verSpeed > 0) ? -1 : 1);
+        else if (this.verSpeed != 0) {
+            this.tilt = Math.PI / 2 * ((this.verSpeed > 0) ? -1 : 1);
         }
-        else{
+        else {
             this.tilt = 0;
         }
-        
+
 
     }
 
@@ -56,5 +56,9 @@ export class MyMovingObject {
 
     verAccel(val) {
         this.verSpeed = val;
+    }
+
+    getObject() {
+        return this.object;
     }
 }
