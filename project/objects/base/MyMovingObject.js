@@ -1,17 +1,20 @@
 import { CGFobject } from '../../../lib/CGF.js';
+import { MyRock } from "../base/MyRock.js";
 
 export class MyMovingObject {
     constructor(scene, object) {
         this.scene = scene;
         this.object = object;
+        this.animating = false;
+        this.rock = null;
         this.reset();
     }
 
     reset() {
         this.rotation = 0;
         this.tilt = 0;
-        this.position = [0, 3, 0];
-        this.mouthPos = [0, 3, 0];
+        this.position = [0, 1, 0];
+        this.mouthPos = [0, 1, 0];
         this.speed = 0;
         this.verSpeed = 0;
     }
@@ -31,6 +34,10 @@ export class MyMovingObject {
         this.position[1] += this.verSpeed;
         this.position[2] += this.speed * this.scene.speedFactor * Math.cos(this.rotation);
 
+        if (this.position[1] < 0.5){
+            this.position[1] = 0.5;
+        }
+
         if (this.verSpeed != 0 && this.speed != 0) {
             var h = Math.sqrt(Math.pow(this.speed, 2) + Math.pow(this.verSpeed, 2));
             this.tilt = Math.asin(this.verSpeed / h) * ((this.speed > 0) ? -1 : 1);
@@ -47,6 +54,11 @@ export class MyMovingObject {
         this.mouthPos[1] = this.position[1] - 0.5 * Math.sin(this.tilt);
         this.mouthPos[2] = this.position[2] + 0.5 * Math.cos(this.rotation) * Math.cos(this.tilt)
 
+        if (this.rock != null){
+            this.rock.setCoord(this.mouthPos);
+            //this.rock.setRotation(this.rotation);
+            //this.rock.setTilt(this.setTilt);
+        }
 
     }
 
@@ -61,6 +73,10 @@ export class MyMovingObject {
 
     verAccel(val) {
         this.verSpeed = val;
+    }
+
+    getCoords(){
+        return this.position;
     }
 
     getObject() {
@@ -78,4 +94,24 @@ export class MyMovingObject {
     getTilt(){
         return this.tilt;
     }
+
+    getAnimating(){
+        return this.animating;
+    }
+
+    pickUpRock(rock){
+        if (rock == null){
+            return;
+        }
+
+        this.rock = rock;
+
+        this.animating = true;
+        this.speed = 0;
+        this.verSpeed = 0;
+
+
+
+    }
+
 }
