@@ -15,7 +15,7 @@ void main() {
 
     float height = (texture2D(uSampler2, aTextureCoord).r + texture2D(uSampler2, aTextureCoord).g + texture2D(uSampler2, aTextureCoord).b) / 3.0;
 
-    vec3 offset = vec3(0.0, 0.0, height + 0.5) / 10.0;
+    vec3 offset = vec3(0.0, 0.0, height + 0.1) / 5.0;
 
     vec3 bVertexPosition = aVertexPosition + offset;
 

@@ -22,9 +22,17 @@ export class MyInterface extends CGFinterface {
 
         this.gui.add(this.scene, 'selectedObject', this.scene.objectIDs).name('Selected Object');
 
-        this.gui.add(this.scene, 'enableCubeMap', this.scene.enableCubeMap).name('Enable Cube Map');
+        this.gui.add(this.scene, 'enableCubeMap', this.scene.enableCubeMap).name('Cube Map');
 
         this.gui.add(this.scene, 'selectedMapTexture', this.scene.mapTexturesIDs).name('Selected Map').onChange(this.scene.updateMapTexture.bind(this.scene));
+
+        this.gui.add(this.scene, 'enableSandFloor').name('Sand Floor');
+
+        this.gui.add(this.scene, 'enableFishNest').name('Fish Nest');
+
+        this.gui.add(this.scene, 'enableWaterSurface').name('Water Surface');
+
+        this.gui.add(this.scene, 'enableRockSet').name('Rock Set');
 
         this.gui.add(this.scene, 'scaleFactor', 0.1, 5.0).name('Scale Factor');
 

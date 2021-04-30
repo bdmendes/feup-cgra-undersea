@@ -3,12 +3,23 @@ import { MyPlane } from "../base/MyPlane.js";
 import { MySphere} from "../base/MySphere.js";
 
 export class MySandFloor {
-    constructor(scene){
+    constructor(scene, nestXPos, nestYPos, nestRadius){
         this.scene = scene;
+
+        if (nestXPos == undefined) this.nestXPos = 0.0;
+        else this.nestXPos = nestXPos;
+
+        if (nestYPos == undefined) this.nestYPos = 0.0;
+        else this.nestYPos = nestYPos;
+
+        if (nestRadius == undefined) this.nestRadius = 2.5;
+        else this.nestRadius = nestRadius;
+
         this.initObject();
         this.initAppearance();
         this.initTextures();
         this.initShaders();
+
     }
 
     initObject(){
@@ -32,7 +43,7 @@ export class MySandFloor {
 
     initShaders() {
         this.bodyShader = new CGFshader(this.scene.gl, 'shaders/sandFloor.vert', 'shaders/sandFloor.frag');
-        this.bodyShader.setUniformsValues({ uSampler1: 1, uSampler2: 2, topRightPos: [2, 2], bottomLeftPos: [-2, -2]});
+        this.bodyShader.setUniformsValues({ uSampler1: 1, uSampler2: 2, nestPos: [this.nestXPos, this.nestYPos], nestRadius: this.nestDiam/2.0});
     }
 
 

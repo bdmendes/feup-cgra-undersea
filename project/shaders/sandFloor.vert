@@ -11,18 +11,19 @@ varying vec2 vTextureCoord;
 uniform sampler2D uSampler1;
 uniform sampler2D uSampler2;
 
-uniform vec2 topRightPos;
-uniform vec2 bottomLeftPos;
+uniform vec2 nestPos;
+uniform float nestRadius;
+
 
 void main() {
 
     float height = (texture2D(uSampler2, aTextureCoord).r + texture2D(uSampler2, aTextureCoord).g + texture2D(uSampler2, aTextureCoord).b) / 3.0;
 
-    vec3 offset = vec3(0.0, 0.0, height) / 10.0;
+    vec3 offset = vec3(0.0, 0.0, height - 0.5) * 1.5;
 
     vec3 bVertexPosition = aVertexPosition + offset;
-
-    if(bVertexPosition.x > bottomLeftPos[0]/50.0 && bVertexPosition.y > bottomLeftPos[1]/50.0 && bVertexPosition.x < topRightPos[0]/50.0 && bVertexPosition.y < topRightPos[1]/50.0){
+                                                                //This + because for some reason the y coord is inverted
+    if(sqrt(pow(bVertexPosition.x - nestPos[0]/50.0, 2.0) + pow(bVertexPosition.y + nestPos[1]/50.0, 2.0)) < (nestRadius-2.0)/50.0){
         bVertexPosition.z = -5.0;
     }  
 
