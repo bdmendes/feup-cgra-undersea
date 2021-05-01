@@ -58,7 +58,7 @@ export class MyRockSet {
 
     pickUpRock(coords){
 
-        var MAX_DIST = 5.0;
+        var MAX_DIST = 20.0;
         
         var min_dist = this.getDist(coords, this.rocks[0].getCoords());
         var rock = this.rocks[0];
