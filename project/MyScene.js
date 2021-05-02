@@ -13,6 +13,7 @@ import { MyPlane } from "./objects/base/MyPlane.js";
 import { MySandFloor } from "./objects/scene/MySandFloor.js";
 import { MyFishNest } from "./objects/scene/MyFishNest.js";
 import { MyWaterSurface } from "./objects/base/MyWaterSurface.js";
+import { MyRockSet } from "./objects/base/MyRockSet.js";
 
 /**
 * MyScene
@@ -43,23 +44,29 @@ export class MyScene extends CGFscene {
         this.cubeMap = new MyCubeMap(this);
         this.mapTexturesIDs = { 'Axis': 0, 'Plains': 1, 'City': 2, 'Beach': 3, 'Sky': 4, 'Underwater': 5 };
 
+        //Initialize env variables
+        this.nestXPos = -7.5;
+        this.nestZPos = -5.0;
+        this.nestRadius = 2.5;
+
         // Initialize scene objects
         this.axis = new CGFaxis(this);
         this.incompleteSphere = new MySphere(this, 16, 8, new CGFtexture(this, './images/part-a/earth.jpg'));
         this.pyramid = new MyPyramid(this, 6, 1);
         this.pillarShader = new MyPillarShader(this);
-        this.rock = new MyRock(this);
+        this.rock = new MyRock(this, 0.5, 0.8, 0.2, 0, 1, 0);
         this.cylinder = new MyCylinder(this, 32, 6);
         this.fish = new MyFish(this);
         this.movingObject = new MyMovingObject(this, this.fish, 0, 0, 0, 0);
-        this.sandFloor = new MySandFloor(this);
-        this.fishNest = new MyFishNest(this);
+        this.sandFloor = new MySandFloor(this, this.nestXPos, this.nestZPos, this.nestRadius);
+        this.fishNest = new MyFishNest(this, this.nestXPos, this.nestZPos, this.nestRadius);
         this.waterSurface = new MyWaterSurface(this);
+        this.rockSet = new MyRockSet(this, 10, this.nestXPos, this.nestZPos, this.nestRadius);
 
         this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cylinder, this.pillarShader, this.rock];
 
         // Labels and ID's for object selection on MyInterface
-        this.objectIDs = { 'Sphere': 0, 'Pyramid': 1, 'Moving Object': 2, 'Cylinder': 3, 'Pillar': 4, 'Rock': 5 };
+        this.objectIDs = { 'Sphere': 0, 'Pyramid': 1, 'Moving Object': 2, 'Cylinder': 3, 'Pillar': 4, 'Rock': 5};
 
         this.defaultAppearance = new CGFappearance(this);
         this.defaultAppearance.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -75,16 +82,22 @@ export class MyScene extends CGFscene {
         this.sphereAppearance.setShininess(120);
 
         // Objects connected to MyInterface
-        this.displayAxis = true;
+        this.displayAxis = false;
         this.selectedObject = 2;
         this.displayNormals = false;
         this.wireframe = false;
-        this.selectedMapTexture = 0;
-        this.enableCubeMap = false;
+        this.selectedMapTexture = 5;
+        this.enableCubeMap = true;
+        this.enableSandFloor = true;
+        this.enableFishNest = true;
+        this.enableWaterSurface = true;
+        this.enableRockSet = true;
 
         // Global object-related properties
         this.scaleFactor = 1;
         this.speedFactor = 1;
+
+        this.updateMapTexture();
     }
     initLights() {
         this.lights[0].setPosition(15, 2, 5, 1);
@@ -120,7 +133,6 @@ export class MyScene extends CGFscene {
         this.cubeMap.changeTexture(this.selectedMapTexture);
     }
 
-    // called periodically (as per setUpdatePeriod() in init())
     update(t) {
         this.checkKeys();
         const selectedObject = this.objects[this.selectedObject];
@@ -130,7 +142,10 @@ export class MyScene extends CGFscene {
                 selectedObject.getObject().update();
             }
         }
-        this.waterSurface.update(t);
+        if(this.enableWaterSurface){
+            this.waterSurface.update(t);
+        }
+        
     }
 
     display() {
@@ -160,6 +175,18 @@ export class MyScene extends CGFscene {
         if (this.enableCubeMap)
             this.cubeMap.display();
 
+        if (this.enableSandFloor)
+            this.sandFloor.display();
+
+        if (this.enableFishNest)
+            this.fishNest.display();
+
+        if (this.enableWaterSurface)
+            this.waterSurface.display();
+
+        if (this.enableRockSet)
+            this.rockSet.display();
+
         /* Unless we make MyMovingObject a proper CGFObject with all its properties... */
         if (this.objects[this.selectedObject] instanceof CGFobject) {
             if (this.displayNormals)
@@ -167,10 +194,6 @@ export class MyScene extends CGFscene {
             else
                 this.objects[this.selectedObject].disableNormalViz();
         }
-
-        this.fishNest.display();
-        this.sandFloor.display();
-        this.waterSurface.display();
 
         // Display selected object
         this.objects[this.selectedObject].display();
@@ -191,14 +214,11 @@ export class MyScene extends CGFscene {
             currObject.accelerate(-this.speedFactor / 200);
         } if (this.gui.isKeyPressed(keyEventCode["R"])) { 
             currObject.reset();
-        }
-        if (this.gui.isKeyPressed(keyEventCode["Space"])) {
-            currObject.verAccel(this.speedFactor/10);
-        }
-        if (this.gui.isKeyPressed(keyEventCode["Shift"])) {
-            currObject.verAccel(-this.speedFactor/10);
-        }
-        if(!this.gui.isKeyPressed(keyEventCode["Space"]) && !this.gui.isKeyPressed(keyEventCode["Shift"])){
+        } if (this.gui.isKeyPressed(keyEventCode["Space"])) {
+            currObject.verAccel(this.speedFactor/50);
+        } if (this.gui.isKeyPressed(keyEventCode["Shift"])) {
+            currObject.verAccel(-this.speedFactor/50);
+        } if(!this.gui.isKeyPressed(keyEventCode["Space"]) && !this.gui.isKeyPressed(keyEventCode["Shift"])){
             currObject.verAccel(0);
         }
 

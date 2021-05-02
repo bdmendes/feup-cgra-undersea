@@ -11,6 +11,7 @@ export class MyMovingObject {
         this.rotation = 0;
         this.tilt = 0;
         this.position = [0, 3, 0];
+        this.mouthPos = [0, 3, 0];
         this.speed = 0;
         this.verSpeed = 0;
     }
@@ -42,6 +43,10 @@ export class MyMovingObject {
             this.tilt = 0;
         }
 
+        this.mouthPos[0] = this.position[0] + 0.5 * Math.sin(this.rotation) * Math.cos(this.tilt);
+        this.mouthPos[1] = this.position[1] - 0.5 * Math.sin(this.tilt);
+        this.mouthPos[2] = this.position[2] + 0.5 * Math.cos(this.rotation) * Math.cos(this.tilt)
+
 
     }
 
@@ -60,5 +65,17 @@ export class MyMovingObject {
 
     getObject() {
         return this.object;
+    }
+
+    getMouthPos(){
+        return this.mouthPos;
+    }
+
+    getRotation(){
+        return this.rotation;
+    }
+
+    getTilt(){
+        return this.tilt;
     }
 }

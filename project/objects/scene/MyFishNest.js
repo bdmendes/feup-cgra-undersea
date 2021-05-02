@@ -2,12 +2,21 @@ import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject, CGFtexture, CGF
 import { MyPlane } from "../base/MyPlane.js";
 
 export class MyFishNest {
-    constructor(scene){
+    constructor(scene, xPos, yPos, radius){
         this.scene = scene;
         this.initObject();
         this.initAppearance();
         this.initTextures();
         this.initShaders();
+
+        if (xPos == undefined) this.xPos = 0;
+        else this.xPos = xPos;
+
+        if (yPos == undefined) this.yPos = 0;
+        else this.yPos = yPos;
+
+        if (radius == undefined) this.radius = 2.5;
+        else this.radius = radius;
     }
 
     initObject(){
@@ -24,7 +33,7 @@ export class MyFishNest {
 
     initTextures(){
         this.sandTexture = new CGFtexture(this.scene, 'images/part-b/sandQuarter.png');
-        this.heightMap = new CGFtexture(this.scene, 'images/part-b/fishNestMap.png');
+        this.heightMap = new CGFtexture(this.scene, 'images/part-b/fishNestMap2.png');
         this.appearance.setTexture(this.sandTexture);
         this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     }
@@ -44,9 +53,9 @@ export class MyFishNest {
         this.sandTexture.bind(1);
         this.heightMap.bind(2);
 
+        this.scene.translate(this.xPos, 0, this.yPos);
         this.scene.setActiveShader(this.bodyShader);
-
-        this.scene.scale(5, 1, 5);
+        this.scene.scale(this.radius * 2, 1, this.radius * 2);
         this.scene.rotate(-Math.PI/2, 1, 0, 0);
 
         this.plane.display();
