@@ -36,7 +36,7 @@ export class MyScene extends CGFscene {
         this.gl.enable(this.gl.CULL_FACE);
         this.gl.depthFunc(this.gl.LEQUAL);
 
-        this.setUpdatePeriod(100);
+        this.setUpdatePeriod(10);
 
         this.enableTextures(true);
 
@@ -45,8 +45,7 @@ export class MyScene extends CGFscene {
         this.mapTexturesIDs = { 'Axis': 0, 'Plains': 1, 'City': 2, 'Beach': 3, 'Sky': 4, 'Underwater': 5 };
 
         //Initialize env variables
-        this.nestXPos = -7.5;
-        this.nestZPos = -5.0;
+        this.nestCoords = [-7.5, -5.0];
         this.nestRadius = 2.5;
 
         // Initialize scene objects
@@ -57,11 +56,11 @@ export class MyScene extends CGFscene {
         this.rock = new MyRock(this, 0.5, 0.8, 0.2, 0, 1, 0);
         this.cylinder = new MyCylinder(this, 32, 6);
         this.fish = new MyFish(this);
-        this.movingObject = new MyMovingObject(this, this.fish, 0, 0, 0, 0);
-        this.sandFloor = new MySandFloor(this, this.nestXPos, this.nestZPos, this.nestRadius);
-        this.fishNest = new MyFishNest(this, this.nestXPos, this.nestZPos, this.nestRadius);
+        this.fishNest = new MyFishNest(this, this.nestCoords, this.nestRadius);
+        this.movingObject = new MyMovingObject(this, this.fish, this.nestCoords, this.nestRadius);
+        this.sandFloor = new MySandFloor(this, this.nestCoords, this.nestRadius);
         this.waterSurface = new MyWaterSurface(this);
-        this.rockSet = new MyRockSet(this, 50, this.nestXPos, this.nestZPos, this.nestRadius);
+        this.rockSet = new MyRockSet(this, 50, this.nestCoords, this.nestRadius);
 
         this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cylinder, this.pillarShader, this.rock];
 
@@ -135,6 +134,7 @@ export class MyScene extends CGFscene {
 
     update(t) {
         this.checkKeys();
+        this.rockSet.update();
         const selectedObject = this.objects[this.selectedObject];
         if (selectedObject instanceof MyMovingObject) {
             selectedObject.update();
@@ -215,7 +215,13 @@ export class MyScene extends CGFscene {
         } if (this.gui.isKeyPressed(keyEventCode["R"])) { 
             currObject.reset();
         } if (this.gui.isKeyPressed(keyEventCode["C"])) { 
-            currObject.pickUpRock(this.rockSet.pickUpRock(this.movingObject.getCoords()));
+            if(this.movingObject.rock == null){
+                currObject.pickUpRock(this.rockSet.pickUpRock(this.movingObject.getCoords()));
+            } 
+            else {
+                currObject.dropRock();
+            }
+            
         } if (this.gui.isKeyPressed(keyEventCode["Space"])) {
             currObject.verAccel(this.speedFactor/20);
         } if (this.gui.isKeyPressed(keyEventCode["Shift"])) {

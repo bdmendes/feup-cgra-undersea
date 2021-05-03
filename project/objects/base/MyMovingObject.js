@@ -2,10 +2,17 @@ import { CGFobject } from '../../../lib/CGF.js';
 import { MyRock } from "../base/MyRock.js";
 
 export class MyMovingObject {
-    constructor(scene, object) {
+    constructor(scene, object, nestCoords, nestRadius) {
         this.scene = scene;
         this.object = object;
         this.rock = null;
+
+        if (nestCoords == undefined) this.nestCoords = [0, 0];
+        else this.nestCoords = nestCoords;
+
+        if (nestRadius == undefined) this.nestRadius = 2.5;
+        else this.nestRadius = nestRadius;
+
         this.initAnimValues();
         this.reset();
     }
@@ -182,11 +189,24 @@ export class MyMovingObject {
         this.startTilt = this.tilt;
         this.endTilt = teta;
 
-
-
         this.stage = 1;
 
         this.rock = rock;
+
+        this.rock.pickedUp = true;
+
+    }
+
+    getDist(c1, c2){
+        return Math.sqrt(Math.pow(c1[0] - c2[0], 2) + Math.pow(c1[1] - c2[1], 2) + Math.pow(c1[2] - c2[2], 2))
+    }
+
+    dropRock(){
+        
+        if (this.getDist(this.rock.getCoords(), [this.nestCoords[0], this.rock.getCoords()[1], this.nestCoords[1]]) < this.nestRadius){
+            this.rock.pickedUp = false;
+            this.rock = null;
+        }
 
     }
 
