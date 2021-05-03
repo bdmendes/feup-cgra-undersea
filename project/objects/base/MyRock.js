@@ -38,6 +38,10 @@ export class MyRock {
         this.z = coords[2];
     }
 
+    getCoords(){
+        return [this.x, this.y, this.z];
+    }
+
     setRotation(rotation){
         this.rotation = rotation;
     }
