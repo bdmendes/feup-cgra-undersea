@@ -23,7 +23,11 @@ void main() {
 
     vec3 bVertexPosition = aVertexPosition + offset;
                                                                 //This + because for some reason the y coord is inverted
-    if(sqrt(pow(bVertexPosition.x - nestPos[0]/50.0, 2.0) + pow(bVertexPosition.y + nestPos[1]/50.0, 2.0)) < (nestRadius-2.0)/50.0){
+    float dist = sqrt(pow(bVertexPosition.x - nestPos[0]/50.0, 2.0) + pow(bVertexPosition.y + nestPos[1]/50.0, 2.0));
+    if(dist <= (nestRadius + 0.1)/50.0 && dist >= (nestRadius - 0.1)/50.0){
+        bVertexPosition.z = 0.05;
+    }
+    else if(dist < (nestRadius - 0.1)/50.0){
         bVertexPosition.z = -5.0;
     }  
 
