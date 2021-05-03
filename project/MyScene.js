@@ -23,6 +23,7 @@ export class MyScene extends CGFscene {
     constructor() {
         super();
     }
+
     init(application) {
         super.init(application);
         this.initCameras();
@@ -49,6 +50,31 @@ export class MyScene extends CGFscene {
         this.nestZPos = -5.0;
         this.nestRadius = 2.5;
 
+        this.initObjects();
+
+        // Global object-related properties
+        this.scaleFactor = 1;
+        this.speedFactor = 1;
+
+        this.updateMapTexture();
+    }
+
+    initLights() {
+        this.lights[0].setPosition(15, 2, 5, 1);
+        this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
+        this.lights[0].enable();
+        this.lights[0].update();
+    }
+
+    initCameras() {
+        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        this.camera.position = [2, 2, 2];
+        this.camera.fov = 2.0;
+        this.camera.target = [0, 2, 0];
+        this.camera.direction = this.camera.calculateDirection();
+    }
+
+    initObjects() {
         // Initialize scene objects
         this.axis = new CGFaxis(this);
         this.incompleteSphere = new MySphere(this, 16, 8, new CGFtexture(this, './images/part-a/earth.jpg'));
@@ -62,11 +88,12 @@ export class MyScene extends CGFscene {
         this.fishNest = new MyFishNest(this, this.nestXPos, this.nestZPos, this.nestRadius);
         this.waterSurface = new MyWaterSurface(this);
         this.rockSet = new MyRockSet(this, 10, this.nestXPos, this.nestZPos, this.nestRadius);
+        this.initPillars();
 
         this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cylinder, this.pillarShader, this.rock];
 
         // Labels and ID's for object selection on MyInterface
-        this.objectIDs = { 'Sphere': 0, 'Pyramid': 1, 'Moving Object': 2, 'Cylinder': 3, 'Pillar': 4, 'Rock': 5};
+        this.objectIDs = { 'Sphere': 0, 'Pyramid': 1, 'Moving Object': 2, 'Cylinder': 3, 'Pillar': 4, 'Rock': 5 };
 
         this.defaultAppearance = new CGFappearance(this);
         this.defaultAppearance.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -92,25 +119,17 @@ export class MyScene extends CGFscene {
         this.enableFishNest = true;
         this.enableWaterSurface = true;
         this.enableRockSet = true;
-
-        // Global object-related properties
-        this.scaleFactor = 1;
-        this.speedFactor = 1;
-
-        this.updateMapTexture();
     }
-    initLights() {
-        this.lights[0].setPosition(15, 2, 5, 1);
-        this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
-        this.lights[0].enable();
-        this.lights[0].update();
-    }
-    initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
-        this.camera.position = [2, 2, 2];
-        this.camera.fov = 2.0;
-        this.camera.target = [0, 2, 0];
-        this.camera.direction = this.camera.calculateDirection();
+
+    initPillars() {
+        this.pillars = [];
+        this.pillarsPos = [];
+        let _fPillarPos = [3, 0, -2];
+        for (let i = 0; i < 5; i++) {
+            this.pillars.push(new MyPillar(this, 20, 20));
+            this.pillarsPos.push([..._fPillarPos]);
+            this.pillarsPos[i][0] += i * 5;
+        }
     }
 
     setDefaultAppearance() {
@@ -142,10 +161,10 @@ export class MyScene extends CGFscene {
                 selectedObject.getObject().update();
             }
         }
-        if(this.enableWaterSurface){
+        if (this.enableWaterSurface) {
             this.waterSurface.update(t);
         }
-        
+
     }
 
     display() {
@@ -195,6 +214,15 @@ export class MyScene extends CGFscene {
                 this.objects[this.selectedObject].disableNormalViz();
         }
 
+        // Draw pillars
+        for (let i = 0; i < this.pillars.length; i++) {
+            this.pushMatrix();
+            this.translate(...this.pillarsPos[i]);
+            this.scale(0.7, 1, 0.7);
+            this.pillars[i].display();
+            this.popMatrix();
+        }
+
         // Display selected object
         this.objects[this.selectedObject].display();
 
@@ -212,13 +240,13 @@ export class MyScene extends CGFscene {
             currObject.accelerate(this.speedFactor / 200);
         } if (this.gui.isKeyPressed(keyEventCode["S"])) {
             currObject.accelerate(-this.speedFactor / 200);
-        } if (this.gui.isKeyPressed(keyEventCode["R"])) { 
+        } if (this.gui.isKeyPressed(keyEventCode["R"])) {
             currObject.reset();
         } if (this.gui.isKeyPressed(keyEventCode["Space"])) {
-            currObject.verAccel(this.speedFactor/50);
+            currObject.verAccel(this.speedFactor / 50);
         } if (this.gui.isKeyPressed(keyEventCode["Shift"])) {
-            currObject.verAccel(-this.speedFactor/50);
-        } if(!this.gui.isKeyPressed(keyEventCode["Space"]) && !this.gui.isKeyPressed(keyEventCode["Shift"])){
+            currObject.verAccel(-this.speedFactor / 50);
+        } if (!this.gui.isKeyPressed(keyEventCode["Space"]) && !this.gui.isKeyPressed(keyEventCode["Shift"])) {
             currObject.verAccel(0);
         }
 
