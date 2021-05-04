@@ -1,4 +1,5 @@
 import { CGFobject } from '../../../lib/CGF.js';
+import { MIN_FISH_HEIGHT } from '../../constants.js';
 import { MyRock } from "../base/MyRock.js";
 
 export class MyMovingObject {
@@ -77,8 +78,8 @@ export class MyMovingObject {
         this.position[1] += this.verSpeed;
         this.position[2] += this.speed * this.scene.speedFactor * Math.cos(this.rotation);
 
-        if (this.position[1] < 0.5){
-            this.position[1] = 0.5;
+        if (this.position[1] < MIN_FISH_HEIGHT){
+            this.position[1] = MIN_FISH_HEIGHT;
         }
 
         if(this.animating){
@@ -149,7 +150,7 @@ export class MyMovingObject {
     }
 
     pickUpRock(rock){
-        if (rock == null || this.rock != null){
+        if (rock == null || this.rock != null || this.position[1] > MIN_FISH_HEIGHT){
             return;
         }
 
@@ -203,6 +204,8 @@ export class MyMovingObject {
 
     dropRock(){
         
+
+
         if (this.getDist(this.rock.getCoords(), [this.nestCoords[0], this.rock.getCoords()[1], this.nestCoords[1]]) < this.nestRadius){
             this.rock.pickedUp = false;
             this.rock = null;
