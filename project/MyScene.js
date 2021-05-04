@@ -124,11 +124,18 @@ export class MyScene extends CGFscene {
     initPillars() {
         this.pillars = [];
         this.pillarsPos = [];
-        let _fPillarPos = [3, 0, -2];
+        let _flPillarPos = [2.5, 0, -3.5];
+        let _frPillarPos = [2.5, 0, 0];
         for (let i = 0; i < 5; i++) {
+            // left pillar
             this.pillars.push(new MyPillar(this, 20, 20));
-            this.pillarsPos.push([..._fPillarPos]);
-            this.pillarsPos[i][0] += i * 5;
+            this.pillarsPos.push([..._flPillarPos]);
+            this.pillarsPos[0] += i * 5;
+
+            // right pillar
+            this.pillars.push(new MyPillar(this, 20, 20));
+            this.pillarsPos.push([..._frPillarPos]);
+            this.pillarsPos[this.pillarsPos.length - 1][0] += i * 5;
         }
     }
 
@@ -218,7 +225,7 @@ export class MyScene extends CGFscene {
         for (let i = 0; i < this.pillars.length; i++) {
             this.pushMatrix();
             this.translate(...this.pillarsPos[i]);
-            this.scale(0.7, 1, 0.7);
+            this.scale(0.5, 1, 0.5);
             this.pillars[i].display();
             this.popMatrix();
         }
