@@ -148,7 +148,6 @@ export class MyFish {
         let sideFinOffset = [_sideFinOffset, _sideFinOffset, 0];
         for (let i = 0; i < 3; i++) {
             if (Math.abs(this.sideFinRotation[i] + sideFinOffset[i]) > maxSideFinRotation[i] || Math.abs(this.sideFinRotation[i] + sideFinOffset[i]) < 0) {
-                console.log("hey!");
                 this.sideFinOrientation[i] *= -1;
             }
             this.sideFinRotation[i] += this.sideFinOrientation[i] * sideFinOffset[i];
