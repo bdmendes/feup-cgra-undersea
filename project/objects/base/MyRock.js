@@ -42,7 +42,7 @@ export class MyRock {
         if (this.y != NEST_Y && !this.pickedUp){
             this.speed += GRAVITY_ACCEL;
 
-            if (this.speed < MAX_FALL_SPEED) this.speed = MAX_FALL_SPEED;
+            // if (this.speed < MAX_FALL_SPEED) this.speed = MAX_FALL_SPEED;
 
             this.y += this.speed;
             console.log(this.speed);
