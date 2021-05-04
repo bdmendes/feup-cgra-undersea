@@ -128,12 +128,12 @@ export class MyScene extends CGFscene {
         let _frPillarPos = [2.5, 0, 0];
         for (let i = 0; i < 5; i++) {
             // left pillar
-            this.pillars.push(new MyPillar(this, 20, 20));
+            this.pillars.push(new MyPillarShader(this));
             this.pillarsPos.push([..._flPillarPos]);
-            this.pillarsPos[0] += i * 5;
+            this.pillarsPos[this.pillarsPos.length - 1][0] += i * 5;
 
             // right pillar
-            this.pillars.push(new MyPillar(this, 20, 20));
+            this.pillars.push(new MyPillarShader(this));
             this.pillarsPos.push([..._frPillarPos]);
             this.pillarsPos[this.pillarsPos.length - 1][0] += i * 5;
         }
