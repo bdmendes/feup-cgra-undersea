@@ -32,7 +32,7 @@ export class MyRock {
         else this.z = z;
 
         this.pickedUp = false;
-        this.speed = 0.0;
+        this.speed = [0, 0, 0];
         this.rotation = 0.0;
         this.tilt = 0.0;
 
@@ -40,15 +40,18 @@ export class MyRock {
 
     update(){
         if (this.y != NEST_Y && !this.pickedUp){
-            this.speed += GRAVITY_ACCEL;
+            this.speed[1] += GRAVITY_ACCEL;
 
             // if (this.speed < MAX_FALL_SPEED) this.speed = MAX_FALL_SPEED;
+               
+            this.x += this.speed[0];
+            this.y += this.speed[1];
+            this.z += this.speed[2];
+        
 
-            this.y += this.speed;
-            console.log(this.speed);
             if(this.y < NEST_Y){
                 this.y = NEST_Y;
-                this.speed = 0.0;
+                this.speed = [0, 0, 0];
             }
         }
     }

@@ -1,5 +1,5 @@
 import { CGFobject } from '../../../lib/CGF.js';
-import { MIN_FISH_HEIGHT } from '../../constants.js';
+import { GRAVITY_ACCEL, NEST_Y, MAX_FALL_SPEED, MIN_FISH_HEIGHT } from '../../constants.js';
 import { MyRock } from "../base/MyRock.js";
 
 export class MyMovingObject {
@@ -28,6 +28,7 @@ export class MyMovingObject {
     }
 
     initAnimValues(){
+        this.forceTilt = false;
         this.animating = false;
         this.startRotation = 0;
         this.endRotation = 0;
@@ -93,8 +94,11 @@ export class MyMovingObject {
             else if (this.verSpeed != 0) {
                 this.tilt = Math.PI / 2 * ((this.verSpeed > 0) ? -1 : 1);
             }
-            else {
+            else if (!this.forceTilt){
                 this.tilt = 0;
+            }
+            else{
+                this.forceTilt = false;
             }
         }
 
@@ -202,14 +206,121 @@ export class MyMovingObject {
         return Math.sqrt(Math.pow(c1[0] - c2[0], 2) + Math.pow(c1[1] - c2[1], 2) + Math.pow(c1[2] - c2[2], 2))
     }
 
+    calcTarget(speed){
+        var speed_vec = [
+            speed*Math.sin(this.rotation)*Math.cos(-this.tilt), 
+            speed*Math.sin(-this.tilt), 
+            speed*Math.cos(this.rotation)*Math.cos(-this.tilt)];
+
+        var init_pos = this.mouthPos;
+
+        var a = GRAVITY_ACCEL/2;
+        var b = speed_vec[1];
+        var c = init_pos[1] - NEST_Y;
+
+        var t_1 = (-b + Math.sqrt(Math.pow(b,2) - 4*a*c)) / (2*a);
+        var t_2 = (-b - Math.sqrt(Math.pow(b,2) - 4*a*c)) / (2*a);
+        var t = Math.max(t_1, t_2);
+
+        var pos_vec = [
+            init_pos[0] + speed_vec[0]*t,
+            init_pos[1] + speed_vec[1]*t + GRAVITY_ACCEL/2 * Math.pow(t, 2),
+            init_pos[2] + speed_vec[2]*t
+        ]
+
+        return pos_vec;
+    }
+
     dropRock(){
         
-
-
-        if (this.getDist(this.rock.getCoords(), [this.nestCoords[0], this.rock.getCoords()[1], this.nestCoords[1]]) < this.nestRadius){
-            this.rock.pickedUp = false;
-            this.rock = null;
+        if (0 && !this.getDist(this.rock.getCoords(), [this.nestCoords[0], this.rock.getCoords()[1], this.nestCoords[1]]) < this.nestRadius + 5.0){
+            return;
         }
+            
+        this.tilt = -Math.PI/4;
+
+        //rotation calc
+
+        var vec_fish_rock = [this.nestCoords[0]- this.position[0], this.nestCoords[1] - this.position[2]];
+        var vec_fish_dir = [Math.sin(this.rotation), Math.cos(this.rotation)];
+        var prod_escalar = vec_fish_dir[0]*vec_fish_rock[0] + vec_fish_dir[1]*vec_fish_rock[1];
+        var cos_teta = prod_escalar / 
+                        (Math.sqrt(Math.pow(vec_fish_rock[0], 2) + Math.pow(vec_fish_rock[1], 2)) *
+                         Math.sqrt(Math.pow(vec_fish_dir[0], 2) + Math.pow(vec_fish_dir[1], 2)));
+        var teta = Math.acos(cos_teta);
+        var normal = vec_fish_dir[0]*vec_fish_rock[1] - vec_fish_dir[1]*vec_fish_rock[0];
+
+        if (normal > 0){
+            this.rotation = this.rotation - teta;
+        }
+        else{
+            this.rotation = this.rotation + teta;
+        }
+
+        this.forceTilt = true;
+
+        this.update();
+
+        var v1 = 0.0, v2 = 2.5, v3 = 5.0;
+
+        var bottomPos = [this.position[0], 0.1, this.position[2]];
+
+        var dc = this.getDist(bottomPos, [this.nestCoords[0], 0.1, this.nestCoords[1]])
+
+        var d1_n = 100.0, d2_n = 100.0, d3_n = 100.0;
+
+        var i = 0;
+
+        while(true){
+
+            var pv1 = this.calcTarget(v1);
+            var pv2 = this.calcTarget(v2);
+            var pv3 = this.calcTarget(v3);
+
+            d1_n = this.getDist(pv1, [this.nestCoords[0], 0.1, this.nestCoords[1]]);
+            d2_n = this.getDist(pv2, [this.nestCoords[0], 0.1, this.nestCoords[1]]);
+            d3_n = this.getDist(pv3, [this.nestCoords[0], 0.1, this.nestCoords[1]]);
+
+            var d1_f = this.getDist(pv1, bottomPos);
+            var d2_f = this.getDist(pv2, bottomPos);
+            var d3_f = this.getDist(pv3, bottomPos);
+
+            if(d1_n < 2 || d2_n < 2 || d3_n < 2 || i > 10000){
+                break;
+            }
+
+            if(d1_f < dc && d2_f > dc){
+                v3 = v2;
+                v2 = (v2+v1)/2;
+            }
+            else if (d2_f < dc && d3_f > dc) {
+                v1 = v2;
+                v2 = (v2+v3)/2;
+            }
+
+            i++;
+        }
+
+        var df = Math.min(d1_n, d2_n, d3_n);
+
+        var vf = 0;
+
+        if (df == d1_n){
+            vf = v1;
+        } else if (df == d2_n){
+            vf = v2;
+        } else if (df == d3_n){
+            vf = v3;
+        }
+
+        this.rock.pickedUp = false;
+
+        this.rock.speed = [
+            vf*Math.sin(this.rotation)*Math.cos(-this.tilt), 
+            vf*Math.sin(-this.tilt), 
+            vf*Math.cos(this.rotation)*Math.cos(-this.tilt)];
+        this.rock = null;
+    
 
     }
 

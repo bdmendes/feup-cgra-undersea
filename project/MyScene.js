@@ -60,7 +60,7 @@ export class MyScene extends CGFscene {
         this.movingObject = new MyMovingObject(this, this.fish, this.nestCoords, this.nestRadius);
         this.sandFloor = new MySandFloor(this, this.nestCoords, this.nestRadius);
         this.waterSurface = new MyWaterSurface(this);
-        this.rockSet = new MyRockSet(this, 50, this.nestCoords, this.nestRadius);
+        this.rockSet = new MyRockSet(this, 10, this.nestCoords, this.nestRadius);
 
         this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cylinder, this.pillarShader, this.rock];
 
