@@ -4,7 +4,6 @@ import { MyTriangle } from '../base/MyTriangle.js'
 
 const maxBackFinRotation = Math.PI / 9;
 const maxSideFinRotation = [Math.PI / 18, Math.PI / 18, 0];
-
 export class MyFish {
     constructor(scene) {
         this.scene = scene;
