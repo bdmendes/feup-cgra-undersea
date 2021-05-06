@@ -2,7 +2,11 @@ import { CGFobject } from '../../../lib/CGF.js';
 import { GRAVITY_ACCEL, NEST_Y, MAX_FALL_SPEED, MIN_FISH_HEIGHT } from '../../constants.js';
 import { MyRock } from "../base/MyRock.js";
 
+const PICK_UP_ANIM = 1;
+const THROW_ANIM = 2;
+
 export class MyMovingObject {
+
     constructor(scene, object, nestCoords, nestRadius) {
         this.scene = scene;
         this.object = object;
@@ -28,8 +32,8 @@ export class MyMovingObject {
     }
 
     initAnimValues(){
-        this.forceTilt = false;
         this.animating = false;
+        this.animationType = 0;
         this.startRotation = 0;
         this.endRotation = 0;
         this.startTilt = 0;
@@ -94,20 +98,27 @@ export class MyMovingObject {
             else if (this.verSpeed != 0) {
                 this.tilt = Math.PI / 2 * ((this.verSpeed > 0) ? -1 : 1);
             }
-            else if (!this.forceTilt){
-                this.tilt = 0;
-            }
             else{
-                this.forceTilt = false;
+                this.tilt = 0;
             }
         }
 
         //Calculates the fish's mouth position
-        this.mouthPos[0] = this.position[0] + 0.5 * Math.sin(this.rotation) * Math.cos(this.tilt);
-        this.mouthPos[1] = this.position[1] - 0.5 * Math.sin(this.tilt);
-        this.mouthPos[2] = this.position[2] + 0.5 * Math.cos(this.rotation) * Math.cos(this.tilt)
+        this.mouthPos = this.calcMouthPos(this.rotation, this.tilt, this.position);
 
         //Updates the rocks position, rotation and tilt
+        if (this.animating && this.stage == 2 && this.animationType == THROW_ANIM){
+            if(this.rock!=null){
+                this.rock.pickedUp = false;
+                this.rock = null;
+            }
+        }
+        else if (this.animating && this.animationType == THROW_ANIM){
+            this.rock.setCoord(this.mouthPos);
+            this.rock.setRotation(this.rotation);
+            this.rock.setTilt(this.tilt);
+        }
+
         if (this.rock != null && this.stage != 1){
             this.rock.setCoord(this.mouthPos);
             this.rock.setRotation(this.rotation);
@@ -158,6 +169,7 @@ export class MyMovingObject {
             return;
         }
 
+        this.animationType = PICK_UP_ANIM;
         this.animating = true;
         this.speed = 0;
         this.verSpeed = 0;
@@ -206,13 +218,11 @@ export class MyMovingObject {
         return Math.sqrt(Math.pow(c1[0] - c2[0], 2) + Math.pow(c1[1] - c2[1], 2) + Math.pow(c1[2] - c2[2], 2))
     }
 
-    calcTarget(speed){
+    calcTarget(init_pos, rotation1, tilt1, speed){
         var speed_vec = [
-            speed*Math.sin(this.rotation)*Math.cos(-this.tilt), 
-            speed*Math.sin(-this.tilt), 
-            speed*Math.cos(this.rotation)*Math.cos(-this.tilt)];
-
-        var init_pos = this.mouthPos;
+            speed*Math.sin(rotation1)*Math.cos(-tilt1), 
+            speed*Math.sin(-tilt1), 
+            speed*Math.cos(rotation1)*Math.cos(-tilt1)];
 
         var a = GRAVITY_ACCEL/2;
         var b = speed_vec[1];
@@ -231,13 +241,29 @@ export class MyMovingObject {
         return pos_vec;
     }
 
+    calcMouthPos(rotation1, tilt1, position1){
+        var mouth_pos1 = [
+            position1[0] + 0.5 * Math.sin(rotation1) * Math.cos(tilt1),
+            position1[1] - 0.5 * Math.sin(tilt1),
+            position1[2] + 0.5 * Math.cos(rotation1) * Math.cos(tilt1)
+        ];
+
+        return mouth_pos1;
+    }
+
     dropRock(){
         
         if (0 && !this.getDist(this.rock.getCoords(), [this.nestCoords[0], this.rock.getCoords()[1], this.nestCoords[1]]) < this.nestRadius + 5.0){
             return;
         }
-            
-        this.tilt = -Math.PI/4;
+        
+        this.animationType = THROW_ANIM;
+        this.animating = true;
+        var new_rotation = 0;
+        var new_tilt = -Math.PI/4;
+        this.stage = 1;
+        this.speed = 0;
+        this.verSpeed = 0;
 
         //rotation calc
 
@@ -251,19 +277,22 @@ export class MyMovingObject {
         var normal = vec_fish_dir[0]*vec_fish_rock[1] - vec_fish_dir[1]*vec_fish_rock[0];
 
         if (normal > 0){
-            this.rotation = this.rotation - teta;
+            new_rotation = this.rotation - teta;
         }
         else{
-            this.rotation = this.rotation + teta;
+            new_rotation = this.rotation + teta;
         }
 
-        this.forceTilt = true;
+        this.startRotation = this.rotation;
+        this.endRotation = new_rotation;
+        this.startTilt = this.tilt;
+        this.endTilt = new_tilt;
 
-        this.update();
+        var new_mouth_pos = this.calcMouthPos(new_rotation, new_tilt, this.position);
 
         var v1 = 0.0, v2 = 2.5, v3 = 5.0;
 
-        var bottomPos = [this.position[0], 0.1, this.position[2]];
+        var bottomPos = [new_mouth_pos[0], 0.1, new_mouth_pos[2]];
 
         var dc = this.getDist(bottomPos, [this.nestCoords[0], 0.1, this.nestCoords[1]])
 
@@ -273,9 +302,9 @@ export class MyMovingObject {
 
         while(true){
 
-            var pv1 = this.calcTarget(v1);
-            var pv2 = this.calcTarget(v2);
-            var pv3 = this.calcTarget(v3);
+            var pv1 = this.calcTarget(new_mouth_pos, new_rotation, new_tilt, v1);
+            var pv2 = this.calcTarget(new_mouth_pos, new_rotation, new_tilt,v2);
+            var pv3 = this.calcTarget(new_mouth_pos, new_rotation, new_tilt, v3);
 
             d1_n = this.getDist(pv1, [this.nestCoords[0], 0.1, this.nestCoords[1]]);
             d2_n = this.getDist(pv2, [this.nestCoords[0], 0.1, this.nestCoords[1]]);
@@ -285,7 +314,12 @@ export class MyMovingObject {
             var d2_f = this.getDist(pv2, bottomPos);
             var d3_f = this.getDist(pv3, bottomPos);
 
-            if(d1_n < 2 || d2_n < 2 || d3_n < 2 || i > 10000){
+            if(
+                d1_n < this.nestRadius - (this.nestRadius/3.0) || 
+                d2_n < this.nestRadius - (this.nestRadius/3.0) || 
+                d3_n < this.nestRadius - (this.nestRadius/3.0) || 
+                i > 10000){
+
                 break;
             }
 
@@ -313,14 +347,10 @@ export class MyMovingObject {
             vf = v3;
         }
 
-        this.rock.pickedUp = false;
-
         this.rock.speed = [
-            vf*Math.sin(this.rotation)*Math.cos(-this.tilt), 
-            vf*Math.sin(-this.tilt), 
-            vf*Math.cos(this.rotation)*Math.cos(-this.tilt)];
-        this.rock = null;
-    
+            vf*Math.sin(new_rotation)*Math.cos(-new_tilt), 
+            vf*Math.sin(-new_tilt), 
+            vf*Math.cos(new_rotation)*Math.cos(-new_tilt)];  
 
     }
 

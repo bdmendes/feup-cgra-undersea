@@ -110,11 +110,11 @@ export class MyRock {
 
         this.appearance.apply();        
 
-        this.scene.translate(this.x, this.y, this.z);
-
-        this.scene.rotate(this.tilt, 1, 0, 0);
+        this.scene.translate(this.x, this.y, this.z);        
 
         this.scene.rotate(this.rotation, 0, 1, 0);
+        
+        this.scene.rotate(this.tilt, 1, 0, 0);
 
         this.scene.scale(this.width, this.height, this.length);
 

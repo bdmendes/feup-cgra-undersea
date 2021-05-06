@@ -46,11 +46,11 @@ export class MyScene extends CGFscene {
 
         //Initialize env variables
         this.nestCoords = [-7.5, -5.0];
-        this.nestRadius = 2.5;
+        this.nestRadius = 2.5; //Default is 2.5
 
         // Initialize scene objects
         this.axis = new CGFaxis(this);
-        this.incompleteSphere = new MySphere(this, 16, 8, new CGFtexture(this, './images/part-a/earth.jpg'));
+        this.incompleteSphere = new MySphere(this, 32, 32, new CGFtexture(this, 'images/part-b/stone2.png'));
         this.pyramid = new MyPyramid(this, 6, 1);
         this.pillarShader = new MyPillarShader(this);
         this.rock = new MyRock(this, 0.5, 0.8, 0.2, 0, 1, 0);
@@ -60,7 +60,7 @@ export class MyScene extends CGFscene {
         this.movingObject = new MyMovingObject(this, this.fish, this.nestCoords, this.nestRadius);
         this.sandFloor = new MySandFloor(this, this.nestCoords, this.nestRadius);
         this.waterSurface = new MyWaterSurface(this);
-        this.rockSet = new MyRockSet(this, 10, this.nestCoords, this.nestRadius);
+        this.rockSet = new MyRockSet(this, 50, this.nestCoords, this.nestRadius);
 
         this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cylinder, this.pillarShader, this.rock];
 

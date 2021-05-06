@@ -28,7 +28,7 @@ void main() {
         bVertexPosition.z = 0.05;
     }
     else if(dist < (nestRadius - 0.1)/50.0){
-        bVertexPosition.z = -5.0;
+        bVertexPosition.z = 0.0;
     }  
 
 	gl_Position = uPMatrix * uMVMatrix * vec4(bVertexPosition, 1.0);
