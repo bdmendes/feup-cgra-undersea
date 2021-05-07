@@ -28,19 +28,32 @@ export class MyFish {
         this.bodyMaterial = new CGFappearance(this.scene);
         this.bodyScales = new CGFtexture(this.scene, 'images/part-b/fish/fish_scales_2.png');
         this.bodyMaterial.setTexture(this.bodyScales);
+        this.bodyMaterial.setAmbient(1.0, 1.0, 1.0, 1.0);
+        this.bodyMaterial.setDiffuse(1.0, 1.0, 1.0, 1.0);
+        this.bodyMaterial.setShininess(10.0);
+        this.bodyMaterial.setSpecular(0,0,0,0);
 
         /* Fin */
         this.finMaterial = new CGFappearance(this.scene);
+        this.finMaterial.setAmbient(1.0, 1.0, 1.0, 1.0);
+        this.finMaterial.setDiffuse(1.0, 1.0, 1.0, 1.0);
+        this.finMaterial.setShininess(10.0);
+        this.finMaterial.setSpecular(0,0,0,0);
         this.finMaterial.setColor(0.55, 0.18, 0.1, 1);
 
         /* Eye */
         this.eyeMaterial = new CGFappearance(this.scene);
         this.eyeTexture = new CGFtexture(this.scene, 'images/part-b/fish/fish_eye.jpg');
         this.eyeMaterial.setTexture(this.eyeTexture);
+        this.eyeMaterial.setColor(0.55, 0.18, 0.1, 1);
+        this.eyeMaterial.setAmbient(1.0, 1.0, 1.0, 1.0);
+        this.eyeMaterial.setDiffuse(1.0, 1.0, 1.0, 1.0);
+        this.eyeMaterial.setShininess(10.0);
+        this.eyeMaterial.setSpecular(0,0,0,0);
     }
 
     initShaders() {
-        this.bodyShader = new CGFshader(this.scene.gl, './shaders/bodyFish.vert', './shaders/bodyFish.frag');
+        this.bodyShader = new CGFshader(this.scene.gl, './shaders/slimGouraud.vert', './shaders/bodyFish.frag');
         this.bodyShader.setUniformsValues({ uSampler2: 1 });
     }
 

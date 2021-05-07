@@ -114,10 +114,10 @@ export class MyScene extends CGFscene {
         this.displayNormals = false;
         this.wireframe = false;
         this.selectedMapTexture = 5;
-        this.enableCubeMap = true;
+        this.enableCubeMap = false;
         this.enableSandFloor = true;
         this.enableFishNest = true;
-        this.enableWaterSurface = true;
+        this.enableWaterSurface = false;
         this.enableRockSet = true;
     }
 
@@ -237,7 +237,7 @@ export class MyScene extends CGFscene {
 
     checkKeys() {
         let currObject = this.objects[this.selectedObject];
-        if (!(currObject instanceof MyMovingObject)) return;
+        if (!(currObject instanceof MyMovingObject) || this.movingObject.getAnimating()) return;
         if (this.gui.isKeyPressed(keyEventCode["A"])) {
             currObject.turn(this.speedFactor * Math.PI / 50);
         } if (this.gui.isKeyPressed(keyEventCode["D"])) {
@@ -248,11 +248,13 @@ export class MyScene extends CGFscene {
             currObject.accelerate(-this.speedFactor / 200);
         } if (this.gui.isKeyPressed(keyEventCode["R"])) {
             currObject.reset();
+        } if (this.gui.isKeyPressed(keyEventCode["C"])) { 
+            currObject.pickUpRock(this.rockSet.pickUpRock(this.movingObject.getCoords()));
         } if (this.gui.isKeyPressed(keyEventCode["Space"])) {
-            currObject.verAccel(this.speedFactor / 50);
+            currObject.verAccel(this.speedFactor/20);
         } if (this.gui.isKeyPressed(keyEventCode["Shift"])) {
-            currObject.verAccel(-this.speedFactor / 50);
-        } if (!this.gui.isKeyPressed(keyEventCode["Space"]) && !this.gui.isKeyPressed(keyEventCode["Shift"])) {
+            currObject.verAccel(-this.speedFactor/20);
+        } if(!this.gui.isKeyPressed(keyEventCode["Space"]) && !this.gui.isKeyPressed(keyEventCode["Shift"])){
             currObject.verAccel(0);
         }
 

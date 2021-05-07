@@ -52,4 +52,32 @@ export class MyRockSet {
         }
     }
 
+    getDist(c1, c2){
+        return Math.sqrt(Math.pow(c1[0] - c2[0], 2) + Math.pow(c1[1] - c2[1], 2) + Math.pow(c1[2] - c2[2], 2))
+    }
+
+    pickUpRock(coords){
+
+        var MAX_DIST = 20.0;
+        
+        var min_dist = this.getDist(coords, this.rocks[0].getCoords());
+        var rock = this.rocks[0];
+
+        for (var i = 0; i < this.rocks.length; i++){
+            var cur_dist = this.getDist(coords, this.rocks[i].getCoords());
+            if ( cur_dist < min_dist){
+                min_dist = cur_dist;
+                rock = this.rocks[i];
+            }
+        }
+
+        if (min_dist <= MAX_DIST){
+            return rock;
+        }
+        else{
+            return null;
+        }
+
+    }
+
 }
