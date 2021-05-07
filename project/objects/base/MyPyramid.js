@@ -65,7 +65,6 @@ export class MyPyramid extends CGFobject {
 
         this.primitiveType = this.scene.gl.TRIANGLES;
         this.initGLBuffers();
-        console.log(this.vertices);
     }
 
     display() {

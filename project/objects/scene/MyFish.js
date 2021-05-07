@@ -2,26 +2,30 @@ import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject, CGFtexture, CGF
 import { MySphere } from '../base/MySphere.js'
 import { MyTriangle } from '../base/MyTriangle.js'
 
-const maxBackFinRotation = Math.PI / 9;
-const maxSideFinRotation = [Math.PI / 18, Math.PI / 18, 0];
+const maxBackFinRotation = Math.PI / 6;
+const maxSideFinRotation = [Math.PI / 12, Math.PI / 12, 0];
+export const minSideFinSpeedFactor = 0.5;
+export const minBackFinSpeedFactor = 0.8;
+
 export class MyFish {
     constructor(scene) {
         this.scene = scene;
         this.initObjects();
         this.initMaterials();
         this.initShaders();
-        this.backFinRotation = 0;
-        this.backFinOrientation = 1;
-        this.resetSideFinPosition();
-        this.leftFinSpeedFactor = 1;
-        this.rightFinSpeedFactor = 1;
+        this.resetFins();
     }
 
-    resetSideFinPosition(){
+    resetFins() {
         this.leftFinRotation = [0, 0, 0];
         this.leftFinOrientation = [1, 1, 1];
         this.rightFinRotation = [0, 0, 0];
         this.rightFinOrientation = [1, 1, 1];
+        this.backFinRotation = 0;
+        this.backFinOrientation = 1;
+        this.leftFinSpeedFactor = minSideFinSpeedFactor;
+        this.rightFinSpeedFactor = minSideFinSpeedFactor;
+        this.backFinSpeedFactor = minBackFinSpeedFactor;
     }
 
     initObjects() {
@@ -38,14 +42,14 @@ export class MyFish {
         this.bodyMaterial.setAmbient(1.0, 1.0, 1.0, 1.0);
         this.bodyMaterial.setDiffuse(1.0, 1.0, 1.0, 1.0);
         this.bodyMaterial.setShininess(10.0);
-        this.bodyMaterial.setSpecular(0,0,0,0);
+        this.bodyMaterial.setSpecular(0, 0, 0, 0);
 
         /* Fin */
         this.finMaterial = new CGFappearance(this.scene);
         this.finMaterial.setAmbient(1.0, 1.0, 1.0, 1.0);
         this.finMaterial.setDiffuse(1.0, 1.0, 1.0, 1.0);
         this.finMaterial.setShininess(10.0);
-        this.finMaterial.setSpecular(0,0,0,0);
+        this.finMaterial.setSpecular(0, 0, 0, 0);
         this.finMaterial.setColor(0.55, 0.18, 0.1, 1);
 
         /* Eye */
@@ -56,7 +60,7 @@ export class MyFish {
         this.eyeMaterial.setAmbient(1.0, 1.0, 1.0, 1.0);
         this.eyeMaterial.setDiffuse(1.0, 1.0, 1.0, 1.0);
         this.eyeMaterial.setShininess(10.0);
-        this.eyeMaterial.setSpecular(0,0,0,0);
+        this.eyeMaterial.setSpecular(0, 0, 0, 0);
     }
 
     initShaders() {
@@ -158,17 +162,17 @@ export class MyFish {
 
     update() {
         /* Back fin movement */
-        let backFinOffset = this.scene.speedFactor * 1.2 * Math.PI / 36;
-        if (Math.abs(this.backFinRotation + backFinOffset) > maxBackFinRotation) {
+        let backFinOffset = this.scene.speedFactor * this.backFinSpeedFactor * Math.PI / 36;
+        if (Math.abs(this.backFinRotation + backFinOffset * this.backFinOrientation) > maxBackFinRotation) {
             this.backFinOrientation *= -1;
         }
         this.backFinRotation += this.backFinOrientation * backFinOffset;
 
         /* Left fin movement */
-        let _leftFinOffset = this.scene.speedFactor * this.leftFinSpeedFactor * 0.8 * Math.PI / 36;
+        let _leftFinOffset = this.scene.speedFactor * this.leftFinSpeedFactor * Math.PI / 36;
         let leftFinOffset = [_leftFinOffset, _leftFinOffset, 0];
         for (let i = 0; i < 3; i++) {
-            if (Math.abs(this.leftFinRotation[i] + leftFinOffset[i]) > maxSideFinRotation[i] || Math.abs(this.leftFinRotation[i] + leftFinOffset[i]) < 0) {
+            if (Math.abs(this.leftFinRotation[i] + leftFinOffset[i] + this.leftFinOrientation[i]) > maxSideFinRotation[i] || Math.abs(this.leftFinRotation[i] + leftFinOffset[i] * this.leftFinOrientation[i]) < 0) {
                 this.leftFinOrientation[i] *= -1;
             }
             this.leftFinRotation[i] += this.leftFinOrientation[i] * leftFinOffset[i];
@@ -178,7 +182,7 @@ export class MyFish {
         let _rightFinOffset = this.scene.speedFactor * this.rightFinSpeedFactor * 0.8 * Math.PI / 36;
         let rightFinOffset = [_rightFinOffset, _rightFinOffset, 0];
         for (let i = 0; i < 3; i++) {
-            if (Math.abs(this.rightFinRotation[i] + rightFinOffset[i]) > maxSideFinRotation[i] || Math.abs(this.rightFinRotation[i] + rightFinOffset[i]) < 0) {
+            if (Math.abs(this.rightFinRotation[i] + rightFinOffset[i] * this.rightFinOrientation[i]) > maxSideFinRotation[i] || Math.abs(this.rightFinRotation[i] + rightFinOffset[i] * this.rightFinOrientation[i]) < 0) {
                 this.rightFinOrientation[i] *= -1;
             }
             this.rightFinRotation[i] += this.rightFinOrientation[i] * rightFinOffset[i];

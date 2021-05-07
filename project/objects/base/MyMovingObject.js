@@ -31,7 +31,7 @@ export class MyMovingObject {
         this.position[1] += this.verSpeed;
         this.position[2] += this.speed * this.scene.speedFactor * Math.cos(this.rotation);
 
-        if (this.position[1] < 0.5){
+        if (this.position[1] < 0.5) {
             this.position[1] = 0.5;
         }
     }
@@ -49,7 +49,7 @@ export class MyMovingObject {
         this.verSpeed = val;
     }
 
-    getCoords(){
+    getCoords() {
         return this.position;
     }
 
@@ -57,11 +57,11 @@ export class MyMovingObject {
         return this.object;
     }
 
-    getRotation(){
+    getRotation() {
         return this.rotation;
     }
 
-    getTilt(){
+    getTilt() {
         return this.tilt;
     }
 }
