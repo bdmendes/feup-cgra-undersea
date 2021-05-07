@@ -1,8 +1,12 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject, CGFtexture, CGFshader } from '../../../lib/CGF.js';
+import { GRAVITY_ACCEL, NEST_Y, MAX_FALL_SPEED } from '../../constants.js';
 import { MySphere } from "../base/MySphere.js";
 
 export class MyRock {
     constructor(scene, width, length, height, x, y, z){
+
+        
+
         this.scene = scene;
         this.initObject();
         this.initMods();
@@ -27,9 +31,29 @@ export class MyRock {
         if (z == undefined) this.z = 0;
         else this.z = z;
 
+        this.pickedUp = false;
+        this.speed = [0, 0, 0];
         this.rotation = 0.0;
         this.tilt = 0.0;
 
+    }
+
+    update(){
+        if (this.y != NEST_Y && !this.pickedUp){
+            this.speed[1] += GRAVITY_ACCEL;
+
+            // if (this.speed < MAX_FALL_SPEED) this.speed = MAX_FALL_SPEED;
+               
+            this.x += this.speed[0];
+            this.y += this.speed[1];
+            this.z += this.speed[2];
+        
+
+            if(this.y < NEST_Y){
+                this.y = NEST_Y;
+                this.speed = [0, 0, 0];
+            }
+        }
     }
 
     setCoord(coords){
@@ -86,11 +110,11 @@ export class MyRock {
 
         this.appearance.apply();        
 
-        this.scene.translate(this.x, this.y, this.z);
-
-        this.scene.rotate(this.tilt, 1, 0, 0);
+        this.scene.translate(this.x, this.y, this.z);        
 
         this.scene.rotate(this.rotation, 0, 1, 0);
+        
+        this.scene.rotate(this.tilt, 1, 0, 0);
 
         this.scene.scale(this.width, this.height, this.length);
 
