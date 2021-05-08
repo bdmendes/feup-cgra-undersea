@@ -12,7 +12,7 @@ import { MySandFloor } from "./objects/scene/MySandFloor.js";
 import { MyFishNest } from "./objects/scene/MyFishNest.js";
 import { MyWaterSurface } from "./objects/base/MyWaterSurface.js";
 import { MyRockSet } from "./objects/base/MyRockSet.js";
-import { MyMovingFish} from "./objects/scene/MyMovingFish.js";
+import { MyMovingFish } from "./objects/scene/MyMovingFish.js";
 
 /**
 * MyScene
@@ -65,7 +65,7 @@ export class MyScene extends CGFscene {
         this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cylinder, this.pillarShader, this.rock];
 
         // Labels and ID's for object selection on MyInterface
-        this.objectIDs = { 'Sphere': 0, 'Pyramid': 1, 'Moving Object': 2, 'Cylinder': 3, 'Pillar': 4, 'Rock': 5};
+        this.objectIDs = { 'Sphere': 0, 'Pyramid': 1, 'Moving Object': 2, 'Cylinder': 3, 'Pillar': 4, 'Rock': 5 };
 
         this.defaultAppearance = new CGFappearance(this);
         this.defaultAppearance.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -105,11 +105,7 @@ export class MyScene extends CGFscene {
         this.lights[0].update();
     }
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
-        this.camera.position = [2, 2, 2];
-        this.camera.fov = 2.0;
-        this.camera.target = [0, 2, 0];
-        this.camera.direction = this.camera.calculateDirection();
+        this.camera = new CGFcamera(1.5, 0.1, 500, vec3.fromValues(2, 2, 2), vec3.fromValues(0, 2, 0));
     }
 
     setDefaultAppearance() {
@@ -141,10 +137,10 @@ export class MyScene extends CGFscene {
                 selectedObject.getObject().update();
             }
         }
-        if(this.enableWaterSurface){
+        if (this.enableWaterSurface) {
             this.waterSurface.update(t);
         }
-        
+
     }
 
     display() {
@@ -211,15 +207,15 @@ export class MyScene extends CGFscene {
             currObject.accelerate(this.speedFactor / 200);
         } if (this.gui.isKeyPressed(keyEventCode["S"])) {
             currObject.accelerate(-this.speedFactor / 200);
-        } if (this.gui.isKeyPressed(keyEventCode["R"])) { 
+        } if (this.gui.isKeyPressed(keyEventCode["R"])) {
             currObject.reset();
-        } if (this.gui.isKeyPressed(keyEventCode["C"])) { 
+        } if (this.gui.isKeyPressed(keyEventCode["C"])) {
             currObject.pickUpRock(this.rockSet.pickUpRock(this.movingObject.getCoords()));
         } if (this.gui.isKeyPressed(keyEventCode["Space"])) {
-            currObject.verAccel(this.speedFactor/20);
+            currObject.verAccel(this.speedFactor / 20);
         } if (this.gui.isKeyPressed(keyEventCode["Shift"])) {
-            currObject.verAccel(-this.speedFactor/20);
-        } if(!this.gui.isKeyPressed(keyEventCode["Space"]) && !this.gui.isKeyPressed(keyEventCode["Shift"])){
+            currObject.verAccel(-this.speedFactor / 20);
+        } if (!this.gui.isKeyPressed(keyEventCode["Space"]) && !this.gui.isKeyPressed(keyEventCode["Shift"])) {
             currObject.verAccel(0);
         }
     }
