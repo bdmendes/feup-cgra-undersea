@@ -10,7 +10,7 @@ export class MyMovingFish extends MyMovingObject {
         super(scene, new MyFish(scene));
         this.initAnimValues();
     }
-
+    
     reset() {
         super.reset();
         this.object.resetFins();
@@ -59,11 +59,11 @@ export class MyMovingFish extends MyMovingObject {
             return rotation <= Math.PI / 2 ||
                 (rotation > Math.PI && rotation <= 3 * Math.PI / 2);
         }
-        if (firstOrThirdQuadrant(this.rotation)) {
-            this.object.rightFinSpeedFactor = minSideFinSpeedFactor + Math.abs(this.speed) * 20;
+        if (val > 0) {
+            this.object.rightFinSpeedFactor = minSideFinSpeedFactor + Math.abs(this.speed) * 100;
             this.object.leftFinSpeedFactor = minSideFinSpeedFactor;
-        } else {
-            this.object.leftFinSpeedFactor = minSideFinSpeedFactor + Math.abs(this.speed) * 20;
+        } else if (val < 0){
+            this.object.leftFinSpeedFactor = minSideFinSpeedFactor + Math.abs(this.speed) * 100;
             this.object.rightFinSpeedFactor = minSideFinSpeedFactor;
         }
     }

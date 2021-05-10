@@ -189,5 +189,8 @@ export class MyFish {
             }
             this.rightFinRotation[i] += this.rightFinOrientation[i] * rightFinOffset[i];
         }
+
+        this.leftFinSpeedFactor = minSideFinSpeedFactor;
+        this.rightFinSpeedFactor = minSideFinSpeedFactor;
     }
 }
