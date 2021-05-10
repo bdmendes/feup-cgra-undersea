@@ -5,15 +5,14 @@ import { MyPyramid } from "./objects/base/MyPyramid.js";
 import { MyCubeMap } from "./objects/base/MyCubeMap.js";
 import { MyCylinder } from "./objects/base/MyCylinder.js";
 import { MyMovingObject } from "./objects/base/MyMovingObject.js";
-import { MyPillar } from "./objects/base/MyPillar.js";
 import { MyPillarShader } from "./objects/base/MyPillarShader.js";
 import { MyRock } from "./objects/base/MyRock.js";
 import { MyFish } from "./objects/scene/MyFish.js";
-import { MyPlane } from "./objects/base/MyPlane.js";
 import { MySandFloor } from "./objects/scene/MySandFloor.js";
 import { MyFishNest } from "./objects/scene/MyFishNest.js";
 import { MyWaterSurface } from "./objects/base/MyWaterSurface.js";
 import { MyRockSet } from "./objects/base/MyRockSet.js";
+import { MyMovingFish } from "./objects/scene/MyMovingFish.js";
 
 /**
 * MyScene
@@ -83,7 +82,7 @@ export class MyScene extends CGFscene {
         this.cylinder = new MyCylinder(this, 32, 6);
         this.fish = new MyFish(this, [0, 1, 0, 1], 0.4);
         this.fishNest = new MyFishNest(this, this.nestCoords, this.nestRadius);
-        this.movingObject = new MyMovingObject(this, this.fish, this.nestCoords, this.nestRadius);
+        this.movingObject = new MyMovingFish(this, new MyFish(this));
         this.sandFloor = new MySandFloor(this, this.nestCoords, this.nestRadius);
         this.waterSurface = new MyWaterSurface(this);
         this.rockSet = new MyRockSet(this, 50, this.nestCoords, this.nestRadius);
@@ -113,11 +112,14 @@ export class MyScene extends CGFscene {
         this.displayNormals = false;
         this.wireframe = false;
         this.selectedMapTexture = 5;
-        this.enableCubeMap = false;
+        this.enableCubeMap = true;
         this.enableSandFloor = true;
         this.enableFishNest = true;
-        this.enableWaterSurface = false;
+        this.enableWaterSurface = true;
         this.enableRockSet = true;
+    }
+    initCameras() {
+        this.camera = new CGFcamera(1.5, 0.1, 500, vec3.fromValues(2, 2, 2), vec3.fromValues(0, 2, 0));
     }
 
     initPillars() {
@@ -237,7 +239,7 @@ export class MyScene extends CGFscene {
 
     checkKeys() {
         let currObject = this.objects[this.selectedObject];
-        if (!(currObject instanceof MyMovingObject) || this.movingObject.getAnimating()) return;
+        if (!(currObject instanceof MyMovingFish) || this.movingObject.getAnimating()) return;
         if (this.gui.isKeyPressed(keyEventCode["A"])) {
             currObject.turn(this.speedFactor * Math.PI / 50);
         } if (this.gui.isKeyPressed(keyEventCode["D"])) {
@@ -251,11 +253,9 @@ export class MyScene extends CGFscene {
         } if (this.gui.isKeyPressed(keyEventCode["C"])) {
             if (this.movingObject.rock == null) {
                 currObject.pickUpRock(this.rockSet.pickUpRock(this.movingObject.getCoords()));
-            }
-            else {
+            } else {
                 currObject.dropRock();
             }
-
         } if (this.gui.isKeyPressed(keyEventCode["Space"])) {
             currObject.verAccel(this.speedFactor / 20);
         } if (this.gui.isKeyPressed(keyEventCode["Shift"])) {
@@ -263,6 +263,5 @@ export class MyScene extends CGFscene {
         } if (!this.gui.isKeyPressed(keyEventCode["Space"]) && !this.gui.isKeyPressed(keyEventCode["Shift"])) {
             currObject.verAccel(0);
         }
-
     }
 }
