@@ -57,7 +57,7 @@ export class MyMovingFish extends MyMovingObject {
 
     accelerate(val) {
         super.accelerate(val);
-        this.object.backFinSpeedFactor = minBackFinSpeedFactor + Math.abs(this.speed) * 50;
+        this.object.backFinSpeedFactor = minBackFinSpeedFactor + Math.abs(this.speed) * 20;
     }
 
     update() {

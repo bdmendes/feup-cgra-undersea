@@ -172,17 +172,19 @@ export class MyFish {
         let _leftFinOffset = this.scene.speedFactor * this.leftFinSpeedFactor * Math.PI / 36;
         let leftFinOffset = [_leftFinOffset, _leftFinOffset, 0];
         for (let i = 0; i < 3; i++) {
-            if (Math.abs(this.leftFinRotation[i] + leftFinOffset[i] + this.leftFinOrientation[i]) > maxSideFinRotation[i] || Math.abs(this.leftFinRotation[i] + leftFinOffset[i] * this.leftFinOrientation[i]) < 0) {
+            let candidateRotation = Math.abs(this.leftFinRotation[i] + leftFinOffset[i] * this.leftFinOrientation[i]);
+            if (candidateRotation > maxSideFinRotation[i] || candidateRotation < 0) {
                 this.leftFinOrientation[i] *= -1;
             }
             this.leftFinRotation[i] += this.leftFinOrientation[i] * leftFinOffset[i];
         }
 
         /* Right fin movement */
-        let _rightFinOffset = this.scene.speedFactor * this.rightFinSpeedFactor * 0.8 * Math.PI / 36;
+        let _rightFinOffset = this.scene.speedFactor * this.rightFinSpeedFactor * Math.PI / 36;
         let rightFinOffset = [_rightFinOffset, _rightFinOffset, 0];
         for (let i = 0; i < 3; i++) {
-            if (Math.abs(this.rightFinRotation[i] + rightFinOffset[i] * this.rightFinOrientation[i]) > maxSideFinRotation[i] || Math.abs(this.rightFinRotation[i] + rightFinOffset[i] * this.rightFinOrientation[i]) < 0) {
+            let candidateRotation = Math.abs(this.rightFinRotation[i] + rightFinOffset[i] * this.rightFinOrientation[i]);
+            if (candidateRotation > maxSideFinRotation[i] || candidateRotation < 0) {
                 this.rightFinOrientation[i] *= -1;
             }
             this.rightFinRotation[i] += this.rightFinOrientation[i] * rightFinOffset[i];
