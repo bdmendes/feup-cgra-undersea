@@ -2,6 +2,9 @@ import { MyMovingObject } from '../base/MyMovingObject.js'
 import { MyRock } from '../base/MyRock.js';
 import { minBackFinSpeedFactor, minSideFinSpeedFactor, MyFish } from './MyFish.js';
 
+const PICK_UP_ANIM = 1;
+const THROW_ANIM = 2;
+
 export class MyMovingFish extends MyMovingObject {
     constructor(scene) {
         super(scene, new MyFish(scene));

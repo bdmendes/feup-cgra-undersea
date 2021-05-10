@@ -1,8 +1,13 @@
 import { CGFobject } from '../../../lib/CGF.js';
+import { GRAVITY_ACCEL, NEST_Y, MAX_FALL_SPEED, MIN_FISH_HEIGHT } from '../../constants.js';
 import { MyRock } from "../base/MyRock.js";
 
+const PICK_UP_ANIM = 1;
+const THROW_ANIM = 2;
+
 export class MyMovingObject {
-    constructor(scene, object) {
+
+    constructor(scene, object, nestCoords, nestRadius) {
         this.scene = scene;
         this.object = object;
         this.reset();
