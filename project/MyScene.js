@@ -14,6 +14,7 @@ import { MySandFloor } from "./objects/scene/MySandFloor.js";
 import { MyFishNest } from "./objects/scene/MyFishNest.js";
 import { MyWaterSurface } from "./objects/base/MyWaterSurface.js";
 import { MyRockSet } from "./objects/base/MyRockSet.js";
+import { MySeaWeed } from "./objects/base/MySeaWeed.js";
 
 /**
 * MyScene
@@ -62,6 +63,7 @@ export class MyScene extends CGFscene {
         this.fishNest = new MyFishNest(this, this.nestXPos, this.nestZPos, this.nestRadius);
         this.waterSurface = new MyWaterSurface(this);
         this.rockSet = new MyRockSet(this, 50, this.nestXPos, this.nestZPos, this.nestRadius);
+        this.seaWeed = new MySeaWeed(this);
 
         this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cylinder, this.pillarShader, this.rock];
 
@@ -186,6 +188,8 @@ export class MyScene extends CGFscene {
 
         if (this.enableRockSet)
             this.rockSet.display();
+
+        this.seaWeed.display();
 
         /* Unless we make MyMovingObject a proper CGFObject with all its properties... */
         if (this.objects[this.selectedObject] instanceof CGFobject) {
