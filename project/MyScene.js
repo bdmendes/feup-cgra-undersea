@@ -86,10 +86,10 @@ export class MyScene extends CGFscene {
         this.displayNormals = false;
         this.wireframe = false;
         this.selectedMapTexture = 5;
-        this.enableCubeMap = false;
+        this.enableCubeMap = true;
         this.enableSandFloor = true;
         this.enableFishNest = true;
-        this.enableWaterSurface = false;
+        this.enableWaterSurface = true;
         this.enableRockSet = true;
 
         // Global object-related properties

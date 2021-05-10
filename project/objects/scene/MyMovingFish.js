@@ -52,7 +52,17 @@ export class MyMovingFish extends MyMovingObject {
 
     turn(val) {
         super.turn(val);
-
+        const firstOrThirdQuadrant = function (rotation) {
+            return rotation <= Math.PI / 2 ||
+                (rotation > Math.PI && rotation <= 3 * Math.PI / 2);
+        }
+        if (firstOrThirdQuadrant(this.rotation)) {
+            this.object.leftFinSpeedFactor = minSideFinSpeedFactor + Math.abs(this.speed) * 20;
+            this.object.rightFinSpeedFactor = minSideFinSpeedFactor;
+        } else {
+            this.object.rightFinSpeedFactor = minSideFinSpeedFactor + Math.abs(this.speed) * 20;
+            this.object.leftFinSpeedFactor = minSideFinSpeedFactor;
+        }
     }
 
     accelerate(val) {

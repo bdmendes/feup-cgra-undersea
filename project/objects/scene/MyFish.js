@@ -4,8 +4,8 @@ import { MyTriangle } from '../base/MyTriangle.js'
 
 const maxBackFinRotation = Math.PI / 6;
 const maxSideFinRotation = [Math.PI / 12, Math.PI / 12, 0];
-export const minSideFinSpeedFactor = 0.5;
-export const minBackFinSpeedFactor = 0.8;
+export const minSideFinSpeedFactor = 0.4;
+export const minBackFinSpeedFactor = 0.4;
 
 export class MyFish {
     constructor(scene) {
