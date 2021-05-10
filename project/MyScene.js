@@ -36,7 +36,7 @@ export class MyScene extends CGFscene {
         this.gl.enable(this.gl.CULL_FACE);
         this.gl.depthFunc(this.gl.LEQUAL);
 
-        this.setUpdatePeriod(10);
+        this.setUpdatePeriod(50);
 
         this.enableTextures(true);
 
@@ -52,7 +52,7 @@ export class MyScene extends CGFscene {
 
         // Global object-related properties
         this.scaleFactor = 1;
-        this.speedFactor = 0.3;
+        this.speedFactor = 1;
 
         this.updateMapTexture();
     }
