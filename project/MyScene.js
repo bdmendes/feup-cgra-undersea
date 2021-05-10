@@ -13,6 +13,7 @@ import { MyFishNest } from "./objects/scene/MyFishNest.js";
 import { MyWaterSurface } from "./objects/base/MyWaterSurface.js";
 import { MyRockSet } from "./objects/base/MyRockSet.js";
 import { MyMovingFish } from "./objects/scene/MyMovingFish.js";
+import { MyAnimatedFish } from "./objects/scene/MyAnimatedFish.js";
 
 /**
 * MyScene
@@ -36,7 +37,7 @@ export class MyScene extends CGFscene {
         this.gl.enable(this.gl.CULL_FACE);
         this.gl.depthFunc(this.gl.LEQUAL);
 
-        this.setUpdatePeriod(10);
+        this.setUpdatePeriod(50);
 
         this.enableTextures(true);
 
@@ -52,7 +53,7 @@ export class MyScene extends CGFscene {
 
         // Global object-related properties
         this.scaleFactor = 1;
-        this.speedFactor = 0.3;
+        this.speedFactor = 1;
 
         this.updateMapTexture();
     }
@@ -86,6 +87,7 @@ export class MyScene extends CGFscene {
         this.sandFloor = new MySandFloor(this, this.nestCoords, this.nestRadius);
         this.waterSurface = new MyWaterSurface(this);
         this.rockSet = new MyRockSet(this, 50, this.nestCoords, this.nestRadius);
+        this.AIFish = new MyAnimatedFish(this, new MyFish(this, [0, 0, 1, 1]), undefined, undefined);
         this.initPillars();
 
         this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cylinder, this.pillarShader, this.rock];
@@ -162,6 +164,7 @@ export class MyScene extends CGFscene {
     update(t) {
         this.checkKeys();
         this.rockSet.update();
+        this.AIFish.update();
         const selectedObject = this.objects[this.selectedObject];
         if (selectedObject instanceof MyMovingObject) {
             selectedObject.update();
@@ -213,6 +216,8 @@ export class MyScene extends CGFscene {
 
         if (this.enableRockSet)
             this.rockSet.display();
+
+        this.AIFish.display();
 
         /* Unless we make MyMovingObject a proper CGFObject with all its properties... */
         if (this.objects[this.selectedObject] instanceof CGFobject) {
