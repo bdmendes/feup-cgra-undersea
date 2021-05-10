@@ -81,7 +81,7 @@ export class MyScene extends CGFscene {
         this.pillarShader = new MyPillarShader(this);
         this.rock = new MyRock(this, 0.5, 0.8, 0.2, 0, 1, 0);
         this.cylinder = new MyCylinder(this, 32, 6);
-        this.fish = new MyFish(this);
+        this.fish = new MyFish(this, [0, 1, 0, 1], 0.4);
         this.fishNest = new MyFishNest(this, this.nestCoords, this.nestRadius);
         this.movingObject = new MyMovingObject(this, this.fish, this.nestCoords, this.nestRadius);
         this.sandFloor = new MySandFloor(this, this.nestCoords, this.nestRadius);

@@ -6,8 +6,14 @@ const maxBackFinRotation = Math.PI / 9;
 const maxSideFinRotation = [Math.PI / 18, Math.PI / 18, 0];
 
 export class MyFish {
-    constructor(scene) {
+    constructor(scene, color, headPortion, texturePath) {
         this.scene = scene;
+        this.color = color === undefined ?
+            [0.55, 0.18, 0.1, 1] : color;
+        this.headPortion = headPortion === undefined ?
+            0.4 : headPortion;
+        this.texturePath = texturePath === undefined ?
+            "images/part-b/fish/fish_scales_2.png" : texturePath;
         this.initObjects();
         this.initMaterials();
         this.initShaders();
@@ -26,20 +32,20 @@ export class MyFish {
     initMaterials() {
         /* Body */
         this.bodyMaterial = new CGFappearance(this.scene);
-        this.bodyScales = new CGFtexture(this.scene, 'images/part-b/fish/fish_scales_2.png');
+        this.bodyScales = new CGFtexture(this.scene, this.texturePath);
         this.bodyMaterial.setTexture(this.bodyScales);
         this.bodyMaterial.setAmbient(1.0, 1.0, 1.0, 1.0);
         this.bodyMaterial.setDiffuse(1.0, 1.0, 1.0, 1.0);
         this.bodyMaterial.setShininess(10.0);
-        this.bodyMaterial.setSpecular(0,0,0,0);
+        this.bodyMaterial.setSpecular(0, 0, 0, 0);
 
         /* Fin */
         this.finMaterial = new CGFappearance(this.scene);
         this.finMaterial.setAmbient(1.0, 1.0, 1.0, 1.0);
         this.finMaterial.setDiffuse(1.0, 1.0, 1.0, 1.0);
         this.finMaterial.setShininess(10.0);
-        this.finMaterial.setSpecular(0,0,0,0);
-        this.finMaterial.setColor(0.55, 0.18, 0.1, 1);
+        this.finMaterial.setSpecular(0, 0, 0, 0);
+        this.finMaterial.setColor(this.color[0], this.color[1], this.color[2], this.color[3]);
 
         /* Eye */
         this.eyeMaterial = new CGFappearance(this.scene);
@@ -49,12 +55,18 @@ export class MyFish {
         this.eyeMaterial.setAmbient(1.0, 1.0, 1.0, 1.0);
         this.eyeMaterial.setDiffuse(1.0, 1.0, 1.0, 1.0);
         this.eyeMaterial.setShininess(10.0);
-        this.eyeMaterial.setSpecular(0,0,0,0);
+        this.eyeMaterial.setSpecular(0, 0, 0, 0);
     }
 
     initShaders() {
         this.bodyShader = new CGFshader(this.scene.gl, './shaders/slimGouraud.vert', './shaders/bodyFish.frag');
-        this.bodyShader.setUniformsValues({ uSampler2: 1 });
+        this.bodyShader.setUniformsValues({
+            uSampler2: 1,
+            r: this.color[0],
+            g: this.color[1],
+            b: this.color[2],
+            headPortion: this.headPortion
+        });
     }
 
     display() {
