@@ -7,10 +7,11 @@ export class MyAnimatedFish extends MyMovingFish {
         this.distance = distance === undefined ? 1 : distance;
         this.circleDuration = circleDuration === undefined ? 10 : circleDuration;
         this.rotation = 0;
+        this.accelerate((2 * Math.PI / (1000 / this.scene.updatePeriod)) / this.circleDuration);
     }
 
     update() {
-        this.turn((2 * Math.PI / (1000 / this.scene.updatePeriod)) / this.circleDuration);
+        this.turn(this.speed);
     }
 
     display() {

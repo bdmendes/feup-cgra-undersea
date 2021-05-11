@@ -13,17 +13,17 @@ export class MyAnimatedFishSet {
         this.fishes = [];
         let counter = 0;
         while(counter < numberFishes){
-            let x = Math.random() * 40 - 25;
-            let z = Math.random() * 40 - 25;
-            let y = Math.random() * 5 + 1;
+            let x = Math.random() * 10 - 5;
+            let z = Math.random() * 10 - 5;
+            let y = Math.random() * 3 + 1;
             let r = Math.random();
-            let g = Math.random();
-            let b = Math.random();
+            let g = (0.9 - r + 0.1) % 1;
+            let b = 1 - r - g;
             let distance = Math.random() * 3;
             let circleDuration = Math.random() * 5 + 5;
 
-            if (x)
-            this.fishes.push(new MyAnimatedFish(this.scene, new MyFish(this.scene, [r,g,b,1], 0.4), [x,y,z], distance, circleDuration));
+            this.fishes.push(new MyAnimatedFish(this.scene,
+                new MyFish(this.scene, [r,g,b,1], 0.4), [x,y,z], distance, circleDuration));
             counter++;
         }
     }
