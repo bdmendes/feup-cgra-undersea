@@ -14,6 +14,7 @@ import { MyWaterSurface } from "./objects/base/MyWaterSurface.js";
 import { MyRockSet } from "./objects/base/MyRockSet.js";
 import { MyMovingFish } from "./objects/scene/MyMovingFish.js";
 import { MyAnimatedFish } from "./objects/scene/MyAnimatedFish.js";
+import { MyAnimatedFishSet } from "./objects/scene/MyAnimatedFishSet.js";
 
 /**
 * MyScene
@@ -87,7 +88,7 @@ export class MyScene extends CGFscene {
         this.sandFloor = new MySandFloor(this, this.nestCoords, this.nestRadius);
         this.waterSurface = new MyWaterSurface(this);
         this.rockSet = new MyRockSet(this, 50, this.nestCoords, this.nestRadius);
-        this.AIFish = new MyAnimatedFish(this, new MyFish(this, [0, 0, 1, 1]), undefined, undefined);
+        this.AIFishes = new MyAnimatedFishSet(this, 4);
         this.initPillars();
 
         this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cylinder, this.pillarShader, this.rock];
@@ -164,7 +165,7 @@ export class MyScene extends CGFscene {
     update(t) {
         this.checkKeys();
         this.rockSet.update();
-        this.AIFish.update();
+        this.AIFishes.update();
         const selectedObject = this.objects[this.selectedObject];
         if (selectedObject instanceof MyMovingObject) {
             selectedObject.update();
@@ -217,7 +218,7 @@ export class MyScene extends CGFscene {
         if (this.enableRockSet)
             this.rockSet.display();
 
-        this.AIFish.display();
+        this.AIFishes.display();
 
         /* Unless we make MyMovingObject a proper CGFObject with all its properties... */
         if (this.objects[this.selectedObject] instanceof CGFobject) {

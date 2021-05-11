@@ -1,6 +1,6 @@
-import { MyMovingObject } from "../base/MyMovingObject.js";
+import { MyMovingFish } from './MyMovingFish.js'
 
-export class MyAnimatedFish extends MyMovingObject {
+export class MyAnimatedFish extends MyMovingFish {
     constructor(scene, fish, rotationCenter, distance, circleDuration) {
         super(scene, fish);
         this.rotationCenter = rotationCenter === undefined ? [0, 0.5, 0] : rotationCenter;
@@ -10,7 +10,7 @@ export class MyAnimatedFish extends MyMovingObject {
     }
 
     update() {
-        this.rotation += (2 * Math.PI / (1000 / this.scene.updatePeriod)) / this.circleDuration;
+        this.turn((2 * Math.PI / (1000 / this.scene.updatePeriod)) / this.circleDuration);
     }
 
     display() {
