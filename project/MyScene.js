@@ -15,6 +15,7 @@ import { MyFishNest } from "./objects/scene/MyFishNest.js";
 import { MyWaterSurface } from "./objects/base/MyWaterSurface.js";
 import { MyRockSet } from "./objects/base/MyRockSet.js";
 import { MySeaWeed } from "./objects/base/MySeaWeed.js";
+import { MySeaWeedCluster } from "./objects/base/MySeaWeedCluster.js";
 
 /**
 * MyScene
@@ -63,7 +64,7 @@ export class MyScene extends CGFscene {
         this.fishNest = new MyFishNest(this, this.nestXPos, this.nestZPos, this.nestRadius);
         this.waterSurface = new MyWaterSurface(this);
         this.rockSet = new MyRockSet(this, 50, this.nestXPos, this.nestZPos, this.nestRadius);
-        this.seaWeed = new MySeaWeed(this);
+        this.seaWeed = new MySeaWeedCluster(this, [0, 0, 0], 0.2, 10);
 
         this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cylinder, this.pillarShader, this.rock];
 

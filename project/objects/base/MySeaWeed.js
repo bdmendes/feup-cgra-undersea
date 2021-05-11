@@ -4,7 +4,6 @@ import { MyPyramid } from "../base/MyPyramid.js";
 export class MySeaWeed {
     constructor(scene, coords, size, rotation){
         this.scene = scene;
-        this.radius = 1.0;
 
         if (coords == undefined) this.coords = [0, 0, 0];
         else this.coords = coords;
@@ -20,12 +19,12 @@ export class MySeaWeed {
     }
 
     initObject(){
-        this.pyramid = new MyPyramid(this.scene, 2, 1)
+        this.pyramid = new MyPyramid(this.scene, 3, 1)
     }
 
     initAppearance(){
         this.appearance = new CGFappearance(this.scene);
-        var greenIntensity = 0.75 + (Math.random() * 6.0 / 10.0 - 0.25);
+        var greenIntensity = 0.1 + (Math.random() * 10 / 10.0);
         this.appearance.setAmbient(0.0, 0.3, 0.0, 1);
         this.appearance.setDiffuse(0.0, greenIntensity, 0.0, 1);
         this.appearance.setSpecular(0.0, 0.5, 0.0, 1);
