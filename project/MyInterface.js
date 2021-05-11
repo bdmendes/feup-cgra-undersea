@@ -34,6 +34,10 @@ export class MyInterface extends CGFinterface {
 
         this.gui.add(this.scene, 'enableRockSet').name('Rock Set');
 
+        this.gui.add(this.scene, 'enablePillars').name('Pillars');
+
+        this.gui.add(this.scene, 'enableSeaWeed').name('SeaWeed');
+
         this.gui.add(this.scene, 'scaleFactor', 0.1, 5.0).name('Scale Factor');
 
         this.gui.add(this.scene, 'speedFactor', -3.0, 3.0).name('Speed Factor');
