@@ -50,7 +50,7 @@ export class MySeaWeed {
         for (var i = 0; i < this.buVertices.length/3; i++){
 
             if (this.buVertices[i*3 + 1] != 0){
-                this.pyramid.vertices[i*3] = this.buVertices[i*3] + (Math.sin(this.buVertices[i*3 + 1]*2.0 + t));
+                this.pyramid.vertices[i*3] = this.buVertices[i*3] + this.buVertices[i*3 + 1] * (Math.sin(this.buVertices[i*3 + 1] + t));
             }
             
         }
