@@ -123,6 +123,8 @@ export class MyScene extends CGFscene {
         this.enableFishNest = true;
         this.enableWaterSurface = true;
         this.enableRockSet = true;
+        this.enablePillars = true;
+        this.enableSeaWeed = true;
     }
     initCameras() {
         this.camera = new CGFcamera(1.5, 0.1, 500, vec3.fromValues(2, 2, 2), vec3.fromValues(0, 2, 0));
@@ -178,7 +180,9 @@ export class MyScene extends CGFscene {
         if (this.enableWaterSurface) {
             this.waterSurface.update(t);
         }
-        this.seaWeed.update(t); 
+        if (this.enableSeaWeed){
+            this.seaWeed.update(t); 
+        }
     }
 
     display() {
@@ -207,20 +211,16 @@ export class MyScene extends CGFscene {
         // Display scene background
         if (this.enableCubeMap)
             this.cubeMap.display();
-
         if (this.enableSandFloor)
             this.sandFloor.display();
-
         if (this.enableFishNest)
             this.fishNest.display();
-
         if (this.enableWaterSurface)
             this.waterSurface.display();
-
         if (this.enableRockSet)
             this.rockSet.display();
-
-        this.seaWeed.display();
+        if (this.enableSeaWeed)
+            this.seaWeed.display();
 
         /* Unless we make MyMovingObject a proper CGFObject with all its properties... */
         if (this.objects[this.selectedObject] instanceof CGFobject) {
@@ -231,14 +231,15 @@ export class MyScene extends CGFscene {
         }
 
         // Draw pillars
-        /*
-        for (let i = 0; i < 2 * this.numberOfPillars; i++) {
-            this.pushMatrix();
-            this.translate(...this.pillarsPos[i]);
-            this.scale(0.5, 1, 0.5);
-            this.pillar.display();
-            this.popMatrix();
-        }*/
+        if (this.enablePillars){
+            for (let i = 0; i < 2 * this.numberOfPillars; i++) {
+                this.pushMatrix();
+                this.translate(...this.pillarsPos[i]);
+                this.scale(0.5, 1, 0.5);
+                this.pillar.display();
+                this.popMatrix();
+            }
+        }
 
         // Display selected object
         this.objects[this.selectedObject].display();
