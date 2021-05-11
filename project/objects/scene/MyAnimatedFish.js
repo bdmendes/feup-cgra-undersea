@@ -15,9 +15,9 @@ export class MyAnimatedFish extends MyMovingObject {
 
     display() {
         this.scene.pushMatrix();
+        this.scene.translate(...this.rotationCenter);
         this.scene.rotate(this.rotation, 0, 1, 0);
         this.scene.translate(0, 0, this.distance);
-        this.scene.translate(...this.rotationCenter);
         this.scene.rotate(Math.PI / 2, 0, 1, 0);
         this.object.display();
         this.scene.popMatrix();
