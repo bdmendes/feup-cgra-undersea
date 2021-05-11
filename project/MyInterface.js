@@ -19,9 +19,7 @@ export class MyInterface extends CGFinterface {
         this.gui.add(this.scene, 'displayNormals').name("Display Normals");
 
         this.gui.add(this.scene, 'wireframe').name('Wireframe').onChange(this.scene.onWireframeChanged.bind(this.scene));
-
-        this.gui.add(this.scene, 'selectedObject', this.scene.objectIDs).name('Selected Object');
-
+        
         this.gui.add(this.scene, 'enableCubeMap', this.scene.enableCubeMap).name('Cube Map');
 
         this.gui.add(this.scene, 'selectedMapTexture', this.scene.mapTexturesIDs).name('Selected Map').onChange(this.scene.updateMapTexture.bind(this.scene));
@@ -37,6 +35,8 @@ export class MyInterface extends CGFinterface {
         this.gui.add(this.scene, 'enablePillars').name('Pillars');
 
         this.gui.add(this.scene, 'enableSeaWeed').name('SeaWeed');
+
+        this.gui.add(this.scene, 'enableFish').name('Fish');
 
         this.gui.add(this.scene, 'scaleFactor', 0.1, 5.0).name('Scale Factor');
 
