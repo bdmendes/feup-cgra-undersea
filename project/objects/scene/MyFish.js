@@ -2,8 +2,10 @@ import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject, CGFtexture, CGF
 import { MySphere } from '../base/MySphere.js'
 import { MyTriangle } from '../base/MyTriangle.js'
 
-const maxBackFinRotation = Math.PI / 9;
-const maxSideFinRotation = [Math.PI / 18, Math.PI / 18, 0];
+const maxBackFinRotation = Math.PI / 6;
+const maxSideFinRotation = [Math.PI / 12, Math.PI / 12, 0];
+export const minSideFinSpeedFactor = 0.4;
+export const minBackFinSpeedFactor = 0.4;
 
 export class MyFish {
     constructor(scene) {
@@ -11,10 +13,19 @@ export class MyFish {
         this.initObjects();
         this.initMaterials();
         this.initShaders();
+        this.resetFins();
+    }
+
+    resetFins() {
+        this.leftFinRotation = [0, 0, 0];
+        this.leftFinOrientation = [1, 1, 1];
+        this.rightFinRotation = [0, 0, 0];
+        this.rightFinOrientation = [1, 1, 1];
         this.backFinRotation = 0;
         this.backFinOrientation = 1;
-        this.sideFinRotation = [0, 0, 0];
-        this.sideFinOrientation = [1, 1, 1];
+        this.leftFinSpeedFactor = minSideFinSpeedFactor;
+        this.rightFinSpeedFactor = minSideFinSpeedFactor;
+        this.backFinSpeedFactor = minBackFinSpeedFactor;
     }
 
     initObjects() {
@@ -31,14 +42,14 @@ export class MyFish {
         this.bodyMaterial.setAmbient(1.0, 1.0, 1.0, 1.0);
         this.bodyMaterial.setDiffuse(1.0, 1.0, 1.0, 1.0);
         this.bodyMaterial.setShininess(10.0);
-        this.bodyMaterial.setSpecular(0,0,0,0);
+        this.bodyMaterial.setSpecular(0, 0, 0, 0);
 
         /* Fin */
         this.finMaterial = new CGFappearance(this.scene);
         this.finMaterial.setAmbient(1.0, 1.0, 1.0, 1.0);
         this.finMaterial.setDiffuse(1.0, 1.0, 1.0, 1.0);
         this.finMaterial.setShininess(10.0);
-        this.finMaterial.setSpecular(0,0,0,0);
+        this.finMaterial.setSpecular(0, 0, 0, 0);
         this.finMaterial.setColor(0.55, 0.18, 0.1, 1);
 
         /* Eye */
@@ -49,7 +60,7 @@ export class MyFish {
         this.eyeMaterial.setAmbient(1.0, 1.0, 1.0, 1.0);
         this.eyeMaterial.setDiffuse(1.0, 1.0, 1.0, 1.0);
         this.eyeMaterial.setShininess(10.0);
-        this.eyeMaterial.setSpecular(0,0,0,0);
+        this.eyeMaterial.setSpecular(0, 0, 0, 0);
     }
 
     initShaders() {
@@ -59,6 +70,7 @@ export class MyFish {
 
     display() {
 
+        /* Global scale */
         this.scene.pushMatrix();
         this.scene.scale(0.5, 0.8, 1); // global fish distortion
         this.scene.scale(0.5, 0.5, 0.5); // 0.5 units of length
@@ -124,9 +136,9 @@ export class MyFish {
         this.finMaterial.apply();
         this.scene.translate(1.03, 0, 0.25);
         this.scene.scale(0.5, 0.4, 0.5);
-        this.scene.rotate(this.sideFinRotation[0], 1, 0, 0);
-        this.scene.rotate(this.sideFinRotation[1], 0, 1, 0);
-        this.scene.rotate(this.sideFinRotation[2], 0, 0, 1);
+        this.scene.rotate(this.leftFinRotation[0], 1, 0, 0);
+        this.scene.rotate(this.leftFinRotation[1], 0, 1, 0);
+        this.scene.rotate(this.leftFinRotation[2], 0, 0, 1);
         this.scene.rotate(Math.PI / 18, 0, 0, 1);
         this.fin.display();
         this.scene.defaultAppearance.apply();
@@ -137,34 +149,48 @@ export class MyFish {
         this.finMaterial.apply();
         this.scene.translate(-1.03, 0, 0.25);
         this.scene.scale(0.5, 0.4, 0.5);
-        this.scene.rotate(this.sideFinRotation[0], 1, 0, 0);
-        this.scene.rotate(-this.sideFinRotation[1], 0, 1, 0);
-        this.scene.rotate(this.sideFinRotation[2], 0, 0, 1);
+        this.scene.rotate(this.rightFinRotation[0], 1, 0, 0);
+        this.scene.rotate(-this.rightFinRotation[1], 0, 1, 0);
+        this.scene.rotate(this.rightFinRotation[2], 0, 0, 1);
         this.scene.rotate(-Math.PI / 18, 0, 0, 1);
         this.fin.display();
         this.scene.defaultAppearance.apply();
         this.scene.popMatrix();
 
-        this.scene.popMatrix();
+        this.scene.popMatrix(); // global scale
     }
 
     update() {
         /* Back fin movement */
-        let backFinOffset = this.scene.speedFactor * 1.2 * Math.PI / 36;
-        if (Math.abs(this.backFinRotation + backFinOffset) > maxBackFinRotation) {
+        let backFinOffset = this.scene.speedFactor * this.backFinSpeedFactor * Math.PI / 36;
+        if (Math.abs(this.backFinRotation + backFinOffset * this.backFinOrientation) > maxBackFinRotation) {
             this.backFinOrientation *= -1;
         }
         this.backFinRotation += this.backFinOrientation * backFinOffset;
 
-        /* Side fin movement */
-        let _sideFinOffset = this.scene.speedFactor * 0.8 * Math.PI / 36;
-        let sideFinOffset = [_sideFinOffset, _sideFinOffset, 0];
+        /* Left fin movement */
+        let _leftFinOffset = this.scene.speedFactor * this.leftFinSpeedFactor * Math.PI / 36;
+        let leftFinOffset = [_leftFinOffset, _leftFinOffset, 0];
         for (let i = 0; i < 3; i++) {
-            if (Math.abs(this.sideFinRotation[i] + sideFinOffset[i]) > maxSideFinRotation[i] || Math.abs(this.sideFinRotation[i] + sideFinOffset[i]) < 0) {
-                console.log("hey!");
-                this.sideFinOrientation[i] *= -1;
+            let candidateRotation = Math.abs(this.leftFinRotation[i] + leftFinOffset[i] * this.leftFinOrientation[i]);
+            if (candidateRotation > maxSideFinRotation[i] || candidateRotation < 0) {
+                this.leftFinOrientation[i] *= -1;
             }
-            this.sideFinRotation[i] += this.sideFinOrientation[i] * sideFinOffset[i];
+            this.leftFinRotation[i] += this.leftFinOrientation[i] * leftFinOffset[i];
         }
+
+        /* Right fin movement */
+        let _rightFinOffset = this.scene.speedFactor * this.rightFinSpeedFactor * Math.PI / 36;
+        let rightFinOffset = [_rightFinOffset, _rightFinOffset, 0];
+        for (let i = 0; i < 3; i++) {
+            let candidateRotation = Math.abs(this.rightFinRotation[i] + rightFinOffset[i] * this.rightFinOrientation[i]);
+            if (candidateRotation > maxSideFinRotation[i] || candidateRotation < 0) {
+                this.rightFinOrientation[i] *= -1;
+            }
+            this.rightFinRotation[i] += this.rightFinOrientation[i] * rightFinOffset[i];
+        }
+
+        this.leftFinSpeedFactor = minSideFinSpeedFactor;
+        this.rightFinSpeedFactor = minSideFinSpeedFactor;
     }
 }

@@ -3,15 +3,12 @@ import { MyRock } from "../base/MyRock.js";
 
 export class MyRockSet {
 
-    constructor(scene, no_rocks, nestXPos, nestYPos, nestRadius){
+    constructor(scene, no_rocks, nestCoords, nestRadius){
         this.scene = scene;
         this.no_rocks = no_rocks;
 
-        if (nestXPos == undefined) this.nestXPos = 0.0;
-        else this.nestXPos = nestXPos;
-
-        if (nestYPos == undefined) this.nestYPos = 0.0;
-        else this.nestYPos = nestYPos;
+        if (nestCoords == undefined) this.nestCoords = [0, 0];
+        else this.nestCoords = nestCoords;
 
         if (nestRadius == undefined) this.nestRadius = 2.5;
         else this.nestRadius = nestRadius;
@@ -37,7 +34,7 @@ export class MyRockSet {
                 x = Math.random() * 50 - 25;
                 z = Math.random() * 50 - 25;
 
-                if (Math.sqrt(Math.pow(x - this.nestXPos, 2) + Math.pow(z - this.nestYPos, 2)) > this.nestRadius + 1.0){
+                if (Math.sqrt(Math.pow(x - this.nestCoords[0], 2) + Math.pow(z - this.nestCoords[1], 2)) > this.nestRadius + 1.0){
                     break;
                 }
             }
@@ -56,16 +53,23 @@ export class MyRockSet {
         return Math.sqrt(Math.pow(c1[0] - c2[0], 2) + Math.pow(c1[1] - c2[1], 2) + Math.pow(c1[2] - c2[2], 2))
     }
 
+    update(){
+        for (var i = 0; i < this.rocks.length; i++){
+            this.rocks[i].update();
+        }
+    }
+
     pickUpRock(coords){
 
-        var MAX_DIST = 20.0;
+        var MAX_DIST = 10.0;
         
-        var min_dist = this.getDist(coords, this.rocks[0].getCoords());
-        var rock = this.rocks[0];
+        var min_dist = 50.0;
+        var rock = null;
 
         for (var i = 0; i < this.rocks.length; i++){
             var cur_dist = this.getDist(coords, this.rocks[i].getCoords());
-            if ( cur_dist < min_dist){
+            var dist_to_nest = this.getDist([this.nestCoords[0], 0.05, this.nestCoords[1]], this.rocks[i].getCoords());
+            if ( cur_dist < min_dist && dist_to_nest >= this.nestRadius){
                 min_dist = cur_dist;
                 rock = this.rocks[i];
             }
