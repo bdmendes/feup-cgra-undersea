@@ -47,9 +47,19 @@ export class MyScene extends CGFscene {
         this.cubeMap = new MyCubeMap(this);
         this.mapTexturesIDs = { 'Axis': 0, 'Plains': 1, 'City': 2, 'Beach': 3, 'Sky': 4, 'Underwater': 5 };
 
-        //Initialize env variables
+        //Objects properties
+
+        //Nest properties
         this.nestCoords = [-7.5, -5.0];
         this.nestRadius = 2.5; //Default is 2.5
+
+        //Sea Weed properties
+        this.seaWeedClusterSize = 3;
+        this.seaWeedMinRadius = 0.1;
+        this.seaWeedMaxRadius = 1.0;
+
+        //Rock Set properties;
+        this.rockSetSize = 10.0;
 
         this.initObjects();
 
@@ -78,26 +88,15 @@ export class MyScene extends CGFscene {
     initObjects() {
         // Initialize scene objects
         this.axis = new CGFaxis(this);
-        this.incompleteSphere = new MySphere(this, 32, 32, new CGFtexture(this, 'images/part-b/stone2.png'));
-        this.pyramid = new MyPyramid(this, 6, 1);
-        this.pillarShader = new MyPillarShader(this);
-        this.rock = new MyRock(this, 0.5, 0.8, 0.2, 0, 1, 0);
-        this.cylinder = new MyCylinder(this, 32, 6);
-        this.fish = new MyFish(this);
         this.movingObject = new MyMovingFish(this, this.nestCoords, this.nestRadius);
         this.sandFloor = new MySandFloor(this, this.nestCoords, this.nestRadius);
         this.fishNest = new MyFishNest(this, this.nestCoords, this.nestRadius);
         this.waterSurface = new MyWaterSurface(this);
-        this.seaWeed = new MySeaWeedSet(this, 3, 0.1, 1.0, this.nestCoords, this.nestRadius);
-        //this.seaWeed = new MySeaWeed(this, [0, 0, 0]);
-        //this.seaWeed = new MySeaWeedCluster(this, [0 ,0, 0], 1.0, 3.0);
-        this.rockSet = new MyRockSet(this, 50, this.nestCoords, this.nestRadius);
+        this.seaWeed = new MySeaWeedSet(this, this.seaWeedClusterSize, this.seaWeedMinRadius, this.seaWeedMaxRadius, this.nestCoords, this.nestRadius);
+        this.rockSet = new MyRockSet(this, this.rockSetSize, this.nestCoords, this.nestRadius);
         this.initPillars();
 
-        this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cylinder, this.pillarShader, this.rock];
-
         // Labels and ID's for object selection on MyInterface
-        this.objectIDs = { 'Sphere': 0, 'Pyramid': 1, 'Moving Object': 2, 'Cylinder': 3, 'Pillar': 4, 'Rock': 5 };
 
         this.defaultAppearance = new CGFappearance(this);
         this.defaultAppearance.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -125,6 +124,7 @@ export class MyScene extends CGFscene {
         this.enableRockSet = true;
         this.enablePillars = true;
         this.enableSeaWeed = true;
+        this.enableFish = true;
     }
     initCameras() {
         this.camera = new CGFcamera(1.5, 0.1, 500, vec3.fromValues(2, 2, 2), vec3.fromValues(0, 2, 0));
@@ -169,13 +169,11 @@ export class MyScene extends CGFscene {
 
     update(t) {
         this.checkKeys();
-        this.rockSet.update();
-        const selectedObject = this.objects[this.selectedObject];
-        if (selectedObject instanceof MyMovingObject) {
-            selectedObject.update();
-            if (selectedObject.getObject() instanceof MyFish) {
-                selectedObject.getObject().update();
-            }
+        if (this.enableRockSet){
+            this.rockSet.update();
+        }
+        if (this.enableFish) {
+            this.movingObject.update(t);
         }
         if (this.enableWaterSurface) {
             this.waterSurface.update(t);
@@ -221,14 +219,9 @@ export class MyScene extends CGFscene {
             this.rockSet.display();
         if (this.enableSeaWeed)
             this.seaWeed.display();
+        if (this.enableFish)
+            this.movingObject.display();
 
-        /* Unless we make MyMovingObject a proper CGFObject with all its properties... */
-        if (this.objects[this.selectedObject] instanceof CGFobject) {
-            if (this.displayNormals)
-                this.objects[this.selectedObject].enableNormalViz();
-            else
-                this.objects[this.selectedObject].disableNormalViz();
-        }
 
         // Draw pillars
         if (this.enablePillars){
@@ -242,14 +235,12 @@ export class MyScene extends CGFscene {
         }
 
         // Display selected object
-        this.objects[this.selectedObject].display();
 
         // ---- END Primitive drawing section
     }
 
     checkKeys() {
-        let currObject = this.objects[this.selectedObject];
-        if (!(currObject instanceof MyMovingFish) || this.movingObject.getAnimating()) return;
+        let currObject = this.movingObject;
         if (this.gui.isKeyPressed(keyEventCode["A"])) {
             currObject.turn(this.speedFactor * Math.PI / 50);
         } if (this.gui.isKeyPressed(keyEventCode["D"])) {
