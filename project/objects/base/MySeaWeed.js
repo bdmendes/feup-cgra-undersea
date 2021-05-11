@@ -15,25 +15,53 @@ export class MySeaWeed {
         else this.rotation = rotation;
 
         this.initObject();
+        this.backUpVerts()
         this.initAppearance();
     }
 
     initObject(){
-        this.pyramid = new MyPyramid(this.scene, 3, 1)
+        console.log("SeaWeed\n");
+        this.pyramid = new MyPyramid(this.scene, 4, Math.ceil(this.size[1]*10.0)*3);
+    }
+
+    backUpVerts(){
+        
+        this.buVertices = this.pyramid.vertices.slice();
     }
 
     initAppearance(){
         this.appearance = new CGFappearance(this.scene);
-        var greenIntensity = 0.1 + (Math.random() * 10 / 10.0);
-        this.appearance.setAmbient(0.0, 0.3, 0.0, 1);
-        this.appearance.setDiffuse(0.0, greenIntensity, 0.0, 1);
-        this.appearance.setSpecular(0.0, 0.5, 0.0, 1);
+        this.colorIntensity = 0.1 + (Math.random() * 10 / 10.0);
+        this.appearance.setAmbient(0.1, 0.3, 0.0, 1);
+        this.appearance.setDiffuse(this.colorIntensity/2, this.colorIntensity, 0.0, 1);
+        this.appearance.setSpecular(0.1, 0.5, 0.0, 1);
         this.appearance.setShininess(120);
+
+        //this.swShader = new CGFshader(this.scene.gl, 'shaders/seaWeed.vert', 'shaders/seaWeed.frag');
+        //this.swShader.setUniformsValues({timeFactor: 0, colorIntensity: this.colorIntensity});
+    }
+
+    update(t){
+
+        
+        t = t / 1000 % (Math.PI * 2)
+
+        
+        for (var i = 0; i < this.buVertices.length/3; i++){
+
+            if (this.buVertices[i*3 + 1] != 0){
+                this.pyramid.vertices[i*3] = this.buVertices[i*3] + (Math.sin(this.buVertices[i*3 + 1]*2.0 + t));
+            }
+            
+        }
+
+        this.pyramid.initGLBuffers();
     }
 
     display(){
         this.scene.pushMatrix();
-        this.appearance.apply();        
+        this.appearance.apply();    
+        //this.scene.setActiveShader(this.swShader);    
         this.scene.translate(...this.coords);
         this.scene.scale(...this.size);
         this.scene.translate(0, 0.5, 0);
@@ -41,5 +69,6 @@ export class MySeaWeed {
         this.scene.rotate(-Math.PI/2, 1, 0 ,0);
         this.pyramid.display();
         this.scene.popMatrix();
+        //this.scene.setActiveShader(this.scene.defaultShader);
     }
 }

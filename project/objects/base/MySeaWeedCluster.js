@@ -34,16 +34,24 @@ export class MySeaWeedCluster{
             ]
 
             var swSize= [
-                0.1 + (Math.random() * (4*100) / 1000),
-                0.2 + (Math.random() * (10*100) / 1000),
-                0.1 + (Math.random() * (4*100) / 1000)
+                0.05 + (Math.random() * (2*100) / 1000),
+                0.2 + (Math.random() * (5*100) / 1000),
+                0.05 + (Math.random() * (2*100) / 1000)
             ]
+
+            //var swSize = [0.05, 0.2, 0.05];
 
             var deg2 = Math.random() * 361;
             var swRot = deg2 * Math.PI / 180;
 
             this.seaWeeds.push(new MySeaWeed(this.scene, swCoord, swSize, swRot));
 
+        }
+    }
+
+    update(t){
+        for( var i = 0; i < this.leafs; i++){    
+            this.seaWeeds[i].update(t);
         }
     }
 
