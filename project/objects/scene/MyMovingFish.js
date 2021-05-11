@@ -215,9 +215,9 @@ export class MyMovingFish extends MyMovingObject {
 
     calcMouthPos(rotation1, tilt1, position1) {
         var mouth_pos1 = [
-            position1[0] + 0.5 * Math.sin(rotation1) * Math.cos(tilt1),
-            position1[1] - 0.5 * Math.sin(tilt1),
-            position1[2] + 0.5 * Math.cos(rotation1) * Math.cos(tilt1)
+            position1[0] + 0.5 * this.scene.scaleFactor * Math.sin(rotation1) * Math.cos(tilt1),
+            position1[1] - 0.5 * this.scene.scaleFactor * Math.sin(tilt1),
+            position1[2] + 0.5 * this.scene.scaleFactor * Math.cos(rotation1) * Math.cos(tilt1)
         ];
 
         return mouth_pos1;
