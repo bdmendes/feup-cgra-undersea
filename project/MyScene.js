@@ -12,6 +12,9 @@ import { MySandFloor } from "./objects/scene/MySandFloor.js";
 import { MyFishNest } from "./objects/scene/MyFishNest.js";
 import { MyWaterSurface } from "./objects/base/MyWaterSurface.js";
 import { MyRockSet } from "./objects/base/MyRockSet.js";
+import { MySeaWeed } from "./objects/base/MySeaWeed.js";
+import { MySeaWeedCluster } from "./objects/base/MySeaWeedCluster.js";
+import { MySeaWeedSet } from "./objects/base/MySeaWeedSet.js";
 import { MyMovingFish } from "./objects/scene/MyMovingFish.js";
 
 /**
@@ -81,10 +84,13 @@ export class MyScene extends CGFscene {
         this.rock = new MyRock(this, 0.5, 0.8, 0.2, 0, 1, 0);
         this.cylinder = new MyCylinder(this, 32, 6);
         this.fish = new MyFish(this);
-        this.movingObject = new MyMovingFish(this);
-        this.sandFloor = new MySandFloor(this, this.nestXPos, this.nestZPos, this.nestRadius);
-        this.fishNest = new MyFishNest(this, this.nestXPos, this.nestZPos, this.nestRadius);
+        this.movingObject = new MyMovingFish(this, this.nestCoords, this.nestRadius);
+        this.sandFloor = new MySandFloor(this, this.nestCoords, this.nestRadius);
+        this.fishNest = new MyFishNest(this, this.nestCoords, this.nestRadius);
         this.waterSurface = new MyWaterSurface(this);
+        this.seaWeed = new MySeaWeedSet(this, 3, 0.1, 1.0, this.nestCoords, this.nestRadius);
+        //this.seaWeed = new MySeaWeed(this, [0, 0, 0]);
+        //this.seaWeed = new MySeaWeedCluster(this, [0 ,0, 0], 1.0, 3.0);
         this.rockSet = new MyRockSet(this, 50, this.nestCoords, this.nestRadius);
         this.initPillars();
 
@@ -172,7 +178,7 @@ export class MyScene extends CGFscene {
         if (this.enableWaterSurface) {
             this.waterSurface.update(t);
         }
-
+        this.seaWeed.update(t); 
     }
 
     display() {
@@ -214,6 +220,8 @@ export class MyScene extends CGFscene {
         if (this.enableRockSet)
             this.rockSet.display();
 
+        this.seaWeed.display();
+
         /* Unless we make MyMovingObject a proper CGFObject with all its properties... */
         if (this.objects[this.selectedObject] instanceof CGFobject) {
             if (this.displayNormals)
@@ -223,13 +231,14 @@ export class MyScene extends CGFscene {
         }
 
         // Draw pillars
+        /*
         for (let i = 0; i < 2 * this.numberOfPillars; i++) {
             this.pushMatrix();
             this.translate(...this.pillarsPos[i]);
             this.scale(0.5, 1, 0.5);
             this.pillar.display();
             this.popMatrix();
-        }
+        }*/
 
         // Display selected object
         this.objects[this.selectedObject].display();
