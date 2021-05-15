@@ -24,9 +24,9 @@ export class MyMovingObject {
     }
 
     update() {
-        this.position[0] += this.speed * this.scene.speedFactor * Math.sin(this.rotation);
+        this.position[0] += this.speed * Math.sin(this.rotation);
         this.position[1] += this.verSpeed;
-        this.position[2] += this.speed * this.scene.speedFactor * Math.cos(this.rotation);
+        this.position[2] += this.speed * Math.cos(this.rotation);
 
         if (this.position[1] < 0.5) {
             this.position[1] = 0.5;
