@@ -12,8 +12,10 @@ export class MyFish {
         this.scene = scene;
         this.color = color === undefined ?
             [0.55, 0.18, 0.1, 1] : color;
+        console.log("color" + color);
         this.headPortion = headPortion === undefined ?
             0.4 : headPortion;
+        console.log("portion" + headPortion);
         this.texturePath = texturePath === undefined ?
             "images/part-b/fish/fish_scales_2.png" : texturePath;
         this.initObjects();
@@ -81,9 +83,9 @@ export class MyFish {
     }
 
     display() {
-
         /* Global scale */
         this.scene.pushMatrix();
+        this.scene.scale(this.scene.scaleFactor, this.scene.scaleFactor, this.scene.scaleFactor);
         this.scene.scale(0.5, 0.8, 1); // global fish distortion
         this.scene.scale(0.5, 0.5, 0.5); // 0.5 units of length
 
@@ -201,5 +203,8 @@ export class MyFish {
             }
             this.rightFinRotation[i] += this.rightFinOrientation[i] * rightFinOffset[i];
         }
+
+        this.leftFinSpeedFactor = minSideFinSpeedFactor;
+        this.rightFinSpeedFactor = minSideFinSpeedFactor;
     }
 }

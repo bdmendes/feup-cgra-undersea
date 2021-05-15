@@ -12,9 +12,13 @@ import { MySandFloor } from "./objects/scene/MySandFloor.js";
 import { MyFishNest } from "./objects/scene/MyFishNest.js";
 import { MyWaterSurface } from "./objects/base/MyWaterSurface.js";
 import { MyRockSet } from "./objects/base/MyRockSet.js";
+import { MySeaWeed } from "./objects/base/MySeaWeed.js";
+import { MySeaWeedCluster } from "./objects/base/MySeaWeedCluster.js";
+import { MySeaWeedSet } from "./objects/base/MySeaWeedSet.js";
 import { MyMovingFish } from "./objects/scene/MyMovingFish.js";
 import { MyAnimatedFish } from "./objects/scene/MyAnimatedFish.js";
 import { MyAnimatedFishSet } from "./objects/scene/MyAnimatedFishSet.js";
+import { MyPillarSet } from "./objects/base/MyPillarSet.js";
 
 /**
 * MyScene
@@ -46,9 +50,19 @@ export class MyScene extends CGFscene {
         this.cubeMap = new MyCubeMap(this);
         this.mapTexturesIDs = { 'Axis': 0, 'Plains': 1, 'City': 2, 'Beach': 3, 'Sky': 4, 'Underwater': 5 };
 
-        //Initialize env variables
+        //Objects properties
+
+        //Nest properties
         this.nestCoords = [-7.5, -5.0];
         this.nestRadius = 2.5; //Default is 2.5
+
+        //Sea Weed properties
+        this.seaWeedClusterSize = 3;
+        this.seaWeedMinRadius = 0.1;
+        this.seaWeedMaxRadius = 1.0;
+
+        //Rock Set properties;
+        this.rockSetSize = 10.0;
 
         this.initObjects();
 
@@ -77,25 +91,16 @@ export class MyScene extends CGFscene {
     initObjects() {
         // Initialize scene objects
         this.axis = new CGFaxis(this);
-        this.incompleteSphere = new MySphere(this, 32, 32, new CGFtexture(this, 'images/part-b/stone2.png'));
-        this.pyramid = new MyPyramid(this, 6, 1);
-        this.pillarShader = new MyPillarShader(this);
-        this.rock = new MyRock(this, 0.5, 0.8, 0.2, 0, 1, 0);
-        this.cylinder = new MyCylinder(this, 32, 6);
-        this.fish = new MyFish(this, [0, 1, 0, 1], 0.4);
-        this.fishNest = new MyFishNest(this, this.nestCoords, this.nestRadius);
-        this.movingObject = new MyMovingFish(this, new MyFish(this));
+        this.fish = new MyMovingFish(this, this.nestCoords, this.nestRadius);
         this.sandFloor = new MySandFloor(this, this.nestCoords, this.nestRadius);
+        this.fishNest = new MyFishNest(this, this.nestCoords, this.nestRadius);
         this.waterSurface = new MyWaterSurface(this);
-        this.rockSet = new MyRockSet(this, 50, this.nestCoords, this.nestRadius);
-        this.AIFishes = new MyAnimatedFishSet(this, 4);
-        this.initPillars();
+        this.seaWeed = new MySeaWeedSet(this, this.seaWeedClusterSize, this.seaWeedMinRadius, this.seaWeedMaxRadius, this.nestCoords, this.nestRadius);
+        this.rockSet = new MyRockSet(this, this.rockSetSize, this.nestCoords, this.nestRadius);
+        this.AIFish = new MyAnimatedFishSet(this);
+        this.pillars = new MyPillarSet(this, 5);
 
-        this.objects = [this.incompleteSphere, this.pyramid, this.movingObject, this.cylinder, this.pillarShader, this.rock];
-
-        // Labels and ID's for object selection on MyInterface
-        this.objectIDs = { 'Sphere': 0, 'Pyramid': 1, 'Moving Object': 2, 'Cylinder': 3, 'Pillar': 4, 'Rock': 5 };
-
+        // Materials
         this.defaultAppearance = new CGFappearance(this);
         this.defaultAppearance.setAmbient(0.2, 0.4, 0.8, 1.0);
         this.defaultAppearance.setDiffuse(0.2, 0.4, 0.8, 1.0);
@@ -103,43 +108,22 @@ export class MyScene extends CGFscene {
         this.defaultAppearance.setEmission(0, 0, 0, 1);
         this.defaultAppearance.setShininess(120);
 
-        this.sphereAppearance = new CGFappearance(this);
-        this.sphereAppearance.setAmbient(0.3, 0.3, 0.3, 1);
-        this.sphereAppearance.setDiffuse(0.7, 0.7, 0.7, 1);
-        this.sphereAppearance.setSpecular(0.0, 0.0, 0.0, 1);
-        this.sphereAppearance.setShininess(120);
-
         // Objects connected to MyInterface
         this.displayAxis = false;
-        this.selectedObject = 2;
-        this.displayNormals = false;
-        this.wireframe = false;
         this.selectedMapTexture = 5;
         this.enableCubeMap = true;
         this.enableSandFloor = true;
         this.enableFishNest = true;
         this.enableWaterSurface = true;
         this.enableRockSet = true;
+        this.enablePillars = true;
+        this.enableSeaWeed = true;
+        this.enableFish = true;
+        this.enableAIFish = true;
     }
+
     initCameras() {
         this.camera = new CGFcamera(1.5, 0.1, 500, vec3.fromValues(2, 2, 2), vec3.fromValues(0, 2, 0));
-    }
-
-    initPillars() {
-        this.pillar = new MyPillarShader(this);
-        this.numberOfPillars = 5;
-        this.pillarsPos = [];
-        let _flPillarPos = [2.5, 0, -3.5];
-        let _frPillarPos = [2.5, 0, 0];
-        for (let i = 0; i < this.numberOfPillars; i++) {
-            // left pillar
-            this.pillarsPos.push([..._flPillarPos]);
-            this.pillarsPos[this.pillarsPos.length - 1][0] += i * 5;
-
-            // right pillar
-            this.pillarsPos.push([..._frPillarPos]);
-            this.pillarsPos[this.pillarsPos.length - 1][0] += i * 5;
-        }
     }
 
     setDefaultAppearance() {
@@ -150,37 +134,29 @@ export class MyScene extends CGFscene {
         this.setShininess(10.0);
     }
 
-    onWireframeChanged(v) {
-        if (v)
-            this.objects[this.selectedObject].setLineMode();
-        else
-            this.objects[this.selectedObject].setFillMode();
-
-    }
-
     updateMapTexture() {
         this.cubeMap.changeTexture(this.selectedMapTexture);
     }
 
     update(t) {
         this.checkKeys();
-        this.rockSet.update();
-        this.AIFishes.update();
-        const selectedObject = this.objects[this.selectedObject];
-        if (selectedObject instanceof MyMovingObject) {
-            selectedObject.update();
-            if (selectedObject.getObject() instanceof MyFish) {
-                selectedObject.getObject().update();
-            }
-        }
-        if (this.enableWaterSurface) {
+        if (this.enableRockSet)
+            this.rockSet.update();
+        if (this.enableAIFish)
+            this.AIFish.update();
+        if (this.enableFish)
+            this.fish.update();
+        if (this.enableRockSet)
+            this.rockSet.update();
+        if (this.enableFish)
+            this.fish.update(t);
+        if (this.enableWaterSurface)
             this.waterSurface.update(t);
-        }
-
+        if (this.enableSeaWeed)
+            this.seaWeed.update(t);
     }
 
     display() {
-        // ---- BEGIN Background, camera and axis setup
         // Clear image and depth buffer everytime we update the scene
         this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
@@ -192,82 +168,58 @@ export class MyScene extends CGFscene {
         // Apply transformations corresponding to the camera position relative to the origin
         this.applyViewMatrix();
 
+        // Apply default material
         this.defaultAppearance.apply();
 
-        // Draw axis
+        // ---- BEGIN Primitive drawing section
         if (this.displayAxis)
             this.axis.display();
-
-        this.sphereAppearance.apply();
-
-        // ---- BEGIN Primitive drawing section
-
-        // Display scene background
         if (this.enableCubeMap)
             this.cubeMap.display();
-
         if (this.enableSandFloor)
             this.sandFloor.display();
-
         if (this.enableFishNest)
             this.fishNest.display();
-
         if (this.enableWaterSurface)
             this.waterSurface.display();
-
         if (this.enableRockSet)
             this.rockSet.display();
-
-        this.AIFishes.display();
-
-        /* Unless we make MyMovingObject a proper CGFObject with all its properties... */
-        if (this.objects[this.selectedObject] instanceof CGFobject) {
-            if (this.displayNormals)
-                this.objects[this.selectedObject].enableNormalViz();
-            else
-                this.objects[this.selectedObject].disableNormalViz();
-        }
-
-        // Draw pillars
-        for (let i = 0; i < 2 * this.numberOfPillars; i++) {
-            this.pushMatrix();
-            this.translate(...this.pillarsPos[i]);
-            this.scale(0.5, 1, 0.5);
-            this.pillar.display();
-            this.popMatrix();
-        }
-
-        // Display selected object
-        this.objects[this.selectedObject].display();
-
+        if (this.enableSeaWeed)
+            this.seaWeed.display();
+        if (this.enableFish)
+            this.fish.display();
+        if (this.enableAIFish)
+            this.AIFish.display();
+        if (this.enablePillars)
+            this.pillars.display();
         // ---- END Primitive drawing section
     }
 
     checkKeys() {
-        let currObject = this.objects[this.selectedObject];
-        if (!(currObject instanceof MyMovingFish) || this.movingObject.getAnimating()) return;
         if (this.gui.isKeyPressed(keyEventCode["A"])) {
-            currObject.turn(this.speedFactor * Math.PI / 50);
+            this.fish.turn(this.speedFactor * Math.PI / 50);
         } if (this.gui.isKeyPressed(keyEventCode["D"])) {
-            currObject.turn(-this.speedFactor * Math.PI / 50);
+            this.fish.turn(-this.speedFactor * Math.PI / 50);
         } if (this.gui.isKeyPressed(keyEventCode["W"])) {
-            currObject.accelerate(this.speedFactor / 200);
+            this.fish.accelerate(this.speedFactor / 200);
         } if (this.gui.isKeyPressed(keyEventCode["S"])) {
-            currObject.accelerate(-this.speedFactor / 200);
+            this.fish.accelerate(-this.speedFactor / 200);
         } if (this.gui.isKeyPressed(keyEventCode["R"])) {
-            currObject.reset();
+            this.fish.reset();
         } if (this.gui.isKeyPressed(keyEventCode["C"])) {
-            if (this.movingObject.rock == null) {
-                currObject.pickUpRock(this.rockSet.pickUpRock(this.movingObject.getCoords()));
+            if (this.fish.rock == null) {
+                this.fish.pickUpRock(this.rockSet.
+                    pickUpRock(this.fish.getCoords()));
             } else {
-                currObject.dropRock();
+                this.fish.dropRock();
             }
         } if (this.gui.isKeyPressed(keyEventCode["Space"])) {
-            currObject.verAccel(this.speedFactor / 20);
+            this.fish.verAccel(this.speedFactor / 20);
         } if (this.gui.isKeyPressed(keyEventCode["Shift"])) {
-            currObject.verAccel(-this.speedFactor / 20);
-        } if (!this.gui.isKeyPressed(keyEventCode["Space"]) && !this.gui.isKeyPressed(keyEventCode["Shift"])) {
-            currObject.verAccel(0);
+            this.fish.verAccel(-this.speedFactor / 20);
+        } if (!this.gui.isKeyPressed(keyEventCode["Space"])
+            && !this.gui.isKeyPressed(keyEventCode["Shift"])) {
+            this.fish.verAccel(0);
         }
     }
 }
