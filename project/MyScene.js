@@ -1,24 +1,15 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject, CGFtexture } from "../lib/CGF.js";
-import { MySphere } from "./objects/base/MySphere.js";
 import { keyEventCode } from "./constants.js";
-import { MyPyramid } from "./objects/base/MyPyramid.js";
 import { MyCubeMap } from "./objects/base/MyCubeMap.js";
-import { MyCylinder } from "./objects/base/MyCylinder.js";
-import { MyMovingObject } from "./objects/base/MyMovingObject.js";
-import { MyPillarShader } from "./objects/base/MyPillarShader.js";
-import { MyRock } from "./objects/base/MyRock.js";
-import { MyFish } from "./objects/scene/MyFish.js";
 import { MySandFloor } from "./objects/scene/MySandFloor.js";
 import { MyFishNest } from "./objects/scene/MyFishNest.js";
 import { MyWaterSurface } from "./objects/base/MyWaterSurface.js";
 import { MyRockSet } from "./objects/base/MyRockSet.js";
-import { MySeaWeed } from "./objects/base/MySeaWeed.js";
-import { MySeaWeedCluster } from "./objects/base/MySeaWeedCluster.js";
 import { MySeaWeedSet } from "./objects/base/MySeaWeedSet.js";
 import { MyMovingFish } from "./objects/scene/MyMovingFish.js";
-import { MyAnimatedFish } from "./objects/scene/MyAnimatedFish.js";
 import { MyAnimatedFishSet } from "./objects/scene/MyAnimatedFishSet.js";
 import { MyPillarSet } from "./objects/base/MyPillarSet.js";
+import { MyFish } from "./objects/scene/MyFish.js"
 
 /**
 * MyScene
@@ -89,7 +80,7 @@ export class MyScene extends CGFscene {
     initObjects() {
         // Initialize scene objects
         this.axis = new CGFaxis(this);
-        this.fish = new MyMovingFish(this, this.nestCoords, this.nestRadius);
+        this.fish = new MyMovingFish(this, new MyFish(this), this.nestCoords, this.nestRadius);
         this.sandFloor = new MySandFloor(this, this.nestCoords, this.nestRadius);
         this.fishNest = new MyFishNest(this, this.nestCoords, this.nestRadius);
         this.waterSurface = new MyWaterSurface(this);

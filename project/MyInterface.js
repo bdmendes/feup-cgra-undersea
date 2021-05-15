@@ -36,11 +36,10 @@ export class MyInterface extends CGFinterface {
 
         this.gui.add(this.scene, 'enableAIFish').name('AI Fish');
 
-        this.gui.add(this.scene, 'scaleFactor', 0.1, 5.0).name('Scale Factor');
+        this.gui.add(this.scene, 'scaleFactor', 0.5, 3.0).name('Scale Factor');
 
         this.gui.add(this.scene, 'speedFactor', -3.0, 3.0).name('Speed Factor');
 
-        //Init keys
         this.initKeys();
 
         return true;

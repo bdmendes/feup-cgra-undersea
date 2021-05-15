@@ -11,8 +11,8 @@ export class MyAnimatedFish extends MyMovingFish {
     }
 
     update() {
+        super.update();
         this.turn(this.scene.speedFactor * this.speed);
-        this.object.update();
     }
 
     display() {

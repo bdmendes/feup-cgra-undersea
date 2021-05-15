@@ -22,8 +22,9 @@ export class MyAnimatedFishSet {
             let circleDuration = Math.random() * 5 + 5;
             let headPortion = 0.3 + Math.random() * 0.2;
 
-            let fish = new MyFish(this.scene, [r, g, b, 1], headPortion);
-            this.fishes.push(new MyAnimatedFish(this.scene, fish, [x, y, z], distance, circleDuration));
+            this.fishes.push(new MyAnimatedFish(this.scene,
+                new MyFish(this.scene, [r, g, b, 1], headPortion),
+                [x, y, z], distance, circleDuration));
         }
     }
 

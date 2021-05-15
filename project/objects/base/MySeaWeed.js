@@ -1,4 +1,4 @@
-import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject, CGFtexture, CGFshader } from '../../../lib/CGF.js';
+import { CGFappearance } from '../../../lib/CGF.js';
 import { MyPyramid } from "../base/MyPyramid.js";
 
 export class MySeaWeed {
