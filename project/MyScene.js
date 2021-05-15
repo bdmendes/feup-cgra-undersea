@@ -50,8 +50,6 @@ export class MyScene extends CGFscene {
         this.cubeMap = new MyCubeMap(this);
         this.mapTexturesIDs = { 'Axis': 0, 'Plains': 1, 'City': 2, 'Beach': 3, 'Sky': 4, 'Underwater': 5 };
 
-        //Objects properties
-
         //Nest properties
         this.nestCoords = [-7.5, -5.0];
         this.nestRadius = 2.5; //Default is 2.5
@@ -172,6 +170,8 @@ export class MyScene extends CGFscene {
         this.defaultAppearance.apply();
 
         // ---- BEGIN Primitive drawing section
+        this.pushMatrix();
+        this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
         if (this.displayAxis)
             this.axis.display();
         if (this.enableCubeMap)
@@ -192,6 +192,7 @@ export class MyScene extends CGFscene {
             this.AIFish.display();
         if (this.enablePillars)
             this.pillars.display();
+        this.popMatrix();
         // ---- END Primitive drawing section
     }
 
