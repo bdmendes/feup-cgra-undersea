@@ -1,4 +1,4 @@
-import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject, CGFtexture, CGFshader } from '../../../lib/CGF.js';
+import { CGFappearance, CGFtexture, CGFshader } from '../../../lib/CGF.js';
 import { MySphere } from '../base/MySphere.js'
 import { MyTriangle } from '../base/MyTriangle.js'
 

@@ -1,41 +1,42 @@
-import {MyAnimatedFish} from './MyAnimatedFish.js'
-import {MyFish} from './MyFish.js'
+import { MyAnimatedFish } from './MyAnimatedFish.js'
+import { MyFish } from './MyFish.js'
 
 export class MyAnimatedFishSet {
-    constructor(scene, numberFishes){
+    constructor(scene, numberFishes) {
         this.scene = scene;
         numberFishes = numberFishes === undefined ? 3 : numberFishes;
         this.initFishes(numberFishes);
     }
 
-    initFishes(numberFishes){
+    initFishes(numberFishes) {
         numberFishes %= 5;
         this.fishes = [];
         let counter = 0;
-        while(counter < numberFishes){
-            let x = Math.random() * 10 - 5;
-            let z = Math.random() * 10 - 5;
-            let y = Math.random() * 3 + 1;
-            let r = Math.random();
-            let g = (0.9 - r + 0.1) % 1;
-            let b = 1 - r - g;
-            let distance = Math.random() * 3;
+        while (counter < numberFishes) {
+            let x = Math.random() * 14 - 7;
+            let z = Math.random() * 14 - 7;
+            let y = Math.random() * 4 + 1;
+            let r = 0.1 + Math.random() % 0.9;
+            let g = 0.1 + Math.random() % 0.9;
+            let b = 0.1 + Math.random() % 0.9;
+            let distance = 1 + Math.random() * 3;
             let circleDuration = Math.random() * 5 + 5;
+            let bodyRatio = 0.3 + Math.random() * 0.2;
 
             this.fishes.push(new MyAnimatedFish(this.scene,
-                new MyFish(this.scene, [r,g,b,1], 0.4), [x,y,z], distance, circleDuration));
+                new MyFish(this.scene, [r, g, b, 1], bodyRatio), [x, y, z], distance, circleDuration));
             counter++;
         }
     }
 
-    display(){
+    display() {
         for (let i = 0; i < this.fishes.length; i++) {
             this.fishes[i].display();
         }
     }
 
-    update(){
-        for (let i = 0; i < this.fishes.length; i++){
+    update() {
+        for (let i = 0; i < this.fishes.length; i++) {
             this.fishes[i].update();
         }
     }
