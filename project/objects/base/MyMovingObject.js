@@ -42,7 +42,7 @@ export class MyMovingObject {
         this.speed += val;
     }
 
-    verAccel(val) {
+    setVerticalSpeed(val) {
         this.verSpeed = val;
     }
 

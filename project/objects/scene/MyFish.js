@@ -12,10 +12,8 @@ export class MyFish {
         this.scene = scene;
         this.color = color === undefined ?
             [0.55, 0.18, 0.1, 1] : color;
-        console.log("color" + color);
         this.headPortion = headPortion === undefined ?
             0.4 : headPortion;
-        console.log("portion" + headPortion);
         this.texturePath = texturePath === undefined ?
             "images/part-b/fish/fish_scales_2.png" : texturePath;
         this.initObjects();

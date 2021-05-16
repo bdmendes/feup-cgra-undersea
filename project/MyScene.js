@@ -190,28 +190,34 @@ export class MyScene extends CGFscene {
     checkKeys() {
         if (this.gui.isKeyPressed(keyEventCode["A"])) {
             this.fish.turn(this.speedFactor * Math.PI / 50);
-        } if (this.gui.isKeyPressed(keyEventCode["D"])) {
+        }
+        if (this.gui.isKeyPressed(keyEventCode["D"])) {
             this.fish.turn(-this.speedFactor * Math.PI / 50);
-        } if (this.gui.isKeyPressed(keyEventCode["W"])) {
+        }
+        if (this.gui.isKeyPressed(keyEventCode["W"])) {
             this.fish.accelerate(this.speedFactor / 200);
-        } if (this.gui.isKeyPressed(keyEventCode["S"])) {
+        }
+        if (this.gui.isKeyPressed(keyEventCode["S"])) {
             this.fish.accelerate(-this.speedFactor / 200);
-        } if (this.gui.isKeyPressed(keyEventCode["R"])) {
+        }
+        if (this.gui.isKeyPressed(keyEventCode["R"])) {
             this.fish.reset();
-        } if (this.gui.isKeyPressed(keyEventCode["C"])) {
+        }
+        if (this.gui.isKeyPressed(keyEventCode["C"])) {
             if (this.fish.rock == null) {
                 this.fish.pickUpRock(this.rockSet.
                     pickUpRock(this.fish.getCoords()));
             } else {
                 this.fish.dropRock();
             }
-        } if (this.gui.isKeyPressed(keyEventCode["Space"])) {
-            this.fish.verAccel(this.speedFactor / 20);
-        } if (this.gui.isKeyPressed(keyEventCode["Shift"])) {
-            this.fish.verAccel(-this.speedFactor / 20);
-        } if (!this.gui.isKeyPressed(keyEventCode["Space"])
-            && !this.gui.isKeyPressed(keyEventCode["Shift"])) {
-            this.fish.verAccel(0);
+        }
+
+        if (this.gui.isKeyPressed(keyEventCode["P"])) {
+            this.fish.setVerticalSpeed(this.speedFactor / 50);
+        } else if (this.gui.isKeyPressed(keyEventCode["L"])) {
+            this.fish.setVerticalSpeed(-this.speedFactor / 50);
+        } else {
+            this.fish.setVerticalSpeed(0);
         }
     }
 }
