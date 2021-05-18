@@ -15,13 +15,23 @@ export class MyAnimatedFish extends MyMovingFish {
         this.turn(this.scene.speedFactor * this.speed);
     }
 
-    display() {
+    displayNSO() {
         this.scene.pushMatrix();
         this.scene.translate(...this.rotationCenter);
         this.scene.rotate(this.rotation, 0, 1, 0);
         this.scene.translate(0, 0, this.distance);
         this.scene.rotate(Math.PI / 2, 0, 1, 0);
-        this.object.display();
+        this.object.displayNSO();
+        this.scene.popMatrix();
+    }
+
+    displaySO(){
+        this.scene.pushMatrix();
+        this.scene.translate(...this.rotationCenter);
+        this.scene.rotate(this.rotation, 0, 1, 0);
+        this.scene.translate(0, 0, this.distance);
+        this.scene.rotate(Math.PI / 2, 0, 1, 0);
+        this.object.displaySO();
         this.scene.popMatrix();
     }
 }

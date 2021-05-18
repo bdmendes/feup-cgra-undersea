@@ -5,14 +5,14 @@ precision highp float;
 varying highp vec2 vTextureCoord;
 varying highp vec4 vLighting;
 
-uniform sampler2D uSampler2;
+uniform sampler2D uSampler1;
 uniform float r;
 uniform float g;
 uniform float b;
 uniform float headPortion;
 
 void main() {
-    vec4 scaleColor = texture2D(uSampler2, vTextureCoord);
+    vec4 scaleColor = texture2D(uSampler1, vTextureCoord);
     if (scaleColor.b < 0.8 || vTextureCoord.t < headPortion) {
         scaleColor = vec4(r, g, b, 1);
     }

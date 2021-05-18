@@ -2,8 +2,9 @@ import { MyAnimatedFish } from './MyAnimatedFish.js'
 import { MyFish } from './MyFish.js'
 
 export class MyAnimatedFishSet {
-    constructor(scene, numberFishes) {
+    constructor(scene, shader, numberFishes) {
         this.scene = scene;
+        this.shader = shader;
         numberFishes = numberFishes === undefined ?
             Math.ceil(2 + (3 * Math.random())) : numberFishes;
         this.initFishes(numberFishes);
@@ -23,14 +24,20 @@ export class MyAnimatedFishSet {
             let headPortion = 0.3 + Math.random() * 0.2;
 
             this.fishes.push(new MyAnimatedFish(this.scene,
-                new MyFish(this.scene, [r, g, b, 1], headPortion),
+                new MyFish(this.scene, this.shader, [r, g, b, 1], headPortion),
                 [x, y, z], distance, circleDuration));
         }
     }
 
-    display() {
+    displayNSO() {
         for (let i = 0; i < this.fishes.length; i++) {
-            this.fishes[i].display();
+            this.fishes[i].displayNSO();
+        }
+    }
+
+    displaySO() {
+        for (let i = 0; i < this.fishes.length; i++) {
+            this.fishes[i].displaySO();
         }
     }
 

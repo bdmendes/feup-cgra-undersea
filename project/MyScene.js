@@ -1,4 +1,4 @@
-import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject, CGFtexture } from "../lib/CGF.js";
+import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject, CGFtexture, CGFshader } from "../lib/CGF.js";
 import { keyEventCode } from "./constants.js";
 import { MyCubeMap } from "./objects/base/MyCubeMap.js";
 import { MySandFloor } from "./objects/scene/MySandFloor.js";
@@ -24,6 +24,7 @@ export class MyScene extends CGFscene {
         super.init(application);
         this.initCameras();
         this.initLights();
+        this.initFishShaders();
 
         //Background color
         this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -80,13 +81,13 @@ export class MyScene extends CGFscene {
     initObjects() {
         // Initialize scene objects
         this.axis = new CGFaxis(this);
-        this.fish = new MyMovingFish(this, new MyFish(this), this.nestCoords, this.nestRadius);
+        this.fish = new MyMovingFish(this, new MyFish(this, this.fishShader), this.nestCoords, this.nestRadius);
+        this.AIFish = new MyAnimatedFishSet(this, this.fishShader);
         this.sandFloor = new MySandFloor(this, this.nestCoords, this.nestRadius);
         this.fishNest = new MyFishNest(this, this.nestCoords, this.nestRadius);
         this.waterSurface = new MyWaterSurface(this);
         this.seaWeed = new MySeaWeedSet(this, this.seaWeedClusterSize, this.seaWeedMinRadius, this.seaWeedMaxRadius, this.nestCoords, this.nestRadius);
         this.rockSet = new MyRockSet(this, this.rockSetSize, this.nestCoords, this.nestRadius);
-        this.AIFish = new MyAnimatedFishSet(this);
         this.pillars = new MyPillarSet(this, 5);
 
         // Materials
@@ -113,6 +114,19 @@ export class MyScene extends CGFscene {
 
     initCameras() {
         this.camera = new CGFcamera(1.5, 0.1, 500, vec3.fromValues(2, 2, 2), vec3.fromValues(0, 2, 0));
+    }
+
+    initFishShaders(){
+        this.fishScales = new CGFtexture(this, "images/part-b/fish/fish_scales_2.png");
+        this.fishShader = new CGFshader(this.gl, 'shaders/slimGouraud.vert', 'shaders/bodyFish.frag');
+        this.fishShader.setUniformsValues({
+            uSampler1: 1,
+            r: 0.55,
+            g: 0.18,
+            b: 0.1,
+            headPortion: 0.4
+        });
+        
     }
 
     setDefaultAppearance() {
@@ -165,17 +179,25 @@ export class MyScene extends CGFscene {
             this.axis.display();
 
         // Display objects that use shaders
-    
-        if (this.enableWaterSurface)
-            this.waterSurface.display();
-        if (this.enableSandFloor)
-            this.sandFloor.display();
+
+        
         if (this.enableFishNest)
             this.fishNest.display();
-        if (this.enableFish)
-            this.fish.display();
+        if (this.enableSandFloor)
+            this.sandFloor.display();
+        if (this.enableWaterSurface)
+            this.waterSurface.display();
+
+        this.setActiveShader(this.fishShader);
+
+        this.fishScales.bind(1);
+        
         if (this.enableAIFish)
-            this.AIFish.display();
+            this.AIFish.displaySO();
+        if (this.enableFish)
+            this.fish.displaySO();
+
+        this.setActiveShader(this.defaultShader);
 
         //Display objects that don't use shaders
 
@@ -187,6 +209,10 @@ export class MyScene extends CGFscene {
             this.seaWeed.display();
         if (this.enablePillars)
             this.pillars.display();
+        if (this.enableAIFish)
+            this.AIFish.displayNSO();
+        if (this.enableFish)
+            this.fish.displayNSO();
 
         // ---- END Primitive drawing section
     }

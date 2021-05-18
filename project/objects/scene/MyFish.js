@@ -1,4 +1,5 @@
 import { CGFappearance, CGFtexture, CGFshader } from '../../../lib/CGF.js';
+import { getNewShaderId } from '../../constants.js';
 import { MySphere } from '../base/MySphere.js'
 import { MyTriangle } from '../base/MyTriangle.js'
 
@@ -8,17 +9,26 @@ export const minSideFinSpeedFactor = 0.4;
 export const minBackFinSpeedFactor = 0.4;
 
 export class MyFish {
-    constructor(scene, color, headPortion, texturePath) {
+    constructor(scene, shader, color, headPortion, texturePath) {
         this.scene = scene;
-        this.color = color === undefined ?
-            [0.55, 0.18, 0.1, 1] : color;
+
+        this.shader = shader;
+
+        if (color == undefined){
+            this.color = [0.55, 0.18, 0.1, 1];
+        }
+        else{
+            this.color = color.slice();
+        }
+
+        //this.color = [0.55, 0.18, 0.1, 1];
         this.headPortion = headPortion === undefined ?
             0.4 : headPortion;
         this.texturePath = texturePath === undefined ?
             "images/part-b/fish/fish_scales_2.png" : texturePath;
         this.initObjects();
         this.initMaterials();
-        this.initShaders();
+        //this.initShaders();
         this.resetFins();
     }
 
@@ -70,9 +80,9 @@ export class MyFish {
     }
 
     initShaders() {
-        this.bodyShader = new CGFshader(this.scene.gl, './shaders/slimGouraud.vert', './shaders/bodyFish.frag');
-        this.bodyShader.setUniformsValues({
-            uSampler2: 1,
+        this.fishShader = new CGFshader(this.scene.gl, 'shaders/slimGouraud.vert', 'shaders/bodyFish.frag');
+        this.fishShader.setUniformsValues({
+            uSampler1: 1,
             r: this.color[0],
             g: this.color[1],
             b: this.color[2],
@@ -80,23 +90,12 @@ export class MyFish {
         });
     }
 
-    display() {
+    displayNSO(){ //Non shader objects
         /* Global scale */
         this.scene.pushMatrix();
         this.scene.scale(this.scene.scaleFactor, this.scene.scaleFactor, this.scene.scaleFactor);
         this.scene.scale(0.5, 0.8, 1); // global fish distortion
         this.scene.scale(0.5, 0.5, 0.5); // 0.5 units of length
-
-        /* Body */
-        this.scene.pushMatrix();
-        this.bodyScales.bind(1);
-        this.scene.setActiveShader(this.bodyShader);
-        this.bodyMaterial.apply();
-        this.scene.rotate(Math.PI / 2, 1, 0, 0);
-        this.body.display();
-        this.scene.defaultAppearance.apply();
-        this.scene.setActiveShader(this.scene.defaultShader);
-        this.scene.popMatrix();
 
         /* Left eye */
         this.scene.pushMatrix();
@@ -107,7 +106,6 @@ export class MyFish {
         this.scene.scale(0.2, 0.2, 0.15);
         this.scene.rotate(Math.PI, 0, 1, 0);
         this.eye.display();
-        this.scene.defaultAppearance.apply();
         this.scene.popMatrix();
 
         /* Right eye */
@@ -118,7 +116,6 @@ export class MyFish {
         this.scene.translate(-0.90, 0, 0);
         this.scene.scale(0.2, 0.2, 0.15);
         this.eye.display();
-        this.scene.defaultAppearance.apply();
         this.scene.popMatrix();
 
         /* Back fin */
@@ -170,6 +167,35 @@ export class MyFish {
         this.scene.popMatrix();
 
         this.scene.popMatrix(); // global scale
+    }
+
+    displaySO() {
+        /* Global scale */
+        this.scene.pushMatrix();
+
+        this.scene.scale(this.scene.scaleFactor, this.scene.scaleFactor, this.scene.scaleFactor);
+        this.scene.scale(0.5, 0.8, 1); // global fish distortion
+        this.scene.scale(0.5, 0.5, 0.5); // 0.5 units of length
+
+        /* Body */
+        this.scene.pushMatrix();
+
+        this.bodyMaterial.apply();
+
+        this.shader.setUniformsValues({
+            r: this.color[0],
+            g: this.color[1],
+            b: this.color[2],
+            headPortion: this.headPortion
+        });
+
+        this.scene.rotate(Math.PI / 2, 1, 0, 0);
+        this.body.display();
+
+        this.scene.popMatrix();
+
+        this.scene.popMatrix(); // global scale
+
     }
 
     update() {
