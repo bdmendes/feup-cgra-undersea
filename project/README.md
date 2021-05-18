@@ -1,6 +1,6 @@
 # CGRA 2020/2021
 
-## Group T7xG09
+## Group T7G09
 
 ## Screenshots
 
