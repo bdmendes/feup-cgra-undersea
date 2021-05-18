@@ -83,6 +83,7 @@ export class MyFish {
     display() {
         /* Global scale */
         this.scene.pushMatrix();
+        this.scene.scale(this.scene.scaleFactor, this.scene.scaleFactor, this.scene.scaleFactor);
         this.scene.scale(0.5, 0.8, 1); // global fish distortion
         this.scene.scale(0.5, 0.5, 0.5); // 0.5 units of length
 

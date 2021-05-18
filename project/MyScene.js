@@ -161,8 +161,6 @@ export class MyScene extends CGFscene {
         this.defaultAppearance.apply();
 
         // ---- BEGIN Primitive drawing section
-        this.pushMatrix();
-        this.scale(this.scaleFactor, this.scaleFactor, this.scaleFactor);
         if (this.displayAxis)
             this.axis.display();
         if (this.enableCubeMap)
@@ -183,7 +181,6 @@ export class MyScene extends CGFscene {
             this.AIFish.display();
         if (this.enablePillars)
             this.pillars.display();
-        this.popMatrix();
         // ---- END Primitive drawing section
     }
 
