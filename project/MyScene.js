@@ -10,6 +10,8 @@ import { MyMovingFish } from "./objects/scene/MyMovingFish.js";
 import { MyAnimatedFishSet } from "./objects/scene/MyAnimatedFishSet.js";
 import { MyPillarSet } from "./objects/base/MyPillarSet.js";
 import { MyFish } from "./objects/scene/MyFish.js"
+import { MyLightPyramid } from "./objects/base/MyLightPyramid.js"
+import { MyLighterPyramid } from "./objects/base/MyLighterPyramid.js"
 
 /**
 * MyScene
@@ -47,12 +49,12 @@ export class MyScene extends CGFscene {
         this.nestRadius = 2.5; //Default is 2.5
 
         //Sea Weed properties
-        this.seaWeedClusterSize = 3;
+        this.seaWeedClusterSize = 20;
         this.seaWeedMinRadius = 0.1;
         this.seaWeedMaxRadius = 1.0;
 
         //Rock Set properties;
-        this.rockSetSize = 10.0;
+        this.rockSetSize = 50.0;
 
         this.initObjects();
 

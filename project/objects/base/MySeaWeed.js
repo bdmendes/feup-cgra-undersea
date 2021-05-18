@@ -1,5 +1,6 @@
 import { CGFappearance } from '../../../lib/CGF.js';
 import { MyPyramid } from "../base/MyPyramid.js";
+import { MyLighterPyramid } from "../base/MyLighterPyramid.js";
 
 export class MySeaWeed {
     constructor(scene, coords, size, rotation) {
@@ -20,7 +21,7 @@ export class MySeaWeed {
     }
 
     initObject() {
-        this.pyramid = new MyPyramid(this.scene, 4, Math.ceil(this.size[1] * 10.0) * 3);
+        this.pyramid = new MyLighterPyramid(this.scene, 4, Math.ceil(this.size[1] * 10.0) * 3);
     }
 
     backUpVerts() {
@@ -30,7 +31,7 @@ export class MySeaWeed {
 
     initAppearance() {
         this.appearance = new CGFappearance(this.scene);
-        this.colorIntensity = 0.1 + (Math.random() * 10 / 10.0);
+        this.colorIntensity = 0.5 + (Math.random() * 6 / 10.0);
         this.appearance.setAmbient(0.1, 0.3, 0.0, 1);
         this.appearance.setDiffuse(this.colorIntensity / 2, this.colorIntensity, 0.0, 1);
         this.appearance.setSpecular(0.1, 0.5, 0.0, 1);

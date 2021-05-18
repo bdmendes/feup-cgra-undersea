@@ -30,7 +30,7 @@ export class MySeaWeedSet{
 
     initObjects(){
         this.clusters = [];
-        
+
         for (var i = 0; i < this.no_clusters; i++){
 
             var swCoords;
@@ -50,7 +50,7 @@ export class MySeaWeedSet{
 
             var radius = Math.random() * ((this.maxRadius - this.minRadius) * 100) / 100 + this.minRadius;
 
-            var leafs = Math.pow(Math.round(radius*10), 2)/2;
+            var leafs = Math.pow(Math.round(radius*10), 2) / 5;
 
             this.clusters.push(new MySeaWeedCluster(this.scene, swCoords, radius, leafs));
         }
