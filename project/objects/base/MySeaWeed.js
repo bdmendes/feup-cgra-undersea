@@ -40,7 +40,7 @@ export class MySeaWeed {
     update(t) {
 
 
-        t = t / 1000 % (Math.PI * 2)
+        t = t / 1000 % (Math.PI * 2);
 
 
         for (var i = 0; i < this.buVertices.length / 3; i++) {

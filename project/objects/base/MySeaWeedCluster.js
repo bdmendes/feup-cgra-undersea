@@ -42,7 +42,7 @@ export class MySeaWeedCluster{
             //var swSize = [0.05, 0.2, 0.05];
 
             var deg2 = Math.random() * 361;
-            var swRot = deg2 * Math.PI / 180;
+            var swRot = 0;//deg2 * Math.PI / 180;
 
             this.seaWeeds.push(new MySeaWeed(this.scene, swCoord, swSize, swRot));
 

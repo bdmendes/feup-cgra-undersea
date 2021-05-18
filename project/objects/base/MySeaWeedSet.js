@@ -1,4 +1,4 @@
-import { CGFobject } from '../../../lib/CGF.js';
+import { CGFobject, CGFshader } from '../../../lib/CGF.js';
 import {MySeaWeedCluster } from "../base/MySeaWeedCluster.js"
 
 export class MySeaWeedSet{
@@ -21,13 +21,16 @@ export class MySeaWeedSet{
         if (nestRadius == undefined) this.nestRadius = 2.5;
         else this.nestRadius = nestRadius;
         
+        this.t = 0;
+
         this.initObjects();
+        this.initShaders();
 
     }
 
     initObjects(){
         this.clusters = [];
-
+        
         for (var i = 0; i < this.no_clusters; i++){
 
             var swCoords;
@@ -54,18 +57,43 @@ export class MySeaWeedSet{
 
     }
 
+    initShaders(){
+        this.seaWeedShader = new CGFshader(this.scene.gl, 'shaders/seaWeed.vert', 'shaders/seaWeed.frag');
+        this.seaWeedShader.setUniformsValues({
+            timeFactor: this.t,
+        });
+    }
+
     update(t){
+
+        this.t = t / 1000 * 3 % (Math.PI * 2);
+
+        //console.log(this.t);
+
+        return;
+
         for( var i = 0; i < this.no_clusters; i++){    
             this.clusters[i].update(t);
         }
     }
 
     display(){
+
+        this.scene.pushMatrix();
+
+        this.scene.setActiveShader(this.seaWeedShader);
+
         for (var i = 0; i < this.no_clusters; i++){
+
+            this.seaWeedShader.setUniformsValues({ 
+                timeFactor: this.t,
+            });
 
             this.clusters[i].display();
 
         }
+
+        this.scene.popMatrix();
     }
 
 }

@@ -187,15 +187,20 @@ export class MyScene extends CGFscene {
             this.sandFloor.display();
         if (this.enableWaterSurface)
             this.waterSurface.display();
-
+       
         this.setActiveShader(this.fishShader);
 
         this.fishScales.bind(1);
-        
+    
         if (this.enableAIFish)
             this.AIFish.displaySO();
         if (this.enableFish)
             this.fish.displaySO();
+        
+
+        if (this.enableSeaWeed)
+            this.seaWeed.display();
+
 
         this.setActiveShader(this.defaultShader);
 
@@ -205,8 +210,6 @@ export class MyScene extends CGFscene {
             this.rockSet.display();
         if (this.enableCubeMap)
             this.cubeMap.display();
-        if (this.enableSeaWeed)
-            this.seaWeed.display();
         if (this.enablePillars)
             this.pillars.display();
         if (this.enableAIFish)
