@@ -67,7 +67,5 @@ export class MyFishNest {
 
         this.scene.popMatrix();
 
-        this.scene.setActiveShader(this.scene.defaultShader);
-
     }
 }

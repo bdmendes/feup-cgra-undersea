@@ -163,24 +163,31 @@ export class MyScene extends CGFscene {
         // ---- BEGIN Primitive drawing section
         if (this.displayAxis)
             this.axis.display();
-        if (this.enableCubeMap)
-            this.cubeMap.display();
+
+        // Display objects that use shaders
+    
+        if (this.enableWaterSurface)
+            this.waterSurface.display();
         if (this.enableSandFloor)
             this.sandFloor.display();
         if (this.enableFishNest)
             this.fishNest.display();
-        if (this.enableWaterSurface)
-            this.waterSurface.display();
-        if (this.enableRockSet)
-            this.rockSet.display();
-        if (this.enableSeaWeed)
-            this.seaWeed.display();
         if (this.enableFish)
             this.fish.display();
         if (this.enableAIFish)
             this.AIFish.display();
+
+        //Display objects that don't use shaders
+
+        if (this.enableRockSet)
+            this.rockSet.display();
+        if (this.enableCubeMap)
+            this.cubeMap.display();
+        if (this.enableSeaWeed)
+            this.seaWeed.display();
         if (this.enablePillars)
             this.pillars.display();
+
         // ---- END Primitive drawing section
     }
 

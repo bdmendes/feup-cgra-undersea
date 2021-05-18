@@ -46,7 +46,6 @@ export class MyWaterSurface {
 
         this.scene.setActiveShader(this.bodyShader);
 
-
         this.scene.scale(50, 1, 50);
         this.scene.translate(0, 10, 0);
         this.scene.rotate(Math.PI/2, 1, 0, 0);
@@ -54,8 +53,6 @@ export class MyWaterSurface {
         this.plane.display();
 
         this.scene.popMatrix();
-
-        this.scene.setActiveShader(this.scene.defaultShader);
 
     }
 

@@ -62,8 +62,6 @@ export class MySandFloor {
 
         this.scene.popMatrix();
 
-        this.scene.setActiveShader(this.scene.defaultShader);
-
     }
 
     initNormalVizBuffers(){
