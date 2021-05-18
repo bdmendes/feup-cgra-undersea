@@ -1,5 +1,4 @@
 import { MyMovingObject } from '../base/MyMovingObject.js'
-import { MyRock } from '../base/MyRock.js';
 import { minBackFinSpeedFactor, minSideFinSpeedFactor, MyFish } from './MyFish.js';
 import { GRAVITY_ACCEL, NEST_Y, MAX_FALL_SPEED, MIN_FISH_HEIGHT } from '../../constants.js';
 
@@ -7,14 +6,14 @@ const PICK_UP_ANIM = 1;
 const THROW_ANIM = 2;
 
 export class MyMovingFish extends MyMovingObject {
-    constructor(scene, nestCoords, nestRadius) {
-        super(scene, new MyFish(scene));
+    constructor(scene, fish, nestCoords, nestRadius) {
+        super(scene, fish);
         this.rock = null;
 
-        if (nestCoords == undefined) this.nestCoords = [0, 0];
+        if (nestCoords === undefined) this.nestCoords = [0, 0];
         else this.nestCoords = nestCoords;
 
-        if (nestRadius == undefined) this.nestRadius = 2.5;
+        if (nestRadius === undefined) this.nestRadius = 2.5;
         else this.nestRadius = nestRadius;
 
         this.initAnimValues();
@@ -81,6 +80,8 @@ export class MyMovingFish extends MyMovingObject {
     }
 
     update() {
+        this.object.update();
+
         this.position[0] += this.speed * this.scene.speedFactor * Math.sin(this.rotation);
         this.position[1] += this.verSpeed;
         this.position[2] += this.speed * this.scene.speedFactor * Math.cos(this.rotation);
@@ -95,7 +96,6 @@ export class MyMovingFish extends MyMovingObject {
             if (this.verSpeed != 0 && this.speed != 0) {
                 var h = Math.sqrt(Math.pow(this.speed, 2) + Math.pow(this.verSpeed, 2));
                 this.tilt = Math.asin(this.verSpeed / h) * ((this.speed > 0) ? -1 : 1);
-                console.log(h);
             }
             else if (this.verSpeed != 0) {
                 this.tilt = Math.PI / 2 * ((this.verSpeed > 0) ? -1 : 1);

@@ -14,12 +14,8 @@ export class MyInterface extends CGFinterface {
         this.gui = new dat.GUI();
 
         //Checkbox element in GUI
-        this.gui.add(this.scene, 'displayAxis').name('Display Axis');
+        this.gui.add(this.scene, 'displayAxis').name('Axis');
 
-        this.gui.add(this.scene, 'displayNormals').name("Display Normals");
-
-        this.gui.add(this.scene, 'wireframe').name('Wireframe').onChange(this.scene.onWireframeChanged.bind(this.scene));
-        
         this.gui.add(this.scene, 'enableCubeMap', this.scene.enableCubeMap).name('Cube Map');
 
         this.gui.add(this.scene, 'selectedMapTexture', this.scene.mapTexturesIDs).name('Selected Map').onChange(this.scene.updateMapTexture.bind(this.scene));
@@ -34,15 +30,16 @@ export class MyInterface extends CGFinterface {
 
         this.gui.add(this.scene, 'enablePillars').name('Pillars');
 
-        this.gui.add(this.scene, 'enableSeaWeed').name('SeaWeed');
+        this.gui.add(this.scene, 'enableSeaWeed').name('Sea Weed');
 
-        this.gui.add(this.scene, 'enableFish').name('Fish');
+        this.gui.add(this.scene, 'enableFish').name('Player Fish');
 
-        this.gui.add(this.scene, 'scaleFactor', 0.1, 5.0).name('Scale Factor');
+        this.gui.add(this.scene, 'enableAIFish').name('AI Fish');
+
+        this.gui.add(this.scene, 'scaleFactor', 0.1, 3.0).name('Scale Factor');
 
         this.gui.add(this.scene, 'speedFactor', -3.0, 3.0).name('Speed Factor');
 
-        //Init keys
         this.initKeys();
 
         return true;
