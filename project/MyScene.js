@@ -202,6 +202,8 @@ export class MyScene extends CGFscene {
 
         if (this.enableSeaWeed)
             this.seaWeed.display();
+        if (this.enablePillars)
+            this.pillars.display();
 
 
         this.setActiveShader(this.defaultShader);
@@ -212,8 +214,6 @@ export class MyScene extends CGFscene {
             this.rockSet.display();
         if (this.enableCubeMap)
             this.cubeMap.display();
-        if (this.enablePillars)
-            this.pillars.display();
         if (this.enableAIFish)
             this.AIFish.displayNSO();
         if (this.enableFish)
