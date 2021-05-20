@@ -1,4 +1,5 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject, CGFtexture, CGFshader } from "../lib/CGF.js";
+import { CGFcamera2 } from "./CGFcamera2.js";
 import { keyEventCode } from "./constants.js";
 import { MyCubeMap } from "./objects/base/MyCubeMap.js";
 import { MySandFloor } from "./objects/scene/MySandFloor.js";
@@ -73,7 +74,8 @@ export class MyScene extends CGFscene {
     }
 
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        //this.camera = new CGFcamera2(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        this.camera = new CGFcamera2(1.5, 0.1, 500, vec3.fromValues(2, 2, 2), vec3.fromValues(0, 2, 0));
         this.camera.position = [2, 2, 2];
         this.camera.fov = 2.0;
         this.camera.target = [0, 2, 0];
@@ -112,10 +114,6 @@ export class MyScene extends CGFscene {
         this.enableSeaWeed = true;
         this.enableFish = true;
         this.enableAIFish = true;
-    }
-
-    initCameras() {
-        this.camera = new CGFcamera(1.5, 0.1, 500, vec3.fromValues(2, 2, 2), vec3.fromValues(0, 2, 0));
     }
 
     initFishShaders(){
