@@ -287,9 +287,9 @@ export class MyMovingFish extends MyMovingObject {
             var d3_f = this.getDist(pv3, bottomPos);
 
             if (
-                d1_n < this.nestRadius - (this.nestRadius / 3.0) ||
-                d2_n < this.nestRadius - (this.nestRadius / 3.0) ||
-                d3_n < this.nestRadius - (this.nestRadius / 3.0) ||
+                d1_n < this.nestRadius - (this.nestRadius / 2.0) ||
+                d2_n < this.nestRadius - (this.nestRadius / 2.0) ||
+                d3_n < this.nestRadius - (this.nestRadius / 2.0) ||
                 i > 10000) {
 
                 break;
