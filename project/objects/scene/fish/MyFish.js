@@ -1,7 +1,7 @@
-import { CGFappearance, CGFtexture, CGFshader } from '../../../lib/CGF.js';
-import { getNewShaderId } from '../../constants.js';
-import { MySphere } from '../base/MySphere.js'
-import { MyTriangle } from '../base/MyTriangle.js'
+import { CGFappearance, CGFtexture, CGFshader } from '../../../../lib/CGF.js';
+import { getNewShaderId } from '../../../constants.js';
+import { MySphere } from '../../base/MySphere.js'
+import { MyTriangle } from '../../base/MyTriangle.js'
 
 const maxBackFinRotation = Math.PI / 6;
 const maxSideFinRotation = [Math.PI / 12, Math.PI / 12, 0];

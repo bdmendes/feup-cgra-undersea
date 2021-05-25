@@ -1,6 +1,6 @@
-import { MyMovingObject } from '../base/MyMovingObject.js'
+import { MyMovingObject } from '../../base/MyMovingObject.js'
 import { minBackFinSpeedFactor, minSideFinSpeedFactor, MyFish } from './MyFish.js';
-import { GRAVITY_ACCEL, NEST_Y, MAX_FALL_SPEED, MIN_FISH_HEIGHT } from '../../constants.js';
+import { GRAVITY_ACCEL, NEST_Y, MAX_FALL_SPEED, MIN_FISH_HEIGHT } from '../../../constants.js';
 
 const PICK_UP_ANIM = 1;
 const THROW_ANIM = 2;

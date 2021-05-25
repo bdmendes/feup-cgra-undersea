@@ -1,6 +1,6 @@
-import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject, CGFtexture, CGFshader } from '../../../lib/CGF.js';
-import { GRAVITY_ACCEL, NEST_Y, MAX_FALL_SPEED } from '../../constants.js';
-import { MySphere } from "../base/MySphere.js";
+import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject, CGFtexture, CGFshader } from '../../../../lib/CGF.js';
+import { GRAVITY_ACCEL, NEST_Y, MAX_FALL_SPEED } from '../../../constants.js';
+import { MySphere } from "../../base/MySphere.js";
 
 export class MyRock {
     constructor(scene, width, length, height, x, y, z){

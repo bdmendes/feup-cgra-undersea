@@ -4,13 +4,13 @@ import { keyEventCode } from "./constants.js";
 import { MyCubeMap } from "./objects/base/MyCubeMap.js";
 import { MySandFloor } from "./objects/scene/MySandFloor.js";
 import { MyFishNest } from "./objects/scene/MyFishNest.js";
-import { MyWaterSurface } from "./objects/base/MyWaterSurface.js";
-import { MyRockSet } from "./objects/base/MyRockSet.js";
+import { MyWaterSurface } from "./objects/scene/MyWaterSurface.js";
+import { MyRockSet } from "./objects/scene/rock/MyRockSet.js";
 import { MySeaWeedSet } from "./objects/scene/seaweed/MySeaWeedSet.js";
-import { MyMovingFish } from "./objects/scene/MyMovingFish.js";
-import { MyAnimatedFishSet } from "./objects/scene/MyAnimatedFishSet.js";
+import { MyMovingFish } from "./objects/scene/fish/MyMovingFish.js";
+import { MyAnimatedFishSet } from "./objects/scene/fish/MyAnimatedFishSet.js";
 import { MyPillarSet } from "./objects/scene/pillar/MyPillarSet.js";
-import { MyFish } from "./objects/scene/MyFish.js"
+import { MyFish } from "./objects/scene/fish/MyFish.js"
 import { MyLightPyramid } from "./objects/base/pyramid/MyLightPyramid.js"
 import { MyLighterPyramid } from "./objects/base/pyramid/MyLighterPyramid.js"
 
