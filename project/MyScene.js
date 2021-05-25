@@ -1,7 +1,7 @@
 import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject, CGFtexture, CGFshader } from "../lib/CGF.js";
 import { CGFcamera2 } from "./CGFcamera2.js";
 import { keyEventCode } from "./constants.js";
-import { MyCubeMap } from "./objects/base/MyCubeMap.js";
+import { MyCubeMap } from "./objects/scene/MyCubeMap.js";
 import { MySandFloor } from "./objects/scene/MySandFloor.js";
 import { MyFishNest } from "./objects/scene/MyFishNest.js";
 import { MyWaterSurface } from "./objects/scene/MyWaterSurface.js";
