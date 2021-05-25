@@ -75,7 +75,7 @@ export class MyScene extends CGFscene {
 
     initCameras() {
         //this.camera = new CGFcamera2(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
-        this.camera = new CGFcamera2(1.5, 0.1, 500, vec3.fromValues(2, 2, 2), vec3.fromValues(0, 2, 0));
+        this.camera = new CGFcamera(1.5, 0.1, 500, vec3.fromValues(2, 2, 2), vec3.fromValues(0, 2, 0));
         this.camera.position = [2, 2, 2];
         this.camera.fov = 2.0;
         this.camera.target = [0, 2, 0];
@@ -86,7 +86,7 @@ export class MyScene extends CGFscene {
         // Initialize scene objects
         this.axis = new CGFaxis(this);
         this.fish = new MyMovingFish(this, new MyFish(this, this.fishShader), this.nestCoords, this.nestRadius);
-        this.AIFish = new MyAnimatedFishSet(this, this.fishShader);
+        this.AIFish = new MyAnimatedFishSet(this, this.fishShader, 3);
         this.sandFloor = new MySandFloor(this, this.nestCoords, this.nestRadius);
         this.fishNest = new MyFishNest(this, this.nestCoords, this.nestRadius);
         this.waterSurface = new MyWaterSurface(this);

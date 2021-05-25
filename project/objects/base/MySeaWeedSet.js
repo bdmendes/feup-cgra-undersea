@@ -83,11 +83,11 @@ export class MySeaWeedSet{
 
         this.scene.setActiveShader(this.seaWeedShader);
 
-        for (var i = 0; i < this.no_clusters; i++){
+        this.seaWeedShader.setUniformsValues({ 
+            timeFactor: this.t,
+        });
 
-            this.seaWeedShader.setUniformsValues({ 
-                timeFactor: this.t,
-            });
+        for (var i = 0; i < this.no_clusters; i++){
 
             this.clusters[i].display();
 
