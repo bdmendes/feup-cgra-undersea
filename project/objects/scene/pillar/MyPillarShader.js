@@ -1,5 +1,5 @@
-import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject, CGFtexture, CGFshader } from '../../../lib/CGF.js';
-import { MyPillar } from "../base/MyPillar.js";
+import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject, CGFtexture, CGFshader } from '../../../../lib/CGF.js';
+import { MyLightCylinder } from "../../base/cylinder/MyLightCylinder.js";
 
 export class MyPillarShader {
     constructor(scene){
@@ -11,7 +11,7 @@ export class MyPillarShader {
     }
 
     initObject(){
-        this.pillar = new MyPillar(this.scene, 64, 64); //TODO
+        this.pillar = new MyLightCylinder(this.scene, 64, 64); //TODO
     }
 
     initAppearance(){

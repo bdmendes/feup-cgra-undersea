@@ -1,6 +1,6 @@
-import { CGFobject, CGFappearance, CGFtexture } from "../../../lib/CGF.js";
+import { CGFobject, CGFappearance, CGFtexture } from "../../../../lib/CGF.js";
 
-export class MyPillar extends CGFobject {
+export class MyLightCylinder extends CGFobject {
 
     constructor(scene, slices, div, deep) {
         super(scene);

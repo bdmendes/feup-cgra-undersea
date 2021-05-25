@@ -1,6 +1,5 @@
-import { CGFappearance } from '../../../lib/CGF.js';
-import { MyPyramid } from "../base/MyPyramid.js";
-import { MyLighterPyramid } from "../base/MyLighterPyramid.js";
+import { CGFappearance } from '../../../../lib/CGF.js';
+import { MyLighterPyramid } from "../../base/pyramid/MyLighterPyramid.js";
 
 export class MySeaWeed {
     constructor(scene, coords, size, rotation) {

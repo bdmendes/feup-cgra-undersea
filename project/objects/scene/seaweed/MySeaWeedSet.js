@@ -1,5 +1,5 @@
-import { CGFobject, CGFshader } from '../../../lib/CGF.js';
-import {MySeaWeedCluster } from "../base/MySeaWeedCluster.js"
+import { CGFobject, CGFshader } from '../../../../lib/CGF.js';
+import {MySeaWeedCluster } from "./MySeaWeedCluster.js"
 
 export class MySeaWeedSet{
 

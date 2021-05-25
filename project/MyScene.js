@@ -6,13 +6,13 @@ import { MySandFloor } from "./objects/scene/MySandFloor.js";
 import { MyFishNest } from "./objects/scene/MyFishNest.js";
 import { MyWaterSurface } from "./objects/base/MyWaterSurface.js";
 import { MyRockSet } from "./objects/base/MyRockSet.js";
-import { MySeaWeedSet } from "./objects/base/MySeaWeedSet.js";
+import { MySeaWeedSet } from "./objects/scene/seaweed/MySeaWeedSet.js";
 import { MyMovingFish } from "./objects/scene/MyMovingFish.js";
 import { MyAnimatedFishSet } from "./objects/scene/MyAnimatedFishSet.js";
-import { MyPillarSet } from "./objects/base/MyPillarSet.js";
+import { MyPillarSet } from "./objects/scene/pillar/MyPillarSet.js";
 import { MyFish } from "./objects/scene/MyFish.js"
-import { MyLightPyramid } from "./objects/base/MyLightPyramid.js"
-import { MyLighterPyramid } from "./objects/base/MyLighterPyramid.js"
+import { MyLightPyramid } from "./objects/base/pyramid/MyLightPyramid.js"
+import { MyLighterPyramid } from "./objects/base/pyramid/MyLighterPyramid.js"
 
 /**
 * MyScene
