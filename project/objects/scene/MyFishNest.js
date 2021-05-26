@@ -38,7 +38,7 @@ export class MyFishNest {
 
     initTextures(){
         this.sandTexture = new CGFtexture(this.scene, 'images/part-b/sandQuarter.png');
-        this.heightMap = new CGFtexture(this.scene, 'images/part-b/fishNestMap2.png');
+        this.heightMap = new CGFtexture(this.scene, 'images/part-b/fishNestMap.png');
         this.appearance.setTexture(this.sandTexture);
         this.appearance.setTextureWrap('REPEAT', 'REPEAT');
     }

@@ -23,7 +23,7 @@ export class MyPillarShader {
     }
 
     initTextures(){
-        this.pillarTexture = new CGFtexture(this.scene, 'images/part-b/pillarTexture4.png');
+        this.pillarTexture = new CGFtexture(this.scene, 'images/part-b/pillarTexture.png');
         this.bumpMap = new CGFtexture(this.scene, 'images/part-b/pillarMap.png');
         this.appearance.setTexture(this.pillarTexture);
         this.appearance.setTextureWrap('REPEAT', 'REPEAT');
