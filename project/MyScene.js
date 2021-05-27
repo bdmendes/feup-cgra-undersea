@@ -1,15 +1,18 @@
-import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject, CGFtexture } from "../lib/CGF.js";
+import { CGFscene, CGFcamera, CGFaxis, CGFappearance, CGFobject, CGFtexture, CGFshader } from "../lib/CGF.js";
+import { CGFcamera2 } from "./CGFcamera2.js";
 import { keyEventCode } from "./constants.js";
-import { MyCubeMap } from "./objects/base/MyCubeMap.js";
+import { MyCubeMap } from "./objects/scene/MyCubeMap.js";
 import { MySandFloor } from "./objects/scene/MySandFloor.js";
 import { MyFishNest } from "./objects/scene/MyFishNest.js";
-import { MyWaterSurface } from "./objects/base/MyWaterSurface.js";
-import { MyRockSet } from "./objects/base/MyRockSet.js";
-import { MySeaWeedSet } from "./objects/base/MySeaWeedSet.js";
-import { MyMovingFish } from "./objects/scene/MyMovingFish.js";
-import { MyAnimatedFishSet } from "./objects/scene/MyAnimatedFishSet.js";
-import { MyPillarSet } from "./objects/base/MyPillarSet.js";
-import { MyFish } from "./objects/scene/MyFish.js"
+import { MyWaterSurface } from "./objects/scene/MyWaterSurface.js";
+import { MyRockSet } from "./objects/scene/rock/MyRockSet.js";
+import { MySeaWeedSet } from "./objects/scene/seaweed/MySeaWeedSet.js";
+import { MyMovingFish } from "./objects/scene/fish/MyMovingFish.js";
+import { MyAnimatedFishSet } from "./objects/scene/fish/MyAnimatedFishSet.js";
+import { MyPillarSet } from "./objects/scene/pillar/MyPillarSet.js";
+import { MyFish } from "./objects/scene/fish/MyFish.js"
+import { MyLightPyramid } from "./objects/base/pyramid/MyLightPyramid.js"
+import { MyLighterPyramid } from "./objects/base/pyramid/MyLighterPyramid.js"
 
 /**
 * MyScene
@@ -24,6 +27,7 @@ export class MyScene extends CGFscene {
         super.init(application);
         this.initCameras();
         this.initLights();
+        this.initFishShaders();
 
         //Background color
         this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -46,12 +50,12 @@ export class MyScene extends CGFscene {
         this.nestRadius = 2.5; //Default is 2.5
 
         //Sea Weed properties
-        this.seaWeedClusterSize = 3;
+        this.seaWeedClusterSize = 20;
         this.seaWeedMinRadius = 0.1;
         this.seaWeedMaxRadius = 1.0;
 
         //Rock Set properties;
-        this.rockSetSize = 10.0;
+        this.rockSetSize = 50.0;
 
         this.initObjects();
 
@@ -70,7 +74,8 @@ export class MyScene extends CGFscene {
     }
 
     initCameras() {
-        this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        //this.camera = new CGFcamera2(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        this.camera = new CGFcamera(1.5, 0.1, 500, vec3.fromValues(2, 2, 2), vec3.fromValues(0, 2, 0));
         this.camera.position = [2, 2, 2];
         this.camera.fov = 2.0;
         this.camera.target = [0, 2, 0];
@@ -80,13 +85,13 @@ export class MyScene extends CGFscene {
     initObjects() {
         // Initialize scene objects
         this.axis = new CGFaxis(this);
-        this.fish = new MyMovingFish(this, new MyFish(this), this.nestCoords, this.nestRadius);
+        this.fish = new MyMovingFish(this, new MyFish(this, this.fishShader), this.nestCoords, this.nestRadius);
+        this.AIFish = new MyAnimatedFishSet(this, this.fishShader, 3);
         this.sandFloor = new MySandFloor(this, this.nestCoords, this.nestRadius);
         this.fishNest = new MyFishNest(this, this.nestCoords, this.nestRadius);
         this.waterSurface = new MyWaterSurface(this);
         this.seaWeed = new MySeaWeedSet(this, this.seaWeedClusterSize, this.seaWeedMinRadius, this.seaWeedMaxRadius, this.nestCoords, this.nestRadius);
         this.rockSet = new MyRockSet(this, this.rockSetSize, this.nestCoords, this.nestRadius);
-        this.AIFish = new MyAnimatedFishSet(this);
         this.pillars = new MyPillarSet(this, 5);
 
         // Materials
@@ -111,8 +116,17 @@ export class MyScene extends CGFscene {
         this.enableAIFish = true;
     }
 
-    initCameras() {
-        this.camera = new CGFcamera(1.5, 0.1, 500, vec3.fromValues(2, 2, 2), vec3.fromValues(0, 2, 0));
+    initFishShaders(){
+        this.fishScales = new CGFtexture(this, "images/part-b/fish/fish_scales_2.png");
+        this.fishShader = new CGFshader(this.gl, 'shaders/slimGouraud.vert', 'shaders/bodyFish.frag');
+        this.fishShader.setUniformsValues({
+            uSampler1: 1,
+            r: 0.55,
+            g: 0.18,
+            b: 0.1,
+            headPortion: 0.4
+        });
+        
     }
 
     setDefaultAppearance() {
@@ -163,24 +177,46 @@ export class MyScene extends CGFscene {
         // ---- BEGIN Primitive drawing section
         if (this.displayAxis)
             this.axis.display();
-        if (this.enableCubeMap)
-            this.cubeMap.display();
-        if (this.enableSandFloor)
-            this.sandFloor.display();
+
+        // Display objects that use shaders
+
+        
         if (this.enableFishNest)
             this.fishNest.display();
+        if (this.enableSandFloor)
+            this.sandFloor.display();
         if (this.enableWaterSurface)
             this.waterSurface.display();
-        if (this.enableRockSet)
-            this.rockSet.display();
+       
+        this.setActiveShader(this.fishShader);
+
+        this.fishScales.bind(1);
+    
+        if (this.enableAIFish)
+            this.AIFish.displaySO();
+        if (this.enableFish)
+            this.fish.displaySO();
+        
+
         if (this.enableSeaWeed)
             this.seaWeed.display();
-        if (this.enableFish)
-            this.fish.display();
-        if (this.enableAIFish)
-            this.AIFish.display();
         if (this.enablePillars)
             this.pillars.display();
+
+
+        this.setActiveShader(this.defaultShader);
+
+        //Display objects that don't use shaders
+
+        if (this.enableRockSet)
+            this.rockSet.display();
+        if (this.enableCubeMap)
+            this.cubeMap.display();
+        if (this.enableAIFish)
+            this.AIFish.displayNSO();
+        if (this.enableFish)
+            this.fish.displayNSO();
+
         // ---- END Primitive drawing section
     }
 

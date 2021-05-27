@@ -14,12 +14,21 @@ export class MyMovingObject {
         this.verSpeed = 0;
     }
 
-    display() {
+    displayNSO() {
         this.scene.pushMatrix();
         this.scene.translate(...this.position, 0);
         this.scene.rotate(this.rotation, 0, 1, 0);
         this.scene.rotate(this.tilt, 1, 0, 0);
-        this.object.display();
+        this.object.displayNSO();
+        this.scene.popMatrix();
+    }
+
+    displaySO() {
+        this.scene.pushMatrix();
+        this.scene.translate(...this.position, 0);
+        this.scene.rotate(this.rotation, 0, 1, 0);
+        this.scene.rotate(this.tilt, 1, 0, 0);
+        this.object.displaySO();
         this.scene.popMatrix();
     }
 
