@@ -2,7 +2,7 @@
 
 ## Group T7G09
 
-## Extra-features
+## Extra-features and details
 
 ### 1 - Rock pickup and throw
 
@@ -90,6 +90,27 @@ And the texture used for the pillar:
 As it can be seen the parts that have seaweed on the texture are the parts that are highlited with a bright green in the bump map, this green is used as a positive offset in the pillar, (green parts are more outwards), the red parts are used as negative offsets (red parts are more inwards) and the black parts are neutral (nothing changes, dimensions are the same on those points). Which leads to the following result:
 
 ![Pillar result](screenshots/extra_1.png)
+
+### 3 - Fishnest height map
+
+For the fish nest, instead of using a shell, a model closer to reality was used.
+
+The model for the fish nest was based of a real life fish nest from a puffer fish, here we have the base image:
+
+![Pufferfish nest](extra_pics/pufferfish_nest.jpg)
+
+This image went several transformations, using a photo editing program, such as: 
+ - Conversion to black and white
+ - Cropping and selection of only the center
+ - A bit of hand painting
+ - Addition of an outer ring made with gradients so that the color goes high and then back down a bit
+
+![Fish nest height map](images/part-b/fishNestMap.png)
+
+The brighter parts are used to map higher parts on the model, which gives it this final look:
+
+![Screenshot 2](screenshots/proj-t7g9-2b.png)
+
 
 ## Screenshots
 
