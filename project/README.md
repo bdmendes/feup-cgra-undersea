@@ -75,6 +75,22 @@ This process repeats itself until a rock lands inside the nest.
 
 ![Throw](gifs/throw.gif)
 
+### 2 - Pillars with shaders
+
+Even though the pillars had a nice feel to it they felt a little plain so a shader was applied to them. This shader was made by 2 parts:
+ - Gourad shading
+ - Bump map
+
+Here we have the bump map:
+![Pillar bump map](images/part-b/pillarMap.png)
+
+And the texture used for the pillar:
+![Pillar texture](images/part-b/pillarTexture.png)
+
+As it can be seen the parts that have seaweed on the texture are the parts that are highlited with a bright green in the bump map, this green is used as a positive offset in the pillar, (green parts are more outwards), the red parts are used as negative offsets (red parts are more inwards) and the black parts are neutral (nothing changes, dimensions are the same on those points). Which leads to the following result:
+
+![Pillar result](screenshots/extra_1.png)
+
 ## Screenshots
 
 ### 1 - Fish
