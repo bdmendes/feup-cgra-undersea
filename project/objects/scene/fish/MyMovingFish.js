@@ -262,7 +262,7 @@ export class MyMovingFish extends MyMovingObject {
 
         var new_mouth_pos = this.calcMouthPos(new_rotation, new_tilt, this.position);
 
-        var v1 = 0.0, v2 = 2.5, v3 = 5.0;
+        var v1 = 0.0, v2 = 10.0, v3 = 20.0;
 
         var bottomPos = [new_mouth_pos[0], 0.1, new_mouth_pos[2]];
 
