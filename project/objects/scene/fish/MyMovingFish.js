@@ -1,6 +1,6 @@
 import { MyMovingObject } from '../../base/MyMovingObject.js'
 import { minBackFinSpeedFactor, minSideFinSpeedFactor, MyFish } from './MyFish.js';
-import { GRAVITY_ACCEL, NEST_Y, MAX_FALL_SPEED, MIN_FISH_HEIGHT } from '../../../constants.js';
+import { GRAVITY_ACCEL, NEST_Y, MAX_FALL_SPEED, MIN_FISH_HEIGHT, MAX_FISH_HEIGHT, MIN_Z, MAX_Z, MIN_X, MAX_X } from '../../../constants.js';
 
 const PICK_UP_ANIM = 1;
 const THROW_ANIM = 2;
@@ -88,6 +88,23 @@ export class MyMovingFish extends MyMovingObject {
 
         if (this.position[1] < MIN_FISH_HEIGHT) {
             this.position[1] = MIN_FISH_HEIGHT;
+        }
+        else if(this.position[1] > MAX_FISH_HEIGHT){
+            this.position[1] = MAX_FISH_HEIGHT;
+        }
+
+        if (this.position[0] < MIN_X){
+            this.position[0] = MIN_X;
+        }
+        else if (this.position[0] > MAX_X){
+            this.position[0] = MAX_X;
+        }
+        
+        if (this.position[2] < MIN_Z){
+            this.position[2] = MIN_Z;
+        }
+        else if (this.position[2] > MAX_Z){
+            this.position[2] = MAX_Z;
         }
 
         if (this.animating) {

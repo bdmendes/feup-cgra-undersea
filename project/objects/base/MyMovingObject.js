@@ -1,3 +1,5 @@
+import { MIN_FISH_HEIGHT } from "../../constants.js";
+
 export class MyMovingObject {
 
     constructor(scene, object, nestCoords, nestRadius) {
@@ -37,9 +39,10 @@ export class MyMovingObject {
         this.position[1] += this.verSpeed;
         this.position[2] += this.speed * Math.cos(this.rotation);
 
-        if (this.position[1] < 0.5) {
-            this.position[1] = 0.5;
+        if (this.position[1] < MIN_FISH_HEIGHT) {
+            this.position[1] = MIN_FISH_HEIGHT;
         }
+        
     }
 
     turn(val) {

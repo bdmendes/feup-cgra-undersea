@@ -151,8 +151,6 @@ export class MyScene extends CGFscene {
             this.fish.update();
         if (this.enableRockSet)
             this.rockSet.update();
-        if (this.enableFish)
-            this.fish.update(t);
         if (this.enableWaterSurface)
             this.waterSurface.update(t);
         if (this.enableSeaWeed)
