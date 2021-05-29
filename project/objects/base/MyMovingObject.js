@@ -1,4 +1,4 @@
-import { MIN_FISH_HEIGHT } from "../../constants.js";
+import { MAX_FISH_HEIGHT, MIN_FISH_HEIGHT } from "../../constants.js";
 
 export class MyMovingObject {
 
@@ -11,7 +11,7 @@ export class MyMovingObject {
     reset() {
         this.rotation = 0;
         this.tilt = 0;
-        this.position = [0, 1, 0];
+        this.position = [0, MAX_FISH_HEIGHT, 0];
         this.speed = 0;
         this.verSpeed = 0;
     }
