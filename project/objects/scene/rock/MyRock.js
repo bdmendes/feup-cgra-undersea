@@ -5,7 +5,6 @@ import { MySphere } from "../../base/MySphere.js";
 export class MyRock {
     constructor(scene, width, length, height, x, y, z){
 
-        
 
         this.scene = scene;
         this.initObject();
@@ -31,11 +30,24 @@ export class MyRock {
         if (z == undefined) this.z = 0;
         else this.z = z;
 
+        this.originalPos = [x, y, z];
+
         this.pickedUp = false;
         this.speed = [0, 0, 0];
         this.rotation = 0.0;
         this.tilt = 0.0;
 
+    }
+
+    reset(){
+        this.pickedUp = false;
+        this.speed = [0, 0, 0];
+        this.rotation = 0.0;
+        this.tilt = 0.0;
+
+        this.x = this.originalPos[0];
+        this.y = this.originalPos[1];
+        this.z = this.originalPos[2];
     }
 
     update(){

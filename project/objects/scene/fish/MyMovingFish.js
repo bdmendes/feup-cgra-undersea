@@ -23,7 +23,12 @@ export class MyMovingFish extends MyMovingObject {
     reset() {
         super.reset();
         this.object.resetFins();
+        console.log("here")
         this.mouthPos = [0, 1, 0];
+        if (this.rock != null){
+            this.rock.reset();
+            this.rock = null;
+        }
     }
 
     initAnimValues() {
