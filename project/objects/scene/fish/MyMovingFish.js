@@ -155,7 +155,7 @@ export class MyMovingFish extends MyMovingObject {
 
     pickUpRock(rock) {
 
-        var max_dist = Math.sqrt(Math.pow(0.5*this.scene.scaleFactor, 2) + Math.pow(0.5*this.scene.scaleFactor, 2));
+        var max_dist = 1.5 * this.scene.scaleFactor; //Math.sqrt(Math.pow(0.5*this.scene.scaleFactor, 2) + Math.pow(0.5*this.scene.scaleFactor, 2));
 
         console.log(max_dist);
 
