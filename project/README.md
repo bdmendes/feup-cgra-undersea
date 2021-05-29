@@ -27,11 +27,11 @@ A bit more detailed explanation of the steps with gifs of the full process:
 
 #### 1.1 - Pickup
 
-![Pickup](gifs/pickup.gif)
+![Pickup](extra_images/pickup.gif)
 
 #### 1.2 - Aiming
 
-![Aiming](gifs/aiming.gif)
+![Aiming](extra_images/aiming.gif)
 
 #### 1.3 - Speed calculation
 
@@ -50,7 +50,7 @@ First three different speeds are used:
 
 Which will cause the rocks to fall in a pattern similar to this:
 
-![step1](pt_pics/step1.png)
+![step1](extra_images/step1.png)
  - Blue spheres: simulated rocks with v3, v2, v1 (from left to right)
  - Red circle: fish nest
 
@@ -59,27 +59,27 @@ As we can see there is one rock that went past the nest (rock thrown with v3), o
 The algorithm chooses two rocks one that is past the nest and one that didn't, if there are two rocks that meet either of these conditions 
 simultaneously (in this case v1 and v2) the one closest to the nest is chosen.
 
-![step2](pt_pics/step2.png)
+![step2](extra_images/step2.png)
 
 Once we have these two rocks a new velocity that is calculated by the median of the selected velocities replaces v2. Which causes a new rock projection.
 
-![step3](pt_pics/step3.png)
+![step3](extra_images/step3.png)
 
 This process repeats itself until a rock lands inside the nest.
 
-![step4](pt_pics/step4.png)
+![step4](extra_images/step4.png)
 
-![step5](pt_pics/step5.png)
+![step5](extra_images/step5.png)
 
-![step6](pt_pics/step6.png)
+![step6](extra_images/step6.png)
 
-![step7](pt_pics/step7.png)
+![step7](extra_images/step7.png)
 
-![step8](pt_pics/step8.png)
+![step8](extra_images/step8.png)
 
 #### 1.4 - Throw
 
-![Throw](gifs/throw.gif)
+![Throw](extra_images/throw.gif)
 
 ### 2 - Pillars with shaders
 
