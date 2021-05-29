@@ -247,10 +247,6 @@ export class MyMovingFish extends MyMovingObject {
 
     dropRock() {
 
-        if (0 && !this.getDist(this.rock.getCoords(), [this.nestCoords[0], this.rock.getCoords()[1], this.nestCoords[1]]) < this.nestRadius + 5.0) {
-            return;
-        }
-
         this.animationType = THROW_ANIM;
         this.animating = true;
         var new_rotation = 0;
