@@ -154,7 +154,12 @@ export class MyMovingFish extends MyMovingObject {
     }
 
     pickUpRock(rock) {
-        if (rock == null || this.rock != null || this.position[1] > MIN_FISH_HEIGHT) {
+
+        var max_dist = Math.sqrt(Math.pow(0.5*this.scene.scaleFactor, 2) + Math.pow(0.5*this.scene.scaleFactor, 2));
+
+        console.log(max_dist);
+
+        if (rock == null || this.rock != null || this.position[1] > MIN_FISH_HEIGHT || this.getDist(rock.getCoords(), this.position) > max_dist) {
             return;
         }
 
