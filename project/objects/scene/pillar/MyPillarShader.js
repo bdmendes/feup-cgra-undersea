@@ -11,7 +11,7 @@ export class MyPillarShader {
     }
 
     initObject(){
-        this.pillar = new MyLightCylinder(this.scene, 64, 64); //TODO
+        this.pillar = new MyLightCylinder(this.scene, 64, 64);
     }
 
     initAppearance(){

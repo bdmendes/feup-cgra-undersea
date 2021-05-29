@@ -111,10 +111,6 @@ export class MyPyramid extends CGFobject {
         for (var i = 1; i < this.stacks; i++) { tt += 2 + i;} 
 
         for (var i = 0; i < this.slices; i++) {
-      
-            // All vertices have to be declared for a given face
-            // even if they are shared with others, as the normals 
-            // in each face will be different
 
             var sa = Math.sin(ang);
             var saa = Math.sin(ang + alphaAng);

@@ -1,5 +1,4 @@
 import { CGFappearance, CGFtexture, CGFshader } from '../../../../lib/CGF.js';
-import { getNewShaderId } from '../../../constants.js';
 import { MySphere } from '../../base/MySphere.js'
 import { MyTriangle } from '../../base/MyTriangle.js'
 

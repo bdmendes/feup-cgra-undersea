@@ -27,7 +27,6 @@ export class MySphere extends CGFobject {
     /**
      * @method initBuffers
      * Initializes the sphere buffers
-     * TODO: DEFINE TEXTURE COORDINATES
      */
     initBuffers() {
         this.vertices = [];
@@ -58,6 +57,7 @@ export class MySphere extends CGFobject {
                 var u = 1.0 * theta / (2 * Math.PI);
                 var v = 1.0 * phi / (Math.PI);
 
+                //--- Tex Coords
                 this.texCoords.push(u, v);
 
                 //--- Indices
@@ -79,10 +79,6 @@ export class MySphere extends CGFobject {
                 // therefore, the value of the normal is equal to the position vectro
                 this.normals.push(x, y, z);
                 theta += thetaInc;
-
-                //--- Texture Coordinates
-                // To be done... 
-                // May need some additional code also in the beginning of the function.
 
             }
             phi += phiInc;

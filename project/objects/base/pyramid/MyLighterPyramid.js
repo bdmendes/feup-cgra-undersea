@@ -6,7 +6,6 @@ export class MyLighterPyramid extends CGFobject {
         this.slices = slices;
         this.stacks = stacks;
         this.initBuffers();
-        //this.enableNormalViz();
     }
 
     initBuffers() {
@@ -30,15 +29,11 @@ export class MyLighterPyramid extends CGFobject {
         }
 
         for (var i = 1; i < this.slices+1; i++) {
-      
-            // All vertices have to be declared for a given face
-            // even if they are shared with others, as the normals 
-            // in each face will be different
 
             var sa = Math.sin(ang);
             var ca = Math.cos(ang);
 
-            for (var j = 0; j < this.stacks; j++){ //j: 
+            for (var j = 0; j < this.stacks; j++){
 
                 var t1_x = sa / this.stacks * (j+1);
                 var t1_z = ca / this.stacks * (j+1);

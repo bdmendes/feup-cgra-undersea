@@ -20,7 +20,7 @@ export class MySandFloor {
     }
 
     initObject(){
-        this.plane = new MyPlane(this.scene, 80, 0, 2, 0, 2); //TODO
+        this.plane = new MyPlane(this.scene, 80, 0, 2, 0, 2);
     }
 
     initAppearance(){

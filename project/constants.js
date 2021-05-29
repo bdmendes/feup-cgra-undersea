@@ -25,9 +25,3 @@ export const MIN_X = -25;
 export const MAX_X = 25;
 export const MIN_Z = -25;
 export const MAX_Z = 25;
-
-var SHADER_ID_HOLDER = 71.0;
-
-export function getNewShaderId() {
-    return ++SHADER_ID_HOLDER;
-  }

@@ -53,8 +53,6 @@ export class MyRock {
     update(){
         if (this.y != NEST_Y && !this.pickedUp){
             this.speed[1] += GRAVITY_ACCEL;
-
-            // if (this.speed < MAX_FALL_SPEED) this.speed = MAX_FALL_SPEED;
                
             this.x += this.speed[0];
             this.y += this.speed[1];
@@ -87,7 +85,7 @@ export class MyRock {
     }
 
     initObject(){
-        this.sphere = new MySphere(this.scene, 16, 16); //TODO
+        this.sphere = new MySphere(this.scene, 16, 16);
     }
 
     initAppearance(){

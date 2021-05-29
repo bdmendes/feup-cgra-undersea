@@ -57,6 +57,9 @@ export class MyScene extends CGFscene {
         //Rock Set properties;
         this.rockSetSize = 50.0;
 
+        //AI fish properties
+        this.numberOfAIFish = 3;
+
         this.initObjects();
 
         // Global object-related properties
@@ -86,7 +89,7 @@ export class MyScene extends CGFscene {
         // Initialize scene objects
         this.axis = new CGFaxis(this);
         this.fish = new MyMovingFish(this, new MyFish(this, this.fishShader), this.nestCoords, this.nestRadius);
-        this.AIFish = new MyAnimatedFishSet(this, this.fishShader, 3);
+        this.AIFish = new MyAnimatedFishSet(this, this.fishShader, this.numberOfAIFish);
         this.sandFloor = new MySandFloor(this, this.nestCoords, this.nestRadius);
         this.fishNest = new MyFishNest(this, this.nestCoords, this.nestRadius);
         this.waterSurface = new MyWaterSurface(this);
@@ -177,8 +180,6 @@ export class MyScene extends CGFscene {
             this.axis.display();
 
         // Display objects that use shaders
-
-        
         if (this.enableFishNest)
             this.fishNest.display();
         if (this.enableSandFloor)
@@ -186,21 +187,18 @@ export class MyScene extends CGFscene {
         if (this.enableWaterSurface)
             this.waterSurface.display();
        
+        //Shaders for both the fish controlled by the user and the AI fish
         this.setActiveShader(this.fishShader);
-
         this.fishScales.bind(1);
     
         if (this.enableAIFish)
             this.AIFish.displaySO();
         if (this.enableFish)
             this.fish.displaySO();
-        
-
         if (this.enableSeaWeed)
             this.seaWeed.display();
         if (this.enablePillars)
             this.pillars.display();
-
 
         this.setActiveShader(this.defaultShader);
 

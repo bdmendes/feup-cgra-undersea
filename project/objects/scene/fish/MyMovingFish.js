@@ -23,7 +23,6 @@ export class MyMovingFish extends MyMovingObject {
     reset() {
         super.reset();
         this.object.resetFins();
-        console.log("here")
         this.mouthPos = [0, 1, 0];
         if (this.rock != null){
             this.rock.reset();
@@ -42,7 +41,7 @@ export class MyMovingFish extends MyMovingObject {
         this.iter = 0;
     }
 
-    animationStep() { //TODO somehow make this prettier
+    animationStep() {
         if (this.stage == 1) {
             if (this.iter >= 10) {
                 this.rotation = this.endRotation;
@@ -91,6 +90,7 @@ export class MyMovingFish extends MyMovingObject {
         this.position[1] += this.verSpeed;
         this.position[2] += this.speed * this.scene.speedFactor * Math.cos(this.rotation);
 
+        //Boundary Checks
         if (this.position[1] < MIN_FISH_HEIGHT) {
             this.position[1] = MIN_FISH_HEIGHT;
         }
@@ -112,6 +112,7 @@ export class MyMovingFish extends MyMovingObject {
             this.position[2] = MAX_Z;
         }
 
+        //Animations
         if (this.animating) {
             this.animationStep();
         } else {

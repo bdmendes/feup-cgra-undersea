@@ -11,7 +11,7 @@ export class MyWaterSurface {
     }
 
     initObject(){
-        this.plane = new MyPlane(this.scene); //TODO
+        this.plane = new MyPlane(this.scene);
     }
 
     initAppearance(){
